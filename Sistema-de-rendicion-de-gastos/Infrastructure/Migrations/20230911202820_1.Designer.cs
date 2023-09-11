@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20230911185428_1")]
+    [Migration("20230911202820_1")]
     partial class _1
     {
         /// <inheritdoc />
@@ -26,18 +26,18 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.DataType", b =>
                 {
-                    b.Property<int>("TypeId")
+                    b.Property<int>("DataTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DataTypeId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("TypeId");
+                    b.HasKey("DataTypeId");
 
                     b.ToTable("DataType");
                 });
@@ -55,7 +55,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Report");
                 });
 
-            modelBuilder.Entity("Domain.Entities.VariableFields", b =>
+            modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
                     b.Property<int>("ReportId")
                         .HasColumnType("int");
@@ -64,10 +64,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("DataType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DataTypeNavTypeId")
+                    b.Property<int>("DataTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
@@ -77,16 +74,16 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("ReportId", "Label");
 
-                    b.HasIndex("DataTypeNavTypeId");
+                    b.HasIndex("DataTypeId");
 
                     b.ToTable("VariableFields");
                 });
 
-            modelBuilder.Entity("Domain.Entities.VariableFields", b =>
+            modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
                     b.HasOne("Domain.Entities.DataType", "DataTypeNav")
                         .WithMany()
-                        .HasForeignKey("DataTypeNavTypeId")
+                        .HasForeignKey("DataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -14,13 +14,13 @@ namespace Infrastructure.Migrations
                 name: "DataType",
                 columns: table => new
                 {
-                    TypeId = table.Column<int>(type: "int", nullable: false)
+                    DataTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DataType", x => x.TypeId);
+                    table.PrimaryKey("PK_DataType", x => x.DataTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,17 +42,16 @@ namespace Infrastructure.Migrations
                     Label = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ReportId = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DataType = table.Column<int>(type: "int", nullable: false),
-                    DataTypeNavTypeId = table.Column<int>(type: "int", nullable: false)
+                    DataTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.Label });
                     table.ForeignKey(
-                        name: "FK_VariableFields_DataType_DataTypeNavTypeId",
-                        column: x => x.DataTypeNavTypeId,
+                        name: "FK_VariableFields_DataType_DataTypeId",
+                        column: x => x.DataTypeId,
                         principalTable: "DataType",
-                        principalColumn: "TypeId",
+                        principalColumn: "DataTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_VariableFields_Report_ReportId",
@@ -63,9 +62,9 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_VariableFields_DataTypeNavTypeId",
+                name: "IX_VariableFields_DataTypeId",
                 table: "VariableFields",
-                column: "DataTypeNavTypeId");
+                column: "DataTypeId");
         }
 
         /// <inheritdoc />
