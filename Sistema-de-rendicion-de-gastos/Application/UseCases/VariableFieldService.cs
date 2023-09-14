@@ -4,7 +4,7 @@ using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Domain.Entities;
 
-namespace Application.Services
+namespace Application.UseCases
 {
     public class VariableFieldService : IVariableFieldService
     {

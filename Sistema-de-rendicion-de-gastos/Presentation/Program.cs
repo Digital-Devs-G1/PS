@@ -38,8 +38,8 @@ public class Program
 
         app.MapControllers();
 
-        //app.Run();
-        Run(app.Services);
+        app.Run();
+        //Run(app.Services);
     }
 
     public static void Run(IServiceProvider services)
