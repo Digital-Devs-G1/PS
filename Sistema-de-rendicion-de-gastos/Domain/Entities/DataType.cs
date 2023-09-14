@@ -10,5 +10,7 @@ namespace Domain.Entities
     {
         public int DataTypeId { get; set; }
         public string Name { get; set; }
+
+        public ICollection<VariableField>? Fields { get; set; }
     }
 }

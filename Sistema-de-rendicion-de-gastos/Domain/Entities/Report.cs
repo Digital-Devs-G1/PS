@@ -9,6 +9,6 @@
         public int Amount { get; set; }
 
         public ICollection<ReportTracking> Trackings { get; set; }
-        public ICollection<VariableFields> Fields { get; set; }
+        public ICollection<VariableField> Fields { get; set; }
     }
 }

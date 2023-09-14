@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20230913230027__1")]
+    [Migration("20230914023728_1")]
     partial class _1
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -35,7 +35,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("DataTypeId");
 
@@ -110,33 +111,26 @@ namespace Infrastructure.Migrations
                     b.ToTable("ReportTrackings");
                 });
 
-            modelBuilder.Entity("Domain.Entities.VariableFields", b =>
+            modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
                     b.Property<int>("ReportId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DataType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DataTypeNavDataTypeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Label")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("ReportId1")
+                    b.Property<int>("DataTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ReportId");
+                    b.HasKey("ReportId", "Label");
 
-                    b.HasIndex("DataTypeNavDataTypeId");
-
-                    b.HasIndex("ReportId1");
+                    b.HasIndex("DataTypeId");
 
                     b.ToTable("VariableFields");
                 });
@@ -160,27 +154,28 @@ namespace Infrastructure.Migrations
                     b.Navigation("ReportOperation");
                 });
 
-            modelBuilder.Entity("Domain.Entities.VariableFields", b =>
+            modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
                     b.HasOne("Domain.Entities.DataType", "DataTypeNav")
-                        .WithMany()
-                        .HasForeignKey("DataTypeNavDataTypeId")
+                        .WithMany("Fields")
+                        .HasForeignKey("DataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Report", "Report")
-                        .WithMany()
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Report", null)
+                    b.HasOne("Domain.Entities.Report", "ReportNav")
                         .WithMany("Fields")
-                        .HasForeignKey("ReportId1");
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DataTypeNav");
 
-                    b.Navigation("Report");
+                    b.Navigation("ReportNav");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DataType", b =>
+                {
+                    b.Navigation("Fields");
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>

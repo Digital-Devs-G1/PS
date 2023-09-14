@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
                 {
                     DataTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,18 +84,16 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     ReportId = table.Column<int>(type: "int", nullable: false),
-                    Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataType = table.Column<int>(type: "int", nullable: false),
-                    DataTypeNavDataTypeId = table.Column<int>(type: "int", nullable: false),
-                    ReportId1 = table.Column<int>(type: "int", nullable: true)
+                    Label = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DataTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VariableFields", x => x.ReportId);
+                    table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.Label });
                     table.ForeignKey(
-                        name: "FK_VariableFields_DataType_DataTypeNavDataTypeId",
-                        column: x => x.DataTypeNavDataTypeId,
+                        name: "FK_VariableFields_DataType_DataTypeId",
+                        column: x => x.DataTypeId,
                         principalTable: "DataType",
                         principalColumn: "DataTypeId",
                         onDelete: ReferentialAction.Cascade);
@@ -103,12 +101,8 @@ namespace Infrastructure.Migrations
                         name: "FK_VariableFields_Reports_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Reports",
-                        principalColumn: "ReportId");
-                    table.ForeignKey(
-                        name: "FK_VariableFields_Reports_ReportId1",
-                        column: x => x.ReportId1,
-                        principalTable: "Reports",
-                        principalColumn: "ReportId");
+                        principalColumn: "ReportId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -122,14 +116,9 @@ namespace Infrastructure.Migrations
                 column: "ReportOperationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VariableFields_DataTypeNavDataTypeId",
+                name: "IX_VariableFields_DataTypeId",
                 table: "VariableFields",
-                column: "DataTypeNavDataTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VariableFields_ReportId1",
-                table: "VariableFields",
-                column: "ReportId1");
+                column: "DataTypeId");
         }
 
         /// <inheritdoc />

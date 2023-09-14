@@ -1,8 +1,8 @@
 ﻿namespace PresentationConsole
 {
-    public class Program
+    public class VariableFieldsTest
     {
-        public static void Main(string[] args)
+        public static void Run()
         {
             Console.WriteLine("Hola Hexagonal");
         }
