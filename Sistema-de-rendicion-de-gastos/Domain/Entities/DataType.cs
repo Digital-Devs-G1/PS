@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class DataType
     {
-        public int TypeId { get; set; }
+        public int DataTypeId { get; set; }
         public string Name { get; set; }
     }
 }
