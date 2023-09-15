@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.Persistence.Configurations;
+using Infrastructure.Persistence.Inserts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -24,6 +25,7 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new ReportTrackingConfiguration());
             modelBuilder.ApplyConfiguration(new VariableFieldConfiguration());
             modelBuilder.ApplyConfiguration(new DataTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DataTypeInserts());
         }
     }
 }
