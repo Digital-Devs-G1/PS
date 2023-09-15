@@ -13,11 +13,33 @@ namespace Infrastructure.Persistence.Inserts
     {
         public void Configure(EntityTypeBuilder<DataType> builder)
         {
-            builder.HasData(new DataType()
-            {
-                DataTypeId = 1,
-                Name = "Entero"
-            });
+            builder.HasData(
+                new DataType()
+                {
+                    DataTypeId = 1,
+                    Name = "Entero"
+                },
+                new DataType()
+                {
+                    DataTypeId = 2,
+                    Name = "String"
+                },
+                new DataType()
+                {
+                    DataTypeId = 3,
+                    Name = "Date"
+                },
+                new DataType()
+                {
+                    DataTypeId = 4,
+                    Name = "Bool"
+                }, 
+                new DataType()
+                {
+                    DataTypeId = 5,
+                    Name = "Decimal"
+                }
+            );
         }
     }
 }

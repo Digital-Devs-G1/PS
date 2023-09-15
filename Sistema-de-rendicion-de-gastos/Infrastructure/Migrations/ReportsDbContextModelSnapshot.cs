@@ -38,6 +38,33 @@ namespace Infrastructure.Migrations
                     b.HasKey("DataTypeId");
 
                     b.ToTable("DataType");
+
+                    b.HasData(
+                        new
+                        {
+                            DataTypeId = 1,
+                            Name = "Entero"
+                        },
+                        new
+                        {
+                            DataTypeId = 2,
+                            Name = "String"
+                        },
+                        new
+                        {
+                            DataTypeId = 3,
+                            Name = "Date"
+                        },
+                        new
+                        {
+                            DataTypeId = 4,
+                            Name = "Bool"
+                        },
+                        new
+                        {
+                            DataTypeId = 5,
+                            Name = "Decimal"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>
@@ -48,8 +75,8 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -59,6 +86,20 @@ namespace Infrastructure.Migrations
                     b.HasKey("ReportId");
 
                     b.ToTable("Reports");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportId = 1,
+                            Amount = 7500.0,
+                            Description = "Bolsa de cemento"
+                        },
+                        new
+                        {
+                            ReportId = 2,
+                            Amount = 15000.0,
+                            Description = "Placa Mdf"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportOperation", b =>
@@ -87,7 +128,8 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportTrackingId"));
 
-                    b.Property<DateTime>("DateTracking")
+                    b.Property<DateTime?>("DateTracking")
+                        .IsRequired()
                         .HasColumnType("datetime");
 
                     b.Property<int>("EmployeeId")
@@ -130,6 +172,43 @@ namespace Infrastructure.Migrations
                     b.HasIndex("DataTypeId");
 
                     b.ToTable("VariableFields");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportId = 1,
+                            Label = "Proveedor",
+                            DataTypeId = 2,
+                            Value = "Constructura X SRL"
+                        },
+                        new
+                        {
+                            ReportId = 1,
+                            Label = "Tel. Proveedor",
+                            DataTypeId = 1,
+                            Value = "42561873"
+                        },
+                        new
+                        {
+                            ReportId = 2,
+                            Label = "Ancho[mm]",
+                            DataTypeId = 1,
+                            Value = "270"
+                        },
+                        new
+                        {
+                            ReportId = 2,
+                            Label = "Alto",
+                            DataTypeId = 1,
+                            Value = "180"
+                        },
+                        new
+                        {
+                            ReportId = 2,
+                            Label = "Peso[kg]",
+                            DataTypeId = 5,
+                            Value = "58.8"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportTracking", b =>

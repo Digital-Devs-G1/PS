@@ -16,10 +16,7 @@ namespace Application.DTO.Creator
             {
                 Label = field.Label,
                 Value = field.Value,
-                DataTypeId = field.DataTypeId,
-                DataTypeNav = field.DataTypeNav,
-                ReportId = field.ReportId,
-                ReportNav = field.ReportNav
+                DataType = field.DataTypeNav.Name,
             };
         }
     }

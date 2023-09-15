@@ -8,8 +8,8 @@ namespace Domain.Entities
 {
     public class DataType
     {
-        public int DataTypeId { get; set; }
-        public string Name { get; set; }
+        public required int DataTypeId { get; set; }
+        public required string Name { get; set; }
 
         public ICollection<VariableField>? Fields { get; set; }
     }

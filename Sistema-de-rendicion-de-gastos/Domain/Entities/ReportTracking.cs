@@ -2,18 +2,18 @@
 {
     public class ReportTracking
     {
-        public int ReportTrackingId { get; set; }
+        public required int ReportTrackingId { get; set; }
 
-        public int EmployeeId { get; set; }
+        public required int EmployeeId { get; set; }
 
-        public int ReportId { get; set; }
+        public required int ReportId { get; set; }
 
-        public Report Report { get; set; }
+        public Report? Report { get; set; }
 
-        public int ReportOperationId { get; set; }
+        public required int ReportOperationId { get; set; }
 
-        public ReportOperation ReportOperation { get; set; }
+        public ReportOperation? ReportOperation { get; set; }
 
-        public DateTime DateTracking { get; set; }
+        public DateTime? DateTracking { get; set; }
     }
 }
