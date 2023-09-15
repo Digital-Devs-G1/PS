@@ -2,10 +2,10 @@
 {
     public class ReportOperation
     {
-        public int ReportOperationId { get; set; }
+        public required int ReportOperationId { get; set; }
 
-        public string ReportOperationName { get; set;}
+        public required string ReportOperationName { get; set;}
 
-        public ICollection<ReportTracking> Trackings { get; set; }
+        public ICollection<ReportTracking>? Trackings { get; set; }
     }
 }

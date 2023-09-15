@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -44,7 +46,7 @@ namespace Infrastructure.Migrations
                     ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: false)
+                    Amount = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,6 +105,39 @@ namespace Infrastructure.Migrations
                         principalTable: "Reports",
                         principalColumn: "ReportId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "DataType",
+                columns: new[] { "DataTypeId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Entero" },
+                    { 2, "String" },
+                    { 3, "Date" },
+                    { 4, "Bool" },
+                    { 5, "Decimal" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reports",
+                columns: new[] { "ReportId", "Amount", "Description" },
+                values: new object[,]
+                {
+                    { 1, 7500.0, "Bolsa de cemento" },
+                    { 2, 15000.0, "Placa Mdf" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "VariableFields",
+                columns: new[] { "Label", "ReportId", "DataTypeId", "Value" },
+                values: new object[,]
+                {
+                    { "Proveedor", 1, 2, "Constructura X SRL" },
+                    { "Tel. Proveedor", 1, 1, "42561873" },
+                    { "Alto", 2, 1, "180" },
+                    { "Ancho[mm]", 2, 1, "270" },
+                    { "Peso[kg]", 2, 5, "58.8" }
                 });
 
             migrationBuilder.CreateIndex(
