@@ -8,11 +8,11 @@
 
         public required int ReportId { get; set; }
 
-        public Report? Report { get; set; }
+        public Report? ReportNav { get; set; }
 
         public required int ReportOperationId { get; set; }
 
-        public ReportOperation? ReportOperation { get; set; }
+        public ReportOperation? ReportOperationNav { get; set; }
 
         public DateTime? DateTracking { get; set; }
     }

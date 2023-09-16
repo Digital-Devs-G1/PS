@@ -10,10 +10,10 @@ namespace Infrastructure.Persistence.Configurations
         {
             table.HasKey(x => new { x.ReportId, x.Label });
             table.HasOne(variableField => variableField.ReportNav)
-                .WithMany(report => report.Fields)
+                .WithMany(/*report => report.Fields*/)
                 .HasForeignKey(variableField => variableField.ReportId);
             table.HasOne(variableField => variableField.DataTypeNav)
-                .WithMany(dataType => dataType.Fields)
+                .WithMany(/*dataType => dataType.Fields*/)
                 .HasForeignKey(variableField => variableField.DataTypeId);
             table.Property(x => x.Label)
                 .HasMaxLength(20);

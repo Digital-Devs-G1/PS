@@ -17,12 +17,12 @@ namespace Infrastructure.Persistence.Configurations
                 .HasColumnType("datetime")
                 .IsRequired();
 
-            builder.HasOne(rt => rt.Report)
-                .WithMany(r => r.Trackings)
+            builder.HasOne(rt => rt.ReportNav)
+                .WithMany(/*r => r.Trackings*/)
                 .HasForeignKey(rt => rt.ReportId);
 
-            builder.HasOne(rt => rt.ReportOperation)
-                .WithMany(r => r.Trackings)
+            builder.HasOne(rt => rt.ReportOperationNav)
+                .WithMany(/*r => r.Trackings*/)
                 .HasForeignKey(rt => rt.ReportOperationId);
         }
     }

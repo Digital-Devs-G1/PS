@@ -83,6 +83,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.HasKey("ReportId");
 
                     b.ToTable("Reports");
@@ -92,13 +95,22 @@ namespace Infrastructure.Migrations
                         {
                             ReportId = 1,
                             Amount = 7500.0,
-                            Description = "Bolsa de cemento"
+                            Description = "Bolsa de cemento",
+                            EmployeeId = 1
                         },
                         new
                         {
                             ReportId = 2,
                             Amount = 15000.0,
-                            Description = "Placa Mdf"
+                            Description = "Placa Mdf",
+                            EmployeeId = 2
+                        },
+                        new
+                        {
+                            ReportId = 3,
+                            Amount = 3500.0,
+                            Description = "Bola de cal",
+                            EmployeeId = 2
                         });
                 });
 
@@ -118,6 +130,23 @@ namespace Infrastructure.Migrations
                     b.HasKey("ReportOperationId");
 
                     b.ToTable("ReportOperations");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportOperationId = 1,
+                            ReportOperationName = "Creacion"
+                        },
+                        new
+                        {
+                            ReportOperationId = 2,
+                            ReportOperationName = "Aprobacion"
+                        },
+                        new
+                        {
+                            ReportOperationId = 3,
+                            ReportOperationName = "Rechazo"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportTracking", b =>
@@ -148,6 +177,40 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ReportOperationId");
 
                     b.ToTable("ReportTrackings");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportTrackingId = 1,
+                            DateTracking = new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified),
+                            EmployeeId = 1,
+                            ReportId = 1,
+                            ReportOperationId = 1
+                        },
+                        new
+                        {
+                            ReportTrackingId = 2,
+                            DateTracking = new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified),
+                            EmployeeId = 2,
+                            ReportId = 2,
+                            ReportOperationId = 1
+                        },
+                        new
+                        {
+                            ReportTrackingId = 3,
+                            DateTracking = new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified),
+                            EmployeeId = 3,
+                            ReportId = 2,
+                            ReportOperationId = 2
+                        },
+                        new
+                        {
+                            ReportTrackingId = 4,
+                            DateTracking = new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified),
+                            EmployeeId = 2,
+                            ReportId = 3,
+                            ReportOperationId = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.VariableField", b =>
@@ -208,38 +271,52 @@ namespace Infrastructure.Migrations
                             Label = "Peso[kg]",
                             DataTypeId = 5,
                             Value = "58.8"
+                        },
+                        new
+                        {
+                            ReportId = 3,
+                            Label = "Proveedor",
+                            DataTypeId = 2,
+                            Value = "Constructura X SRL"
+                        },
+                        new
+                        {
+                            ReportId = 3,
+                            Label = "Tel. Proveedor",
+                            DataTypeId = 1,
+                            Value = "42561873"
                         });
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportTracking", b =>
                 {
-                    b.HasOne("Domain.Entities.Report", "Report")
-                        .WithMany("Trackings")
+                    b.HasOne("Domain.Entities.Report", "ReportNav")
+                        .WithMany()
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.ReportOperation", "ReportOperation")
-                        .WithMany("Trackings")
+                    b.HasOne("Domain.Entities.ReportOperation", "ReportOperationNav")
+                        .WithMany()
                         .HasForeignKey("ReportOperationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Report");
+                    b.Navigation("ReportNav");
 
-                    b.Navigation("ReportOperation");
+                    b.Navigation("ReportOperationNav");
                 });
 
             modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
                     b.HasOne("Domain.Entities.DataType", "DataTypeNav")
-                        .WithMany("Fields")
+                        .WithMany()
                         .HasForeignKey("DataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Report", "ReportNav")
-                        .WithMany("Fields")
+                        .WithMany()
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -247,23 +324,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("DataTypeNav");
 
                     b.Navigation("ReportNav");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DataType", b =>
-                {
-                    b.Navigation("Fields");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Report", b =>
-                {
-                    b.Navigation("Fields");
-
-                    b.Navigation("Trackings");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ReportOperation", b =>
-                {
-                    b.Navigation("Trackings");
                 });
 #pragma warning restore 612, 618
         }

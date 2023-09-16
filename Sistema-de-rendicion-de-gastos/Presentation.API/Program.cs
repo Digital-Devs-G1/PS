@@ -5,6 +5,7 @@ using Application.Interfaces.IServices;
 using Application.UseCases;
 using Infrastructure;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Presentation.API
@@ -25,6 +26,8 @@ namespace Presentation.API
             builder.Services.AddSingleton<DbContext, ReportsDbContext>();
             builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
             builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
+            builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
+            builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
 
             var app = builder.Build();
 
@@ -42,9 +45,9 @@ namespace Presentation.API
 
             app.MapControllers();
 
-            //app.Run();
+            app.Run();
 
-            Run(app.Services);
+            //Run(app.Services);
 
         }
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _1 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,6 +45,7 @@ namespace Infrastructure.Migrations
                 {
                     ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false)
                 },
@@ -120,12 +121,34 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Reports",
-                columns: new[] { "ReportId", "Amount", "Description" },
+                table: "ReportOperations",
+                columns: new[] { "ReportOperationId", "ReportOperationName" },
                 values: new object[,]
                 {
-                    { 1, 7500.0, "Bolsa de cemento" },
-                    { 2, 15000.0, "Placa Mdf" }
+                    { 1, "Creacion" },
+                    { 2, "Aprobacion" },
+                    { 3, "Rechazo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reports",
+                columns: new[] { "ReportId", "Amount", "Description", "EmployeeId" },
+                values: new object[,]
+                {
+                    { 1, 7500.0, "Bolsa de cemento", 1 },
+                    { 2, 15000.0, "Placa Mdf", 2 },
+                    { 3, 3500.0, "Bola de cal", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReportTrackings",
+                columns: new[] { "ReportTrackingId", "DateTracking", "EmployeeId", "ReportId", "ReportOperationId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified), 1, 1, 1 },
+                    { 2, new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified), 2, 2, 1 },
+                    { 3, new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified), 3, 2, 2 },
+                    { 4, new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified), 2, 3, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -137,7 +160,9 @@ namespace Infrastructure.Migrations
                     { "Tel. Proveedor", 1, 1, "42561873" },
                     { "Alto", 2, 1, "180" },
                     { "Ancho[mm]", 2, 1, "270" },
-                    { "Peso[kg]", 2, 5, "58.8" }
+                    { "Peso[kg]", 2, 5, "58.8" },
+                    { "Proveedor", 3, 2, "Constructura X SRL" },
+                    { "Tel. Proveedor", 3, 1, "42561873" }
                 });
 
             migrationBuilder.CreateIndex(

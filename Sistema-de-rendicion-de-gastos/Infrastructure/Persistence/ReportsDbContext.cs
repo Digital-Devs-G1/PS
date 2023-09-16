@@ -29,6 +29,8 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new DataTypeInserts());
             modelBuilder.ApplyConfiguration(new ReportInserts());
             modelBuilder.ApplyConfiguration(new VariableFieldInserts());
+            modelBuilder.ApplyConfiguration(new ReportTrackingInserts());
+            modelBuilder.ApplyConfiguration(new ReportOperationInserts());
         }
     }
 }

@@ -11,6 +11,6 @@ namespace Domain.Entities
         public required int DataTypeId { get; set; }
         public required string Name { get; set; }
 
-        public ICollection<VariableField>? Fields { get; set; }
+        //public ICollection<VariableField>? Fields { get; set; }
     }
 }

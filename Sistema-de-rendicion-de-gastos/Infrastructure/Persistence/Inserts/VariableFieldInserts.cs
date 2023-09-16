@@ -43,6 +43,20 @@ namespace Infrastructure.Persistence.Inserts
                     Label = "Peso[kg]",
                     Value = "58.8",
                     DataTypeId = 5
+                },
+                new VariableField()
+                {
+                    ReportId = 3,
+                    Label = "Proveedor",
+                    Value = "Constructura X SRL",
+                    DataTypeId = 2
+                },
+                new VariableField()
+                {
+                    ReportId = 3,
+                    Label = "Tel. Proveedor",
+                    Value = "42561873",
+                    DataTypeId = 1
                 }
             );
         }

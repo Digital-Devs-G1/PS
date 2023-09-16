@@ -6,6 +6,6 @@
 
         public required string ReportOperationName { get; set;}
 
-        public ICollection<ReportTracking>? Trackings { get; set; }
+        //public ICollection<ReportTracking>? Trackings { get; set; }
     }
 }
