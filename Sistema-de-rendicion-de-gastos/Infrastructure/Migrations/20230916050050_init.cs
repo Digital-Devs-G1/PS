@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _1 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,20 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DataType", x => x.DataTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeptoTemplate",
+                columns: table => new
+                {
+                    TemplateId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DeptoId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeptoTemplate", x => x.TemplateId);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,6 +65,32 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reports", x => x.ReportId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FieldTemplate",
+                columns: table => new
+                {
+                    TemplateId = table.Column<int>(type: "int", nullable: false),
+                    Label = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false),
+                    DataTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FieldTemplate", x => new { x.TemplateId, x.Label });
+                    table.ForeignKey(
+                        name: "FK_FieldTemplate_DataType_DataTypeId",
+                        column: x => x.DataTypeId,
+                        principalTable: "DataType",
+                        principalColumn: "DataTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FieldTemplate_DeptoTemplate_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "DeptoTemplate",
+                        principalColumn: "TemplateId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,12 +160,55 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "DeptoTemplate",
+                columns: new[] { "TemplateId", "DeptoId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Auto Propio" },
+                    { 2, 1, "Servicio Viaje" },
+                    { 3, 1, "Viaticos" },
+                    { 4, 2, "Material.Const." },
+                    { 5, 2, "Viaticos" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Reports",
                 columns: new[] { "ReportId", "Amount", "Description" },
                 values: new object[,]
                 {
                     { 1, 7500.0, "Bolsa de cemento" },
                     { 2, 15000.0, "Placa Mdf" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FieldTemplate",
+                columns: new[] { "Label", "TemplateId", "DataTypeId", "Enabled" },
+                values: new object[,]
+                {
+                    { "Destino", 1, 2, true },
+                    { "Fecha", 1, 3, true },
+                    { "Km", 1, 5, true },
+                    { "Monto Peajes", 1, 5, true },
+                    { "Peajes", 1, 4, true },
+                    { "Comprobante", 2, 2, true },
+                    { "Destino", 2, 2, true },
+                    { "Fecha", 2, 3, true },
+                    { "Nombre Servicio", 2, 2, true },
+                    { "Comprobante", 3, 2, true },
+                    { "Fecha", 3, 3, true },
+                    { "Motivo", 3, 2, true },
+                    { "Viatico", 3, 2, true },
+                    { "Alto [mm]", 4, 5, true },
+                    { "Ancho [mm]", 4, 5, true },
+                    { "Contacto", 4, 1, true },
+                    { "Fecha", 4, 3, true },
+                    { "Nombre Material", 4, 2, true },
+                    { "Peso [Kg]", 4, 5, true },
+                    { "Proveedor", 4, 2, true },
+                    { "Comprobante", 5, 2, true },
+                    { "Fecha", 5, 3, true },
+                    { "Motivo", 5, 2, true },
+                    { "Viatico", 5, 2, true }
                 });
 
             migrationBuilder.InsertData(
@@ -139,6 +222,11 @@ namespace Infrastructure.Migrations
                     { "Ancho[mm]", 2, 1, "270" },
                     { "Peso[kg]", 2, 5, "58.8" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FieldTemplate_DataTypeId",
+                table: "FieldTemplate",
+                column: "DataTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReportTrackings_ReportId",
@@ -160,10 +248,16 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "FieldTemplate");
+
+            migrationBuilder.DropTable(
                 name: "ReportTrackings");
 
             migrationBuilder.DropTable(
                 name: "VariableFields");
+
+            migrationBuilder.DropTable(
+                name: "DeptoTemplate");
 
             migrationBuilder.DropTable(
                 name: "ReportOperations");

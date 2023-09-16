@@ -12,10 +12,13 @@ namespace Infrastructure.Persistence
         public DbSet<ReportOperation> ReportOperations { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<ReportTracking> ReportTrackings { get; set; }
+        public DbSet<FieldTemplate> FieldTemplateds { get; set; }
+        public DbSet<FieldTemplate> DeptoTemplates { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=MSI;Database=RendicionGastos;User Id=rootPS;Password=1234;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-0M320PM;Database=RendicionGastos;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,10 +28,14 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new ReportTrackingConfiguration());
             modelBuilder.ApplyConfiguration(new VariableFieldConfiguration());
             modelBuilder.ApplyConfiguration(new DataTypeConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new FieldTemplateConfiguration());
+            modelBuilder.ApplyConfiguration(new DeptoTemplateConfiguration());
+
             modelBuilder.ApplyConfiguration(new DataTypeInserts());
             modelBuilder.ApplyConfiguration(new ReportInserts());
             modelBuilder.ApplyConfiguration(new VariableFieldInserts());
+            modelBuilder.ApplyConfiguration(new FieldTemplatedInserts());
+            modelBuilder.ApplyConfiguration(new DeptoTemplatedInserts());
         }
     }
 }

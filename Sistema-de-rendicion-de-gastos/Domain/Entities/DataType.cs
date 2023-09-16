@@ -12,5 +12,6 @@ namespace Domain.Entities
         public required string Name { get; set; }
 
         public ICollection<VariableField>? Fields { get; set; }
+        public ICollection<FieldTemplate>? FieldTemplateNav { get; set; }
     }
 }
