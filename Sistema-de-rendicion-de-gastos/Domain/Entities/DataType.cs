@@ -8,9 +8,13 @@ namespace Domain.Entities
 {
     public class DataType
     {
+        // PK
         public required int DataTypeId { get; set; }
-        public required string Name { get; set; }
 
-        //public ICollection<VariableField>? Fields { get; set; }
+        // FK
+        //public ICollection<VariableField>? VariableFieldCol { get; set; }
+
+        // DATA
+        public required string Name { get; set; }
     }
 }

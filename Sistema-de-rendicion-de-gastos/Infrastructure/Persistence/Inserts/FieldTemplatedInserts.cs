@@ -17,36 +17,36 @@ namespace Infrastructure.Persistence.Inserts
             builder.HasData(
                 new FieldTemplate()
                 {
-                    TemplateId = 1,
-                    Label = "Fecha",
+                    FieldTemplateId = 1,
+                    FieldNameId = "Fecha",
                     DataTypeId = 3,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 1,
-                    Label = "Destino",
+                    FieldTemplateId = 1,
+                    FieldNameId = "Destino",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 1,
-                    Label = "Km",
+                    FieldTemplateId = 1,
+                    FieldNameId = "Km",
                     DataTypeId = 5,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 1,
-                    Label = "Peajes",
+                    FieldTemplateId = 1,
+                    FieldNameId = "Peajes",
                     DataTypeId = 4,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 1,
-                    Label = "Monto Peajes",
+                    FieldTemplateId = 1,
+                    FieldNameId = "Monto Peajes",
                     DataTypeId = 5,
                     Enabled = true,
                 }
@@ -54,29 +54,29 @@ namespace Infrastructure.Persistence.Inserts
             builder.HasData(
                 new FieldTemplate()
                 {
-                    TemplateId = 2,
-                    Label = "Fecha",
+                    FieldTemplateId = 2,
+                    FieldNameId = "Fecha",
                     DataTypeId = 3,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 2,
-                    Label = "Destino",
+                    FieldTemplateId = 2,
+                    FieldNameId = "Destino",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 2,
-                    Label = "Nombre Servicio",
+                    FieldTemplateId = 2,
+                    FieldNameId = "Nombre Servicio",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 2,
-                    Label = "Comprobante",
+                    FieldTemplateId = 2,
+                    FieldNameId = "Comprobante",
                     DataTypeId = 2,
                     Enabled = true,
                 }
@@ -84,29 +84,29 @@ namespace Infrastructure.Persistence.Inserts
             builder.HasData(
                 new FieldTemplate()
                 {
-                    TemplateId = 3,
-                    Label = "Fecha",
+                    FieldTemplateId = 3,
+                    FieldNameId = "Fecha",
                     DataTypeId = 3,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 3,
-                    Label = "Viatico",
+                    FieldTemplateId = 3,
+                    FieldNameId = "Viatico",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 3,
-                    Label = "Motivo",
+                    FieldTemplateId = 3,
+                    FieldNameId = "Motivo",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 3,
-                    Label = "Comprobante",
+                    FieldTemplateId = 3,
+                    FieldNameId = "Comprobante",
                     DataTypeId = 2,
                     Enabled = true,
                 }
@@ -116,50 +116,50 @@ namespace Infrastructure.Persistence.Inserts
             builder.HasData(
                 new FieldTemplate()
                 {
-                    TemplateId = 4,
-                    Label = "Fecha",
+                    FieldTemplateId = 4,
+                    FieldNameId = "Fecha",
                     DataTypeId = 3,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 4,
-                    Label = "Proveedor",
+                    FieldTemplateId = 4,
+                    FieldNameId = "Proveedor",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 4,
-                    Label = "Contacto",
+                    FieldTemplateId = 4,
+                    FieldNameId = "Contacto",
                     DataTypeId = 1,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 4,
-                    Label = "Nombre Material",
+                    FieldTemplateId = 4,
+                    FieldNameId = "Nombre Material",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 4,
-                    Label = "Peso [Kg]",
+                    FieldTemplateId = 4,
+                    FieldNameId = "Peso [Kg]",
                     DataTypeId = 5,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 4,
-                    Label = "Ancho [mm]",
+                    FieldTemplateId = 4,
+                    FieldNameId = "Ancho [mm]",
                     DataTypeId = 5,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 4,
-                    Label = "Alto [mm]",
+                    FieldTemplateId = 4,
+                    FieldNameId = "Alto [mm]",
                     DataTypeId = 5,
                     Enabled = true,
                 }
@@ -168,29 +168,29 @@ namespace Infrastructure.Persistence.Inserts
             builder.HasData(
                 new FieldTemplate()
                 {
-                    TemplateId = 5,
-                    Label = "Fecha",
+                    FieldTemplateId = 5,
+                    FieldNameId = "Fecha",
                     DataTypeId = 3,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 5,
-                    Label = "Viatico",
+                    FieldTemplateId = 5,
+                    FieldNameId = "Viatico",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 5,
-                    Label = "Motivo",
+                    FieldTemplateId = 5,
+                    FieldNameId = "Motivo",
                     DataTypeId = 2,
                     Enabled = true,
                 },
                 new FieldTemplate()
                 {
-                    TemplateId = 5,
-                    Label = "Comprobante",
+                    FieldTemplateId = 5,
+                    FieldNameId = "Comprobante",
                     DataTypeId = 2,
                     Enabled = true,
                 }

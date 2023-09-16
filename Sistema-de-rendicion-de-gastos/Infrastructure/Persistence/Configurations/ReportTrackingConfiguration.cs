@@ -18,11 +18,11 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.HasOne(rt => rt.ReportNav)
-                .WithMany(/*r => r.Trackings*/)
+                .WithMany()
                 .HasForeignKey(rt => rt.ReportId);
 
             builder.HasOne(rt => rt.ReportOperationNav)
-                .WithMany(/*r => r.Trackings*/)
+                .WithMany()
                 .HasForeignKey(rt => rt.ReportOperationId);
         }
     }

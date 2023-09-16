@@ -8,14 +8,14 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<VariableField> table)
         {
-            table.HasKey(x => new { x.ReportId, x.Label });
+            table.HasKey(x => new { x.ReportId, x.NameId });
             table.HasOne(variableField => variableField.ReportNav)
-                .WithMany(/*report => report.Fields*/)
+                .WithMany()
                 .HasForeignKey(variableField => variableField.ReportId);
             table.HasOne(variableField => variableField.DataTypeNav)
-                .WithMany(/*dataType => dataType.Fields*/)
+                .WithMany()
                 .HasForeignKey(variableField => variableField.DataTypeId);
-            table.Property(x => x.Label)
+            table.Property(x => x.NameId)
                 .HasMaxLength(20);
             table.Property(x => x.Value)
                 .HasMaxLength(50);

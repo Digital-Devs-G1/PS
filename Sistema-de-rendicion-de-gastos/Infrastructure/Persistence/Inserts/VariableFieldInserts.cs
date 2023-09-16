@@ -12,49 +12,49 @@ namespace Infrastructure.Persistence.Inserts
                 new VariableField()
                 {
                     ReportId = 1,
-                    Label = "Proveedor",
+                    NameId = "Proveedor",
                     Value = "Constructura X SRL",
                     DataTypeId = 2
                 },
                 new VariableField()
                 {
                     ReportId = 1,
-                    Label = "Tel. Proveedor",
+                    NameId = "Tel. Proveedor",
                     Value = "42561873",
                     DataTypeId = 1
                 },
                 new VariableField()
                 {
                     ReportId = 2,
-                    Label = "Ancho[mm]",
+                    NameId = "Ancho[mm]",
                     Value = "270",
                     DataTypeId = 1
                 },
                 new VariableField()
                 {
                     ReportId = 2,
-                    Label = "Alto",
+                    NameId = "Alto",
                     Value = "180",
                     DataTypeId = 1
                 },
                 new VariableField()
                 {
                     ReportId = 2,
-                    Label = "Peso[kg]",
+                    NameId = "Peso[kg]",
                     Value = "58.8",
                     DataTypeId = 5
                 },
                 new VariableField()
                 {
                     ReportId = 3,
-                    Label = "Proveedor",
+                    NameId = "Proveedor",
                     Value = "Constructura X SRL",
                     DataTypeId = 2
                 },
                 new VariableField()
                 {
                     ReportId = 3,
-                    Label = "Tel. Proveedor",
+                    NameId = "Tel. Proveedor",
                     Value = "42561873",
                     DataTypeId = 1
                 }

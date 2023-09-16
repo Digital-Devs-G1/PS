@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class DeptoTemplateConfiguration : IEntityTypeConfiguration<DeptoTemplate>
+    public class DeptoTemplateConfiguration : IEntityTypeConfiguration<DepartmentTemplate>
     {
-        public void Configure(EntityTypeBuilder<DeptoTemplate> builder)
+        public void Configure(EntityTypeBuilder<DepartmentTemplate> builder)
         {
-            builder.HasKey(dt => dt.TemplateId); 
-            builder.Property(dt => dt.Name).HasMaxLength(15);
+            builder.HasKey(dt => dt.DepartmentTemplateId); 
+            builder.Property(dt => dt.DepartmentTemplateName).HasMaxLength(15);
         }
     }
 }

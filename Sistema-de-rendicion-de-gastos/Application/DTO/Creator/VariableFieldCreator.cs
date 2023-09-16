@@ -14,7 +14,7 @@ namespace Application.DTO.Creator
         {
             return new VariableFieldResponse()
             {
-                Label = field.Label,
+                Label = field.NameId,
                 Value = field.Value,
                 DataType = field.DataTypeNav.Name,
             };

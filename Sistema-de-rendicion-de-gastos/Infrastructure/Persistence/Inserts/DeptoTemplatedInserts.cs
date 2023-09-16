@@ -9,42 +9,42 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Inserts
 {
-    public class DeptoTemplatedInserts : IEntityTypeConfiguration<DeptoTemplate>
+    public class DeptoTemplatedInserts : IEntityTypeConfiguration<DepartmentTemplate>
     {
-        public void Configure(EntityTypeBuilder<DeptoTemplate> builder)
+        public void Configure(EntityTypeBuilder<DepartmentTemplate> builder)
         {
             builder.HasData(
-                new DeptoTemplate()
+                new DepartmentTemplate()
                 {
-                    TemplateId = 1,
-                    DeptoId = 1,
-                    Name = "Auto Propio"
+                    DepartmentTemplateId = 1,
+                    DeptartmentId = 1,
+                    DepartmentTemplateName = "Auto Propio"
 
                 },
-                new DeptoTemplate()
+                new DepartmentTemplate()
                 {
-                    TemplateId = 2,
-                    DeptoId = 1,
-                    Name = "Servicio Viaje"
+                    DepartmentTemplateId = 2,
+                    DeptartmentId = 1,
+                    DepartmentTemplateName = "Servicio Viaje"
 
                 },
-                new DeptoTemplate()
+                new DepartmentTemplate()
                 {
-                    TemplateId = 3,
-                    DeptoId = 1,
-                    Name = "Viaticos"
+                    DepartmentTemplateId = 3,
+                    DeptartmentId = 1,
+                    DepartmentTemplateName = "Viaticos"
                 },
-                new DeptoTemplate()
+                new DepartmentTemplate()
                 {
-                    TemplateId = 4,
-                    DeptoId = 2,
-                    Name = "Material.Const."
+                    DepartmentTemplateId = 4,
+                    DeptartmentId = 2,
+                    DepartmentTemplateName = "Material.Const."
                 },
-                new DeptoTemplate()
+                new DepartmentTemplate()
                 {
-                    TemplateId = 5,
-                    DeptoId = 2,
-                    Name = "Viaticos"
+                    DepartmentTemplateId = 5,
+                    DeptartmentId = 2,
+                    DepartmentTemplateName = "Viaticos"
                 }
             );
         }
