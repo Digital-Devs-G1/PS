@@ -10,7 +10,7 @@ hasData DataType
 5) IList<RealReport> GetReport(reportId)
 	Emi
 
-6) IList<ReportTracking> GetReportsStatus(empleadoId)
+6) IList<ReportTracking> GetReportsStatus(empleadoId, reportId)
 	Maxi
 
 ReportStatus

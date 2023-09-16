@@ -5,6 +5,7 @@ using Application.Interfaces.IServices;
 using Application.UseCases;
 using Infrastructure;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Presentation.API
@@ -23,8 +24,17 @@ namespace Presentation.API
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddSingleton<DbContext, ReportsDbContext>();
+
+            //repositories
+            builder.Services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
+            builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
+
+            //services
             builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
+            builder.Services.AddSingleton<IReportService, ReportService>();
+            builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
+            builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
 
             var app = builder.Build();
 
@@ -42,9 +52,9 @@ namespace Presentation.API
 
             app.MapControllers();
 
-            //app.Run();
+            app.Run();
 
-            Run(app.Services);
+            //Run(app.Services);
 
         }
 

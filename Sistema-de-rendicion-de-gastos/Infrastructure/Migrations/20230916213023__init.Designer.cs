@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20230916050050_init")]
-    partial class init
+    [Migration("20230916213023__init")]
+    partial class _init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -317,11 +317,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
-                    b.Property<int>("ReportId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ReportId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -331,50 +332,74 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("ReportId");
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Reports");
 
                     b.HasData(
                         new
                         {
-                            ReportId = 1,
+                            Id = 1,
                             Amount = 7500.0,
-                            Description = "Bolsa de cemento"
+                            Description = "Bolsa de cemento",
+                            EmployeeId = 1
                         },
                         new
                         {
-                            ReportId = 2,
+                            Id = 2,
                             Amount = 15000.0,
-                            Description = "Placa Mdf"
+                            Description = "Placa Mdf",
+                            EmployeeId = 1
                         });
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportOperation", b =>
                 {
-                    b.Property<int>("ReportOperationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ReportOperationId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportOperationId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ReportOperationName")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("ReportOperationId");
+                    b.HasKey("Id");
 
                     b.ToTable("ReportOperations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ReportOperationName = "Pendiente"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ReportOperationName = "Aceptado"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ReportOperationName = "Rechazado"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportTracking", b =>
                 {
-                    b.Property<int>("ReportTrackingId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ReportTrackingId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportTrackingId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("DateTracking")
                         .IsRequired()
@@ -389,13 +414,31 @@ namespace Infrastructure.Migrations
                     b.Property<int>("ReportOperationId")
                         .HasColumnType("int");
 
-                    b.HasKey("ReportTrackingId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ReportId");
 
                     b.HasIndex("ReportOperationId");
 
                     b.ToTable("ReportTrackings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateTracking = new DateTime(2023, 9, 16, 18, 30, 23, 343, DateTimeKind.Local).AddTicks(7787),
+                            EmployeeId = 1,
+                            ReportId = 1,
+                            ReportOperationId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateTracking = new DateTime(2023, 9, 16, 18, 30, 23, 343, DateTimeKind.Local).AddTicks(7798),
+                            EmployeeId = 1,
+                            ReportId = 2,
+                            ReportOperationId = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.VariableField", b =>
