@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class _init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,6 +59,7 @@ namespace Infrastructure.Migrations
                 {
                     ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false)
                 },
@@ -172,12 +173,22 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Reports",
-                columns: new[] { "ReportId", "Amount", "Description" },
+                table: "ReportOperations",
+                columns: new[] { "ReportOperationId", "ReportOperationName" },
                 values: new object[,]
                 {
-                    { 1, 7500.0, "Bolsa de cemento" },
-                    { 2, 15000.0, "Placa Mdf" }
+                    { 1, "Pendiente" },
+                    { 2, "Aceptado" },
+                    { 3, "Rechazado" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reports",
+                columns: new[] { "ReportId", "Amount", "Description", "EmployeeId" },
+                values: new object[,]
+                {
+                    { 1, 7500.0, "Bolsa de cemento", 1 },
+                    { 2, 15000.0, "Placa Mdf", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -209,6 +220,15 @@ namespace Infrastructure.Migrations
                     { "Fecha", 5, 3, true },
                     { "Motivo", 5, 2, true },
                     { "Viatico", 5, 2, true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReportTrackings",
+                columns: new[] { "ReportTrackingId", "DateTracking", "EmployeeId", "ReportId", "ReportOperationId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 9, 16, 18, 30, 23, 343, DateTimeKind.Local).AddTicks(7787), 1, 1, 1 },
+                    { 2, new DateTime(2023, 9, 16, 18, 30, 23, 343, DateTimeKind.Local).AddTicks(7798), 1, 2, 1 }
                 });
 
             migrationBuilder.InsertData(

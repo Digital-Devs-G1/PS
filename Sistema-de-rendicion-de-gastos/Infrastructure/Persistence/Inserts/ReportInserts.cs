@@ -11,13 +11,15 @@ namespace Infrastructure.Persistence.Configurations
             builder.HasData(
                 new Report()
                 {
-                    ReportId = 1,
+                    Id = 1,
+                    EmployeeId = 1,
                     Description = "Bolsa de cemento",
                     Amount = 7500.0
                 }, 
                 new Report()
                 {
-                    ReportId = 2,
+                    Id = 2,
+                    EmployeeId = 1,
                     Description = "Placa Mdf",
                     Amount = 15000.0
                 }
