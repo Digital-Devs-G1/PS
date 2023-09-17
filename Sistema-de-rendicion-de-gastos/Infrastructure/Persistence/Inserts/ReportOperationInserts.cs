@@ -1,11 +1,8 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-<<<<<<< HEAD
 using static Infrastructure.Persistence.Inserts.ReportOperationEnum;
 
-
-namespace Infrastructure.Persistence.Inserts
 {
     public class ReportOperationInserts : IEntityTypeConfiguration<ReportOperation>
     {
