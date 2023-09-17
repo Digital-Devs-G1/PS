@@ -8,7 +8,10 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ReportTracking> builder)
         {
-            builder.HasKey(e => e.ReportTrackingId);
+            builder.HasKey(e => e.Id);
+
+            builder.Property(e => e.Id)
+                .HasColumnName("ReportTrackingId");
 
             builder.Property(e => e.EmployeeId)
                 .IsRequired();

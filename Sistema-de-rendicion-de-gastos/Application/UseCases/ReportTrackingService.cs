@@ -14,9 +14,19 @@ namespace Application.UseCases
             _repository = repository;
         }
 
+        public Task<IEnumerable<ReportTracking>> GetByReportId(int reportId)
+        {
+            return _repository.GetByReportId(reportId);
+        }
+
         public async Task<IList<ReportOperationHistory>> GetEmployeeReportInteractions(int employeeId)
         {
             return await _repository.GetEmployeeReportInteractions(employeeId);
+        }
+
+        public Task<ReportTracking> GetLastTrackingByReportId(int reportId)
+        {
+            return _repository.GetLastTrackingByReportIdAsync(reportId);
         }
 
         public async Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId)

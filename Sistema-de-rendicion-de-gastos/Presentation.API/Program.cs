@@ -24,10 +24,19 @@ namespace Presentation.API
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddSingleton<DbContext, ReportsDbContext>();
+
+            //repositories
+            builder.Services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
+            builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
+
+            //services
             builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
+            builder.Services.AddSingleton<IReportService, ReportService>();
+            builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
+            builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
 
             var app = builder.Build();
 

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class ReportTracking
+    public class ReportTracking : BaseEntity
     {
         // PK
         public required int ReportTrackingId { get; set; }

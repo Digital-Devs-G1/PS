@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class ReportOperation
+    public class ReportOperation : BaseEntity
     {
         // PK
         public required int ReportOperationId { get; set; }
