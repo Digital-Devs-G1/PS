@@ -1,11 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static Infrastructure.Persistence.Inserts.DataTypeEnum;
 
 namespace Infrastructure.Persistence.Inserts
 {
@@ -16,27 +12,27 @@ namespace Infrastructure.Persistence.Inserts
             builder.HasData(
                 new DataType()
                 {
-                    DataTypeId = 1,
+                    DataTypeId = (int)Int,
                     Name = "Entero"
                 },
                 new DataType()
                 {
-                    DataTypeId = 2,
+                    DataTypeId = (int)Str,
                     Name = "String"
                 },
                 new DataType()
                 {
-                    DataTypeId = 3,
+                    DataTypeId = (int)Date,
                     Name = "Date"
                 },
                 new DataType()
                 {
-                    DataTypeId = 4,
+                    DataTypeId = (int)Bool,
                     Name = "Bool"
                 }, 
                 new DataType()
                 {
-                    DataTypeId = 5,
+                    DataTypeId = (int)Dec,
                     Name = "Decimal"
                 }
             );

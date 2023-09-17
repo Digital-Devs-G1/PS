@@ -16,6 +16,5 @@ namespace Domain.Entities
 
         // DATA
         public required string Value { get; set; }
-
     }
 }

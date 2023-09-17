@@ -17,11 +17,16 @@ namespace Infrastructure.Persistence.Configurations
                 new ReportOperation()
                 {
                     ReportOperationId = 2,
-                    ReportOperationName = "Aprobacion"
+                    ReportOperationName = "Revision"
                 },
                 new ReportOperation()
                 {
                     ReportOperationId = 3,
+                    ReportOperationName = "Aprobacion"
+                },
+                new ReportOperation()
+                {
+                    ReportOperationId = 4,
                     ReportOperationName = "Rechazo"
                 }
             );

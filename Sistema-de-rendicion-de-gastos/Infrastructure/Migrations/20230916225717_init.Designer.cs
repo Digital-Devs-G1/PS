@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20230916222316_init")]
+    [Migration("20230916225717_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -70,33 +70,33 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.DeptoTemplate", b =>
+            modelBuilder.Entity("Domain.Entities.DepartmentTemplate", b =>
                 {
-                    b.Property<int>("TemplateId")
+                    b.Property<int>("DepartmentTemplateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TemplateId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentTemplateId"));
 
-                    b.Property<int>("DeptoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("DepartmentTemplateName")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("TemplateId");
+                    b.Property<int>("DeptartmentId")
+                        .HasColumnType("int");
 
-                    b.ToTable("DeptoTemplate");
+                    b.HasKey("DepartmentTemplateId");
+
+                    b.ToTable("DepartmentTemplate");
                 });
 
             modelBuilder.Entity("Domain.Entities.FieldTemplate", b =>
                 {
-                    b.Property<int>("TemplateId")
+                    b.Property<int>("FieldTemplateId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Label")
+                    b.Property<string>("FieldNameId")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -106,7 +106,7 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
-                    b.HasKey("TemplateId", "Label");
+                    b.HasKey("FieldTemplateId", "FieldNameId");
 
                     b.HasIndex("DataTypeId");
 
@@ -264,7 +264,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("ReportId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Label")
+                    b.Property<string>("NameId")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -276,7 +276,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ReportId", "Label");
+                    b.HasKey("ReportId", "NameId");
 
                     b.HasIndex("DataTypeId");
 
@@ -286,49 +286,49 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ReportId = 1,
-                            Label = "Proveedor",
+                            NameId = "Proveedor",
                             DataTypeId = 2,
                             Value = "Constructura X SRL"
                         },
                         new
                         {
                             ReportId = 1,
-                            Label = "Tel. Proveedor",
+                            NameId = "Tel. Proveedor",
                             DataTypeId = 1,
                             Value = "42561873"
                         },
                         new
                         {
                             ReportId = 2,
-                            Label = "Ancho[mm]",
+                            NameId = "Ancho[mm]",
                             DataTypeId = 1,
                             Value = "270"
                         },
                         new
                         {
                             ReportId = 2,
-                            Label = "Alto",
+                            NameId = "Alto",
                             DataTypeId = 1,
                             Value = "180"
                         },
                         new
                         {
                             ReportId = 2,
-                            Label = "Peso[kg]",
+                            NameId = "Peso[kg]",
                             DataTypeId = 5,
                             Value = "58.8"
                         },
                         new
                         {
                             ReportId = 3,
-                            Label = "Proveedor",
+                            NameId = "Proveedor",
                             DataTypeId = 2,
                             Value = "Constructura X SRL"
                         },
                         new
                         {
                             ReportId = 3,
-                            Label = "Tel. Proveedor",
+                            NameId = "Tel. Proveedor",
                             DataTypeId = 1,
                             Value = "42561873"
                         });
@@ -342,27 +342,19 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.DeptoTemplate", "DeptoTemplateNav")
-                        .WithMany("FieldTemplateNav")
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("DataTypeNav");
-
-                    b.Navigation("DeptoTemplateNav");
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportTracking", b =>
                 {
                     b.HasOne("Domain.Entities.Report", "ReportNav")
-                        .WithMany("Trackings")
+                        .WithMany()
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.ReportOperation", "ReportOperationNav")
-                        .WithMany("Trackings")
+                        .WithMany()
                         .HasForeignKey("ReportOperationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -375,13 +367,13 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
                     b.HasOne("Domain.Entities.DataType", "DataTypeNav")
-                        .WithMany("FieldsNav")
+                        .WithMany()
                         .HasForeignKey("DataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Report", "ReportNav")
-                        .WithMany("Fields")
+                        .WithMany()
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -389,28 +381,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("DataTypeNav");
 
                     b.Navigation("ReportNav");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DataType", b =>
-                {
-                    b.Navigation("FieldsNav");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DeptoTemplate", b =>
-                {
-                    b.Navigation("FieldTemplateNav");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Report", b =>
-                {
-                    b.Navigation("Fields");
-
-                    b.Navigation("Trackings");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ReportOperation", b =>
-                {
-                    b.Navigation("Trackings");
                 });
 #pragma warning restore 612, 618
         }

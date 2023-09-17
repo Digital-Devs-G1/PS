@@ -27,17 +27,17 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeptoTemplate",
+                name: "DepartmentTemplate",
                 columns: table => new
                 {
-                    TemplateId = table.Column<int>(type: "int", nullable: false)
+                    DepartmentTemplateId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeptoId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
+                    DeptartmentId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentTemplateName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeptoTemplate", x => x.TemplateId);
+                    table.PrimaryKey("PK_DepartmentTemplate", x => x.DepartmentTemplateId);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,25 +72,19 @@ namespace Infrastructure.Migrations
                 name: "FieldTemplate",
                 columns: table => new
                 {
-                    TemplateId = table.Column<int>(type: "int", nullable: false),
-                    Label = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Enabled = table.Column<bool>(type: "bit", nullable: false),
-                    DataTypeId = table.Column<int>(type: "int", nullable: false)
+                    FieldTemplateId = table.Column<int>(type: "int", nullable: false),
+                    FieldNameId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    DataTypeId = table.Column<int>(type: "int", nullable: false),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FieldTemplate", x => new { x.TemplateId, x.Label });
+                    table.PrimaryKey("PK_FieldTemplate", x => new { x.FieldTemplateId, x.FieldNameId });
                     table.ForeignKey(
                         name: "FK_FieldTemplate_DataType_DataTypeId",
                         column: x => x.DataTypeId,
                         principalTable: "DataType",
                         principalColumn: "DataTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FieldTemplate_DeptoTemplate_TemplateId",
-                        column: x => x.TemplateId,
-                        principalTable: "DeptoTemplate",
-                        principalColumn: "TemplateId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -100,9 +94,9 @@ namespace Infrastructure.Migrations
                 {
                     ReportTrackingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
                     ReportId = table.Column<int>(type: "int", nullable: false),
                     ReportOperationId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
                     DateTracking = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
@@ -126,14 +120,14 @@ namespace Infrastructure.Migrations
                 name: "VariableFields",
                 columns: table => new
                 {
+                    NameId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ReportId = table.Column<int>(type: "int", nullable: false),
-                    Label = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DataTypeId = table.Column<int>(type: "int", nullable: false)
+                    DataTypeId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.Label });
+                    table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.NameId });
                     table.ForeignKey(
                         name: "FK_VariableFields_DataType_DataTypeId",
                         column: x => x.DataTypeId,
@@ -193,7 +187,7 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "VariableFields",
-                columns: new[] { "Label", "ReportId", "DataTypeId", "Value" },
+                columns: new[] { "NameId", "ReportId", "DataTypeId", "Value" },
                 values: new object[,]
                 {
                     { "Proveedor", 1, 2, "Constructura X SRL" },
@@ -230,6 +224,9 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "DepartmentTemplate");
+
+            migrationBuilder.DropTable(
                 name: "FieldTemplate");
 
             migrationBuilder.DropTable(
@@ -237,9 +234,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "VariableFields");
-
-            migrationBuilder.DropTable(
-                name: "DeptoTemplate");
 
             migrationBuilder.DropTable(
                 name: "ReportOperations");
