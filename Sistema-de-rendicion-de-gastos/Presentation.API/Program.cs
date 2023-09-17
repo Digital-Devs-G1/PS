@@ -28,7 +28,7 @@ namespace Presentation.API
             //repositories
             builder.Services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
-            builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
+            //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services
             builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
@@ -55,31 +55,6 @@ namespace Presentation.API
             app.MapControllers();
 
             app.Run();
-
-            //Run(app.Services);
-
-        }
-
-        public static void Run(IServiceProvider services)
-        {
-            while (true)
-            {
-                var service = services.GetService<IVariableFieldService>();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("Ingrese el numero de template: ");
-                int i = int.Parse(Console.ReadLine());
-                IList<VariableFieldResponse> fields = service.GetTemplate(i);
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nRendicion de gatos:\n-------------------\n");
-                Console.ForegroundColor = ConsoleColor.White;
-                foreach (VariableFieldResponse field in fields)
-                {
-                    Console.Write(field.Label + ": ");
-                    Console.ReadLine();
-                }
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\nSu Reporte se ingreso con exito\n");
-            }
         }
     }
 }

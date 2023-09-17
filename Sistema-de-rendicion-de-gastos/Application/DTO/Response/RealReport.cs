@@ -17,7 +17,7 @@ namespace Application.DTO.Response
             _report = report;
             VariableFields = variableFields;
         }
-        public int ReportId { get { return _report.Id; } set { _report.Id = value; } }
+        public int ReportId { get { return _report.ReportId; } set { _report.ReportId = value; } }
 
         public string Description { get { return _report.Description; } set { _report.Description = value; } }
 

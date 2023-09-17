@@ -19,6 +19,22 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<ReportTracking>> GetByReportId(int reportId)
+        {
+            return await _dbContext
+                .Set<ReportTracking>()
+                .Where(e => e.ReportId == reportId)
+                .ToListAsync();
+        }
+
+        public async Task<ReportTracking> GetLastTrackingByReportIdAsync(int reportId)
+        {
+            var trackings = await _dbContext.Set<ReportTracking>()
+                .Where(e => e.ReportId == reportId)
+                .ToListAsync();
+            return trackings.OrderByDescending(e => e.DateTracking).FirstOrDefault();
+        }
+
         /// <summary>
         /// Retorna todos los reportes con los que interactuo un empleado, ya sea para
         /// crearlos, aprobarlos, etc. Para cada reporte se especifica como y cuando fue

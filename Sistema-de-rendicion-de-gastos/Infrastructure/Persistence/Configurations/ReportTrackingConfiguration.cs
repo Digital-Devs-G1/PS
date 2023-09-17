@@ -8,9 +8,9 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ReportTracking> builder)
         {
-            builder.HasKey(e => e.Id);
+            builder.HasKey(e => e.ReportTrackingId);
 
-            builder.Property(e => e.Id)
+            builder.Property(e => e.ReportTrackingId)
                 .HasColumnName("ReportTrackingId");
 
             builder.Property(e => e.EmployeeId)
