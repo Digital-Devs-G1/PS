@@ -24,6 +24,23 @@ namespace Infrastructure.Persistence.Inserts
         {
             DeptoOneTemplates(builder);
             DeptoTwoTemplates(builder);
+            DeptoThreeTemplates(builder);
+        }
+
+        // Al departamento 3 se le asignaron 2 templates en DeptoTemplateInserts
+        private void DeptoThreeTemplates(EntityTypeBuilder<FieldTemplate> builder)
+        {
+            AddTemplate(builder, new List<Field>()
+            {
+                new Field("Proveedor", (int)Str),
+                new Field("Tel. Proveedor", (int)Int)
+            });
+            AddTemplate(builder, new List<Field>()
+            {
+                new Field("Ancho [mm]", (int)Int),
+                new Field("Alto [mm]", (int)Int),
+                new Field("Peso [Kg]", (int)Dec)
+            });
         }
 
         // Al departamento 2 se le asignaron 3 templates en DeptoTemplateInserts
@@ -31,7 +48,6 @@ namespace Infrastructure.Persistence.Inserts
         {
             AddTemplate(builder, new List<Field>()
             {
-                new Field("Fecha", (int)Date),
                 new Field("Destino", (int)Str),
                 new Field("Km", (int)Dec),
                 new Field("Peajes", (int)Bool),
@@ -39,14 +55,12 @@ namespace Infrastructure.Persistence.Inserts
             });
             AddTemplate(builder, new List<Field>()
             {
-                new Field("Fecha", (int)Date),
                 new Field("Destino", (int)Str),
                 new Field("Nombre Servicio", (int)Str),
                 new Field("Comprobante", (int)Str)
             });
             AddTemplate(builder, new List<Field>()
             {
-                new Field("Fecha", (int)Date),
                 new Field("Viatico", (int)Str),
                 new Field("Motivo", (int)Str),
                 new Field("Comprobante", (int)Str)
@@ -58,7 +72,6 @@ namespace Infrastructure.Persistence.Inserts
         {
             AddTemplate(builder, new List<Field>()
             {
-                new Field("Fecha", (int)Date),
                 new Field("Proveedor", (int)Str),
                 new Field("Contacto", (int)Int),
                 new Field("Nombre Material", (int)Str),
@@ -68,7 +81,6 @@ namespace Infrastructure.Persistence.Inserts
             });
             AddTemplate(builder, new List<Field>()
             {
-                new Field("Fecha", (int)Date),
                 new Field("Viatico", (int)Str),
                 new Field("Motivo", (int)Str),
                 new Field("Comprobante", (int)Str)

@@ -42,21 +42,21 @@ namespace Infrastructure.Persistence.Inserts
                 new VariableField()
                 {
                     ReportId = 2,
-                    NameId = "Ancho[mm]",
+                    NameId = "Ancho [mm]",
                     Value = "270",
                     DataTypeId = (int)Int
                 },
                 new VariableField()
                 {
                     ReportId = 2,
-                    NameId = "Alto",
+                    NameId = "Alto [mm]",
                     Value = "180",
                     DataTypeId = (int)Int
                 },
                 new VariableField()
                 {
                     ReportId = 2,
-                    NameId = "Peso[kg]",
+                    NameId = "Peso [kg]",
                     Value = "58.8",
                     DataTypeId = (int)Dec
                 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20230916225717_init")]
+    [Migration("20230917044142_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -186,11 +186,16 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ReportOperationId = 2,
-                            ReportOperationName = "Aprobacion"
+                            ReportOperationName = "Revision"
                         },
                         new
                         {
                             ReportOperationId = 3,
+                            ReportOperationName = "Aprobacion"
+                        },
+                        new
+                        {
+                            ReportOperationId = 4,
                             ReportOperationName = "Rechazo"
                         });
                 });
@@ -300,34 +305,34 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ReportId = 2,
-                            NameId = "Ancho[mm]",
+                            NameId = "Ancho [mm]",
                             DataTypeId = 1,
                             Value = "270"
                         },
                         new
                         {
                             ReportId = 2,
-                            NameId = "Alto",
+                            NameId = "Alto [mm]",
                             DataTypeId = 1,
                             Value = "180"
                         },
                         new
                         {
                             ReportId = 2,
-                            NameId = "Peso[kg]",
+                            NameId = "Peso [kg]",
                             DataTypeId = 5,
                             Value = "58.8"
                         },
                         new
                         {
-                            ReportId = 3,
+                            ReportId = 2,
                             NameId = "Proveedor",
                             DataTypeId = 2,
                             Value = "Constructura X SRL"
                         },
                         new
                         {
-                            ReportId = 3,
+                            ReportId = 2,
                             NameId = "Tel. Proveedor",
                             DataTypeId = 1,
                             Value = "42561873"

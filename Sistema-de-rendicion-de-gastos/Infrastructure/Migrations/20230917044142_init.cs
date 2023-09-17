@@ -160,8 +160,9 @@ namespace Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, "Creacion" },
-                    { 2, "Aprobacion" },
-                    { 3, "Rechazo" }
+                    { 2, "Revision" },
+                    { 3, "Aprobacion" },
+                    { 4, "Rechazo" }
                 });
 
             migrationBuilder.InsertData(
@@ -192,11 +193,11 @@ namespace Infrastructure.Migrations
                 {
                     { "Proveedor", 1, 2, "Constructura X SRL" },
                     { "Tel. Proveedor", 1, 1, "42561873" },
-                    { "Alto", 2, 1, "180" },
-                    { "Ancho[mm]", 2, 1, "270" },
-                    { "Peso[kg]", 2, 5, "58.8" },
-                    { "Proveedor", 3, 2, "Constructura X SRL" },
-                    { "Tel. Proveedor", 3, 1, "42561873" }
+                    { "Alto [mm]", 2, 1, "180" },
+                    { "Ancho [mm]", 2, 1, "270" },
+                    { "Peso [kg]", 2, 5, "58.8" },
+                    { "Proveedor", 2, 2, "Constructura X SRL" },
+                    { "Tel. Proveedor", 2, 1, "42561873" }
                 });
 
             migrationBuilder.CreateIndex(

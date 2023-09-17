@@ -18,7 +18,7 @@ namespace Infrastructure.Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=MSI;Database=RendicionGastos;Trusted_Connection=True;TrustServerCertificate=True;");
-            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.EnableSensitiveDataLogging(); // Eliminar en Produccion
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

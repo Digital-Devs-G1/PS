@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static Infrastructure.Persistence.Inserts.ReportOperationEnum;
 
 namespace Infrastructure.Persistence.Configurations
 {
@@ -11,22 +12,22 @@ namespace Infrastructure.Persistence.Configurations
             builder.HasData(
                 new ReportOperation()
                 {
-                    ReportOperationId = 1,
+                    ReportOperationId = (int)Create,
                     ReportOperationName = "Creacion"
                 },
                 new ReportOperation()
                 {
-                    ReportOperationId = 2,
+                    ReportOperationId = (int)Review,
                     ReportOperationName = "Revision"
                 },
                 new ReportOperation()
                 {
-                    ReportOperationId = 3,
+                    ReportOperationId = (int)Approval,
                     ReportOperationName = "Aprobacion"
                 },
                 new ReportOperation()
                 {
-                    ReportOperationId = 4,
+                    ReportOperationId = (int)Refuse,
                     ReportOperationName = "Rechazo"
                 }
             );
