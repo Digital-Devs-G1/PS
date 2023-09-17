@@ -8,12 +8,15 @@ namespace Domain.Entities
 {
     public class FieldTemplate
     {
-        public required int TemplateId { get; set; }
-        public DeptoTemplate? DeptoTemplateNav { get; set; }
-        public required string Label { get; set; }
-        public required bool Enabled { get; set; }
+        // PK
+        public required int FieldTemplateId { get; set; }
+        public required string FieldNameId { get; set; }
 
+        // FK
         public required int DataTypeId { get; set; }
         public DataType? DataTypeNav { get; set; }
+
+        // DATA
+        public required bool Enabled { get; set; }
     }
 }

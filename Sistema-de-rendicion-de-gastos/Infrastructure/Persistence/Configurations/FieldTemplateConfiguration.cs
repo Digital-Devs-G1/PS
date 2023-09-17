@@ -13,14 +13,11 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<FieldTemplate> builder)
         {
-            builder.HasKey(ft => new {ft.TemplateId, ft.Label});
+            builder.HasKey(ft => new {ft.FieldTemplateId, ft.FieldNameId});
             builder.HasOne(fieldTemplate => fieldTemplate.DataTypeNav)
-                   .WithMany(dataType => dataType.FieldTemplateNav)
+                   .WithMany()
                    .HasForeignKey(fieldTemplate => fieldTemplate.DataTypeId);
-            builder.HasOne(fieldTemplate => fieldTemplate.DeptoTemplateNav)
-                   .WithMany(deptoTemplate => deptoTemplate.FieldTemplateCollec)
-                   .HasForeignKey(fieldTemplate => fieldTemplate.TemplateId);
-            builder.Property(ft => ft.Label).HasMaxLength(20);
+            builder.Property(ft => ft.FieldNameId).HasMaxLength(20);
         }
     }
 }

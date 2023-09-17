@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static Infrastructure.Persistence.Inserts.DataTypeEnum;
 
 namespace Infrastructure.Persistence.Inserts
 {
@@ -8,41 +9,56 @@ namespace Infrastructure.Persistence.Inserts
     {
         public void Configure(EntityTypeBuilder<VariableField> builder)
         {
+            ConstructionMaterialReport(builder, 1);
+            CarpentryMaterialReport(builder);
+            ConstructionMaterialReport(builder, 2);
+        }
+
+        public void ConstructionMaterialReport(
+            EntityTypeBuilder<VariableField> builder,
+            int reportId)
+        {
             builder.HasData(
                 new VariableField()
                 {
-                    ReportId = 1,
-                    Label = "Proveedor",
+                    ReportId = reportId,
+                    NameId = "Proveedor",
                     Value = "Constructura X SRL",
-                    DataTypeId = 2
+                    DataTypeId = (int) Str
                 },
                 new VariableField()
                 {
-                    ReportId = 1,
-                    Label = "Tel. Proveedor",
+                    ReportId = reportId,
+                    NameId = "Tel. Proveedor",
                     Value = "42561873",
-                    DataTypeId = 1
-                },
+                    DataTypeId = (int)Int
+                }
+            );
+        }
+
+        public void CarpentryMaterialReport(EntityTypeBuilder<VariableField> builder)
+        {
+            builder.HasData(
                 new VariableField()
                 {
                     ReportId = 2,
-                    Label = "Ancho[mm]",
+                    NameId = "Ancho [mm]",
                     Value = "270",
-                    DataTypeId = 1
+                    DataTypeId = (int)Int
                 },
                 new VariableField()
                 {
                     ReportId = 2,
-                    Label = "Alto",
+                    NameId = "Alto [mm]",
                     Value = "180",
-                    DataTypeId = 1
+                    DataTypeId = (int)Int
                 },
                 new VariableField()
                 {
                     ReportId = 2,
-                    Label = "Peso[kg]",
+                    NameId = "Peso [kg]",
                     Value = "58.8",
-                    DataTypeId = 5
+                    DataTypeId = (int)Dec
                 }
             );
         }

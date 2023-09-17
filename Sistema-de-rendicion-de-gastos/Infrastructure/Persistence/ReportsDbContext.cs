@@ -17,8 +17,8 @@ namespace Infrastructure.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-VAO1UL8\MAXIMILIANO;Database=ExpenseReport;Trusted_Connection=true;TrustServerCertificate=True;");
-            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.UseSqlServer(@"Server=MSI;Database=RendicionGastos;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.EnableSensitiveDataLogging(); // Eliminar en Produccion
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,10 +34,8 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new DataTypeInserts());
             modelBuilder.ApplyConfiguration(new ReportInserts());
             modelBuilder.ApplyConfiguration(new VariableFieldInserts());
-            modelBuilder.ApplyConfiguration(new FieldTemplatedInserts());
-            modelBuilder.ApplyConfiguration(new DeptoTemplatedInserts());
-            modelBuilder.ApplyConfiguration(new ReportOperationInserts());
             modelBuilder.ApplyConfiguration(new ReportTrackingInserts());
+            modelBuilder.ApplyConfiguration(new ReportOperationInserts());
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Application.UseCases
 
             foreach (var report in filter)
             {
-                var lastTracking = await this.reportTrackingService.GetLastTrackingByReportId(report.Id);
+                var lastTracking = await this.reportTrackingService.GetLastTrackingByReportId(report.ReportId);
                 if (lastTracking == null)
                 {
                     throw new ArgumentException($"No se han realizado operaciones sobre este reporte");
@@ -40,7 +40,7 @@ namespace Application.UseCases
 
                 ReportStatusResponse reportStatusResponse = new ReportStatusResponse
                 {
-                    Id = report.Id,
+                    Id = report.ReportId,
                     Description = report.Description,
                     Amount = report.Amount,
                     Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
@@ -69,7 +69,7 @@ namespace Application.UseCases
 
             ReportStatusResponse reportStatusResponse = new ReportStatusResponse
             {
-                Id = report.Id,
+                Id = report.ReportId,
                 Description = report.Description,
                 Amount = report.Amount,
                 Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),

@@ -8,9 +8,9 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ReportTracking> builder)
         {
-            builder.HasKey(e => e.Id);
+            builder.HasKey(e => e.ReportTrackingId);
 
-            builder.Property(e => e.Id)
+            builder.Property(e => e.ReportTrackingId)
                 .HasColumnName("ReportTrackingId");
 
             builder.Property(e => e.EmployeeId)
@@ -20,12 +20,12 @@ namespace Infrastructure.Persistence.Configurations
                 .HasColumnType("datetime")
                 .IsRequired();
 
-            builder.HasOne(rt => rt.Report)
-                .WithMany(r => r.Trackings)
+            builder.HasOne(rt => rt.ReportNav)
+                .WithMany()
                 .HasForeignKey(rt => rt.ReportId);
 
-            builder.HasOne(rt => rt.ReportOperation)
-                .WithMany(r => r.Trackings)
+            builder.HasOne(rt => rt.ReportOperationNav)
+                .WithMany()
                 .HasForeignKey(rt => rt.ReportOperationId);
         }
     }
