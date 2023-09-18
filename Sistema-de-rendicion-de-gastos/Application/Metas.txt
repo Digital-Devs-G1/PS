@@ -1,6 +1,3 @@
-hasData ReportOperation
-hasData DataType
-
 1) templateId GetAllTemplateNames(deptoId)
 2) IList<ResponseFieldTemplate> GetTemplate(templateId)
 3) accept/refuse tracking + reportOperation
@@ -13,22 +10,10 @@ hasData DataType
 6) IList<ReportTracking> GetReportsStatus(empleadoId, reportId)
 	Maxi
 
-ReportStatus
-{
-  ReportId;
-  DateTime date;
-  int amount;
-  ReportTracking currentState;
-}
 
 7) IList<ReportHistory> GetReportHistory(empleadoId)
 	Martin
 
-ReportHistoryItem
-{
- ReportId _reportId;
- IList<ReportTracking<ReportOperation> 
-}
 
 8) insert report + fields + tracking
 

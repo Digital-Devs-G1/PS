@@ -33,12 +33,10 @@ namespace Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        // el profe dice que los chequeos x id eran en capa de aplication (Emi y Martin)
-        public async Task Delete(int id)
+        public async Task Delete(T entity)
         {
-            //T entity = await GetByIdAsync(id);
-            //entities.Remove(entity);
-            //await context.SaveChangesAsync();
+            entities.Remove(entity);
+            await context.SaveChangesAsync();
         }
     }
 }

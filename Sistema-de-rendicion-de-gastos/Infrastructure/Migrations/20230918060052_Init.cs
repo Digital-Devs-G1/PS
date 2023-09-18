@@ -97,7 +97,7 @@ namespace Infrastructure.Migrations
                     ReportId = table.Column<int>(type: "int", nullable: false),
                     ReportOperationId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    DateTracking = table.Column<DateTime>(type: "datetime", nullable: false)
+                    TrackingDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,7 +196,7 @@ namespace Infrastructure.Migrations
                 {
                     { "Destino", 1, 2, true },
                     { "Km", 2, 5, true },
-                    { "Peajes", 3, 4, true },
+                    { "HuboPeajes", 3, 4, true },
                     { "Monto Peajes", 4, 5, true },
                     { "Destino", 5, 2, true },
                     { "Nombre Servicio", 6, 2, true },
@@ -222,13 +222,13 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "ReportTrackings",
-                columns: new[] { "ReportTrackingId", "DateTracking", "EmployeeId", "ReportId", "ReportOperationId" },
+                columns: new[] { "ReportTrackingId", "EmployeeId", "ReportId", "ReportOperationId", "TrackingDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified), 1, 1, 1 },
-                    { 2, new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified), 2, 2, 1 },
-                    { 3, new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified), 3, 2, 2 },
-                    { 4, new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified), 2, 3, 1 }
+                    { 1, 1, 1, 1, new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, 2, 1, new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified) },
+                    { 3, 3, 2, 2, new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified) },
+                    { 4, 2, 3, 1, new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(

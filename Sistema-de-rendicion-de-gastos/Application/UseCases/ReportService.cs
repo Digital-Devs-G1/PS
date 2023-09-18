@@ -1,4 +1,4 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.ReportOperationNS;
 using Application.Enums;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
@@ -15,7 +15,6 @@ namespace Application.UseCases
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
-            this.reportOperationService = reportOperationService;
         }
 
         public async Task<Report> GetById(int id)
@@ -40,11 +39,11 @@ namespace Application.UseCases
 
                 ReportStatusResponse reportStatusResponse = new ReportStatusResponse
                 {
-                    Id = report.ReportId,
+                    ReportId = report.ReportId,
                     Description = report.Description,
                     Amount = report.Amount,
                     Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
-                    DateTracking = lastTracking.DateTracking,
+                    DateTracking = lastTracking.TrackingDate,
                 };
 
                 reportStatusResponses.Add(reportStatusResponse);
@@ -69,11 +68,11 @@ namespace Application.UseCases
 
             ReportStatusResponse reportStatusResponse = new ReportStatusResponse
             {
-                Id = report.ReportId,
+                ReportId = report.ReportId,
                 Description = report.Description,
                 Amount = report.Amount,
                 Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
-                DateTracking = lastTracking.DateTracking,
+                DateTracking = lastTracking.TrackingDate,
             };
 
             return reportStatusResponse;

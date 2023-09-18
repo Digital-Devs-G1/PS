@@ -1,5 +1,4 @@
 
-using Application.DTO.Response;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Application.UseCases;
@@ -7,7 +6,7 @@ using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repositories.Query;
 
 namespace Presentation.API
 {
@@ -29,13 +28,11 @@ namespace Presentation.API
             //repositories
             builder.Services.AddTransient(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
             builder.Services.AddTransient(typeof(IGenericRepositoryCommand<>), typeof(GenericRepositoryCommand<>));
-            builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
             builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IDepartamentTemplateQuery, DepartmentTemplateQuery>();
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services
-            builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
@@ -54,7 +51,6 @@ namespace Presentation.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

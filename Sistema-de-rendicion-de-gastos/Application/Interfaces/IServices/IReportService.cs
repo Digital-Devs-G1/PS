@@ -1,5 +1,4 @@
-﻿using Application.DTO.Response;
-using Domain.Entities;
+﻿using Application.DTO.Response.ReportOperationNS;
 
 namespace Application.Interfaces.IServices
 {

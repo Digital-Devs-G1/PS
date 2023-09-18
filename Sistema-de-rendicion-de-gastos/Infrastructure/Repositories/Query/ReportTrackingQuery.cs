@@ -1,15 +1,10 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.ReportOperationNS;
 using Application.Interfaces.IRepositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Query
 {
     public class ReportTrackingQuery : IReportTrackingQuery
     {
@@ -33,7 +28,7 @@ namespace Infrastructure.Repositories
             var trackings = await _dbContext.Set<ReportTracking>()
                 .Where(e => e.ReportId == reportId)
                 .ToListAsync();
-            return trackings.OrderByDescending(e => e.DateTracking).FirstOrDefault();
+            return trackings.OrderByDescending(e => e.TrackingDate).FirstOrDefault();
         }
 
         /// <summary>
@@ -44,20 +39,20 @@ namespace Infrastructure.Repositories
         /// <param name="employeeId">ID del empleado que interactuo con los reportes.</param>
         /// <returns>Lista de Historiales de operacion que el empleado realizo en cada uno de los 
         /// reportes en cuestion.</returns>
-        public async Task<IList<ReportOperationHistory>> GetEmployeeReportInteractions(int employeeId)
+        public async Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId)
         {
-            var resultado = await _dbContext
+            var result = await _dbContext
                 .Set<ReportTracking>()
                 .Include(reportTracking => reportTracking.ReportOperationNav)
                 .Where(reportTracking => reportTracking.EmployeeId == employeeId)
-                .GroupBy(tracking => tracking.ReportId)
-                .Select(group => new ReportOperationHistory()
+                .Select(rt => new ReportInteraction
                 {
-                    ReportId = group.Key,
-                    Operations = group.ToList()
+                    ReportId = rt.ReportId,
+                    TrackingDate = rt.TrackingDate,
+                    ReportOperationName = rt.ReportOperationNav.ReportOperationName
                 })
                 .ToListAsync();
-            return resultado;
+            return result;
         }
 
         /// <summary>
@@ -72,12 +67,18 @@ namespace Infrastructure.Repositories
             var resultado = await _dbContext
                 .Set<ReportTracking>()
                 .Include(reportTracking => reportTracking.ReportOperationNav)
-                .Where(rt => rt.ReportNav!.EmployeeId == employeeId)
+                .Include(reportTracking => reportTracking.ReportNav)
+                .Where(rt => rt.ReportNav.EmployeeId == employeeId)
                 .GroupBy(tracking => tracking.ReportId)
                 .Select(group => new ReportOperationHistory()
                 {
                     ReportId = group.Key,
-                    Operations = group.ToList()
+                    Operations = group.Select(tracking => new ReportOperationHistoryItem
+                    {
+                        TrackingDate = tracking.TrackingDate,
+                        EmployeeId = tracking.EmployeeId,
+                        ReportOperationName = tracking.ReportOperationNav.ReportOperationName
+                    }).ToList()
                 })
                 .ToListAsync();
             return resultado;

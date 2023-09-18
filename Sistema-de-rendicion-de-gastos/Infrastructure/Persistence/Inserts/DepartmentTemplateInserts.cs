@@ -7,6 +7,7 @@ namespace Infrastructure.Persistence.Inserts
     public class DepartmentTemplateInserts : IEntityTypeConfiguration<DepartmentTemplate>
     {
         private int _autoincrement = 1;
+
         public void Configure(EntityTypeBuilder<DepartmentTemplate> builder)
         {
             string[] names = { "Auto Propio", "Servicio Viaje", "Viaticos" };
