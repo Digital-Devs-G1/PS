@@ -24,11 +24,9 @@ namespace Presentation.API
 
             //repositories
             builder.Services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
             builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
 
             //services
-            builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();

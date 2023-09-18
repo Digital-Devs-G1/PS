@@ -5,7 +5,7 @@ namespace Application.Interfaces.IServices
 {
     public interface IReportTrackingService
     {
-        public Task<IList<ReportOperationHistory>> GetEmployeeReportInteractions(int employeeId);
+        public Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId);
         public Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId);
         Task<IEnumerable<ReportTracking>> GetByReportId(int reportId);
         Task<ReportTracking> GetLastTrackingByReportId(int reportId);

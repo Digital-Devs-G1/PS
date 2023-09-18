@@ -1,14 +1,15 @@
 ﻿using Application.Interfaces.IRepositories;
 using Domain.Entities;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Query
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        protected readonly DbContext _dbContext;
+        protected readonly ReportsDbContext _dbContext;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(ReportsDbContext context)
         {
             this._dbContext = context;
         }

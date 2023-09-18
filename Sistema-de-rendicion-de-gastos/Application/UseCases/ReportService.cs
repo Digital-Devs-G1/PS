@@ -45,7 +45,7 @@ namespace Application.UseCases
                     Description = report.Description,
                     Amount = report.Amount,
                     Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
-                    DateTracking = lastTracking.DateTracking,
+                    DateTracking = lastTracking.TrackingDate,
                 };
 
                 reportStatusResponses.Add(reportStatusResponse);
@@ -74,7 +74,7 @@ namespace Application.UseCases
                 Description = report.Description,
                 Amount = report.Amount,
                 Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
-                DateTracking = lastTracking.DateTracking,
+                DateTracking = lastTracking.TrackingDate,
             };
 
             return reportStatusResponse;

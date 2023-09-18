@@ -208,10 +208,6 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportTrackingId"));
 
-                    b.Property<DateTime?>("DateTracking")
-                        .IsRequired()
-                        .HasColumnType("datetime");
-
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
@@ -220,6 +216,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("ReportOperationId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("TrackingDate")
+                        .IsRequired()
+                        .HasColumnType("datetime");
 
                     b.HasKey("ReportTrackingId");
 
@@ -233,34 +233,34 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ReportTrackingId = 1,
-                            DateTracking = new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified),
                             EmployeeId = 1,
                             ReportId = 1,
-                            ReportOperationId = 1
+                            ReportOperationId = 1,
+                            TrackingDate = new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             ReportTrackingId = 2,
-                            DateTracking = new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified),
                             EmployeeId = 2,
                             ReportId = 2,
-                            ReportOperationId = 1
+                            ReportOperationId = 1,
+                            TrackingDate = new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             ReportTrackingId = 3,
-                            DateTracking = new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified),
                             EmployeeId = 3,
                             ReportId = 2,
-                            ReportOperationId = 2
+                            ReportOperationId = 2,
+                            TrackingDate = new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             ReportTrackingId = 4,
-                            DateTracking = new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified),
                             EmployeeId = 2,
                             ReportId = 3,
-                            ReportOperationId = 1
+                            ReportOperationId = 1,
+                            TrackingDate = new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified)
                         });
                 });
 

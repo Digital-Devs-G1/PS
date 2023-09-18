@@ -16,7 +16,7 @@ namespace Infrastructure.Persistence.Configurations
                     ReportId = 1,
                     EmployeeId = 1,
                     ReportOperationId = (int)Create,
-                    DateTracking = new DateTime(2023, 9, 5, 14, 30, 20)
+                    TrackingDate = new DateTime(2023, 9, 5, 14, 30, 20)
                 },
                 new ReportTracking()
                 {
@@ -24,7 +24,7 @@ namespace Infrastructure.Persistence.Configurations
                     ReportId = 2,
                     EmployeeId = 2,
                     ReportOperationId = (int)Create,
-                    DateTracking = new DateTime(2023, 9, 7, 9, 20, 9)
+                    TrackingDate = new DateTime(2023, 9, 7, 9, 20, 9)
                 },
                 new ReportTracking()
                 {
@@ -32,7 +32,7 @@ namespace Infrastructure.Persistence.Configurations
                     ReportId = 2,
                     EmployeeId = 3,
                     ReportOperationId = (int)Review,
-                    DateTracking = new DateTime(2023, 9, 15, 16, 15, 43)
+                    TrackingDate = new DateTime(2023, 9, 15, 16, 15, 43)
                 },
                 new ReportTracking()
                 {
@@ -40,7 +40,7 @@ namespace Infrastructure.Persistence.Configurations
                     ReportId = 3,
                     EmployeeId = 2,
                     ReportOperationId = (int)Create,
-                    DateTracking = new DateTime(2023, 9, 17, 18, 33, 1)
+                    TrackingDate = new DateTime(2023, 9, 17, 18, 33, 1)
                 }
             );
         }

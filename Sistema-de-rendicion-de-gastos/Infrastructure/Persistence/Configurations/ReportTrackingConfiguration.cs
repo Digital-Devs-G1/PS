@@ -16,7 +16,7 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(e => e.EmployeeId)
                 .IsRequired();
 
-            builder.Property(e => e.DateTracking)
+            builder.Property(e => e.TrackingDate)
                 .HasColumnType("datetime")
                 .IsRequired();
 

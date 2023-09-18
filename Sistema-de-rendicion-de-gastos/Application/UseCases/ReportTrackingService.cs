@@ -14,7 +14,7 @@ namespace Application.UseCases
             _repository = repository;
         }
 
-        public async Task<IList<ReportOperationHistory>> GetEmployeeReportInteractions(int employeeId)
+        public async Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId)
         {
             return await _repository.GetEmployeeReportInteractions(employeeId);
         }
