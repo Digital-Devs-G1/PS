@@ -10,9 +10,9 @@ namespace Infrastructure.Repositories.Query
         : GenericRepository<ReportTracking>
         , IReportTrackingQuery
     {
-        
+        private ReportsDbContext _dbContext;
+
         public ReportTrackingQuery(ReportsDbContext dbContext)
-            : base(dbContext)
         {
         }
 

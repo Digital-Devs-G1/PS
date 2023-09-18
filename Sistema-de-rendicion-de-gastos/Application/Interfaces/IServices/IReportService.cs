@@ -7,5 +7,6 @@ namespace Application.Interfaces.IServices
         Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId);
 
         Task<ReportStatusResponse> GetReportStatusById(int reportId);
+
     }
 }

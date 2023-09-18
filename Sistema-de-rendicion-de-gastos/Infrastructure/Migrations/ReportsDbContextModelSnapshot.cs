@@ -75,17 +75,61 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentTemplateId"));
 
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DepartmentTemplateName")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("DeptartmentId")
-                        .HasColumnType("int");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("DepartmentTemplateId");
 
-                    b.ToTable("DepartmentTemplate");
+                    b.ToTable("DepartmentTemplates");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentTemplateId = 1,
+                            DepartmentId = 1,
+                            DepartmentTemplateName = "Auto Propio"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 2,
+                            DepartmentId = 1,
+                            DepartmentTemplateName = "Servicio Viaje"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 3,
+                            DepartmentId = 1,
+                            DepartmentTemplateName = "Viaticos"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 4,
+                            DepartmentId = 2,
+                            DepartmentTemplateName = "Gastos varios"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 5,
+                            DepartmentId = 2,
+                            DepartmentTemplateName = "Materia prima"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 6,
+                            DepartmentId = 3,
+                            DepartmentTemplateName = "Materiales de Construccion"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 7,
+                            DepartmentId = 3,
+                            DepartmentTemplateName = "Placas de Carpinteria"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.FieldTemplate", b =>
@@ -107,7 +151,177 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DataTypeId");
 
-                    b.ToTable("FieldTemplate");
+                    b.ToTable("FieldTemplates");
+
+                    b.HasData(
+                        new
+                        {
+                            FieldTemplateId = 1,
+                            FieldNameId = "Destino",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 2,
+                            FieldNameId = "Km",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 3,
+                            FieldNameId = "Peajes",
+                            DataTypeId = 4,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 4,
+                            FieldNameId = "Monto Peajes",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 5,
+                            FieldNameId = "Destino",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 6,
+                            FieldNameId = "Nombre Servicio",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 7,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 8,
+                            FieldNameId = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 9,
+                            FieldNameId = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 10,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 11,
+                            FieldNameId = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 12,
+                            FieldNameId = "Contacto",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 13,
+                            FieldNameId = "Nombre Material",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 14,
+                            FieldNameId = "Peso [Kg]",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 15,
+                            FieldNameId = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 16,
+                            FieldNameId = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 17,
+                            FieldNameId = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 18,
+                            FieldNameId = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 19,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 20,
+                            FieldNameId = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 21,
+                            FieldNameId = "Tel. Proveedor",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 22,
+                            FieldNameId = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 23,
+                            FieldNameId = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 24,
+                            FieldNameId = "Peso [Kg]",
+                            DataTypeId = 5,
+                            Enabled = true
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>

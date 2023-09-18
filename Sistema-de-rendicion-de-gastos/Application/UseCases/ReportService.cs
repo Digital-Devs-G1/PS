@@ -8,12 +8,10 @@ namespace Application.UseCases
 {
     public class ReportService : IReportService
     {
-        private readonly IGenericRepository<Report> _reportRepo;
+        private readonly IGenericRepositoryQuerys<Report> repository;
         private readonly IReportTrackingService reportTrackingService;
-        public ReportService(
-            IGenericRepository<Report> repository, 
-            IReportTrackingService reportTrackingService
-            )
+        private readonly IReportOperationService reportOperationService;
+        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService)
         {
             this._reportRepo = repository;
             this.reportTrackingService = reportTrackingService;
@@ -29,7 +27,7 @@ namespace Application.UseCases
             List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
             var reports = await this._reportRepo.GetAllAsync();
             var filter = reports.Where(opt => opt.EmployeeId == employeeId);
-
+            
             foreach (var report in filter)
             {
                 var lastTracking = await this.reportTrackingService.GetLastTrackingByReportId(report.ReportId);
