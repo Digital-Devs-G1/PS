@@ -1,4 +1,4 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.ReportOperationNS;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Domain.Entities;
@@ -14,14 +14,19 @@ namespace Application.UseCases
             _repository = repository;
         }
 
+        public async Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId)
+        {
+            return await _repository.GetEmployeeReportInteractions(employeeId);
+        }
+
+        public async Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId)
+        {
+            return await _repository.GetReportHistoryByCreator(employeeId);
+        }
+
         public Task<IEnumerable<ReportTracking>> GetByReportId(int reportId)
         {
             return _repository.GetByReportId(reportId);
-        }
-
-        public async Task<IList<ReportOperationHistory>> GetEmployeeReportInteractions(int employeeId)
-        {
-            return await _repository.GetEmployeeReportInteractions(employeeId);
         }
 
         public Task<ReportTracking> GetLastTrackingByReportId(int reportId)

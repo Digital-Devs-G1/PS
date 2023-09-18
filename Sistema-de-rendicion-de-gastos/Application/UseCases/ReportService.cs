@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response;
+using Application.DTO.Response.ReportOperationNS;
 using Application.Enums;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
@@ -9,14 +10,13 @@ namespace Application.UseCases
 {
     public class ReportService : IReportService
     {
-        private readonly IGenericRepository<Report> repository;
+        private readonly IGenericRepositoryQuerys<Report> repository;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
-        public ReportService(IGenericRepository<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService)
+        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
-            this.reportOperationService = reportOperationService;
         }
 
         public async Task<Report> GetById(int id)
@@ -35,7 +35,7 @@ namespace Application.UseCases
             List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
             var reports = await this.repository.GetAllAsync();
             var filter = reports.Where(opt => opt.EmployeeId == employeeId);
-
+            
             foreach (var report in filter)
             {
                 var lastTracking = await this.reportTrackingService.GetLastTrackingByReportId(report.ReportId);
@@ -47,11 +47,11 @@ namespace Application.UseCases
 
                 ReportStatusResponse reportStatusResponse = new ReportStatusResponse
                 {
-                    Id = report.ReportId,
+                    ReportId = report.ReportId,
                     Description = report.Description,
                     Amount = report.Amount,
-                    Status = reportOperation.ReportOperationName,
-                    DateTracking = lastTracking.DateTracking,
+                    Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                    DateTracking = lastTracking.TrackingDate,
                 };
 
                 reportStatusResponses.Add(reportStatusResponse);
@@ -76,11 +76,11 @@ namespace Application.UseCases
 
             ReportStatusResponse reportStatusResponse = new ReportStatusResponse
             {
-                Id = report.ReportId,
+                ReportId = report.ReportId,
                 Description = report.Description,
                 Amount = report.Amount,
-                Status = reportOperation.ReportOperationName,
-                DateTracking = lastTracking.DateTracking,
+                Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                DateTracking = lastTracking.TrackingDate,
             };
 
             return reportStatusResponse;

@@ -13,6 +13,6 @@
 
         // DATA
         public required int EmployeeId { get; set; }
-        public DateTime? DateTracking { get; set; }
+        public DateTime? TrackingDate { get; set; }
     }
 }

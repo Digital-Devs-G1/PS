@@ -75,17 +75,61 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentTemplateId"));
 
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DepartmentTemplateName")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("DeptartmentId")
-                        .HasColumnType("int");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("DepartmentTemplateId");
 
-                    b.ToTable("DepartmentTemplate");
+                    b.ToTable("DepartmentTemplates");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentTemplateId = 1,
+                            DepartmentId = 1,
+                            DepartmentTemplateName = "Auto Propio"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 2,
+                            DepartmentId = 1,
+                            DepartmentTemplateName = "Servicio Viaje"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 3,
+                            DepartmentId = 1,
+                            DepartmentTemplateName = "Viaticos"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 4,
+                            DepartmentId = 2,
+                            DepartmentTemplateName = "Gastos varios"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 5,
+                            DepartmentId = 2,
+                            DepartmentTemplateName = "Materia prima"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 6,
+                            DepartmentId = 3,
+                            DepartmentTemplateName = "Materiales de Construccion"
+                        },
+                        new
+                        {
+                            DepartmentTemplateId = 7,
+                            DepartmentId = 3,
+                            DepartmentTemplateName = "Placas de Carpinteria"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.FieldTemplate", b =>
@@ -107,7 +151,177 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DataTypeId");
 
-                    b.ToTable("FieldTemplate");
+                    b.ToTable("FieldTemplates");
+
+                    b.HasData(
+                        new
+                        {
+                            FieldTemplateId = 1,
+                            FieldNameId = "Destino",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 2,
+                            FieldNameId = "Km",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 3,
+                            FieldNameId = "HuboPeajes",
+                            DataTypeId = 4,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 4,
+                            FieldNameId = "Monto Peajes",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 5,
+                            FieldNameId = "Destino",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 6,
+                            FieldNameId = "Nombre Servicio",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 7,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 8,
+                            FieldNameId = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 9,
+                            FieldNameId = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 10,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 11,
+                            FieldNameId = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 12,
+                            FieldNameId = "Contacto",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 13,
+                            FieldNameId = "Nombre Material",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 14,
+                            FieldNameId = "Peso [Kg]",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 15,
+                            FieldNameId = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 16,
+                            FieldNameId = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 17,
+                            FieldNameId = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 18,
+                            FieldNameId = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 19,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 20,
+                            FieldNameId = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 21,
+                            FieldNameId = "Tel. Proveedor",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 22,
+                            FieldNameId = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 23,
+                            FieldNameId = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 24,
+                            FieldNameId = "Peso [Kg]",
+                            DataTypeId = 5,
+                            Enabled = true
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>
@@ -208,10 +422,6 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportTrackingId"));
 
-                    b.Property<DateTime?>("DateTracking")
-                        .IsRequired()
-                        .HasColumnType("datetime");
-
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
@@ -220,6 +430,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("ReportOperationId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("TrackingDate")
+                        .IsRequired()
+                        .HasColumnType("datetime");
 
                     b.HasKey("ReportTrackingId");
 
@@ -233,34 +447,34 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ReportTrackingId = 1,
-                            DateTracking = new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified),
                             EmployeeId = 1,
                             ReportId = 1,
-                            ReportOperationId = 1
+                            ReportOperationId = 1,
+                            TrackingDate = new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             ReportTrackingId = 2,
-                            DateTracking = new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified),
                             EmployeeId = 2,
                             ReportId = 2,
-                            ReportOperationId = 1
+                            ReportOperationId = 1,
+                            TrackingDate = new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             ReportTrackingId = 3,
-                            DateTracking = new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified),
                             EmployeeId = 3,
                             ReportId = 2,
-                            ReportOperationId = 2
+                            ReportOperationId = 2,
+                            TrackingDate = new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             ReportTrackingId = 4,
-                            DateTracking = new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified),
                             EmployeeId = 2,
                             ReportId = 3,
-                            ReportOperationId = 1
+                            ReportOperationId = 1,
+                            TrackingDate = new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified)
                         });
                 });
 

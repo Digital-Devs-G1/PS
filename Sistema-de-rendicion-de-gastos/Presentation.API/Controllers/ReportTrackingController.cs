@@ -1,9 +1,5 @@
 ﻿using Application.Interfaces.IServices;
-using Application.UseCases;
-using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Presentation.API.Controllers
 {
@@ -11,7 +7,7 @@ namespace Presentation.API.Controllers
     [ApiController]
     public class ReportTrackingController : ControllerBase
     {
-        private IReportTrackingService _service;
+        private readonly IReportTrackingService _service;
 
         public ReportTrackingController(IReportTrackingService service)
         {
@@ -19,18 +15,18 @@ namespace Presentation.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetEmployeeReportInteractions/{id}")]
-        public async Task<IActionResult> GetEmployeeReportInteractions(int id)
+        [Route("GetEmployeeReportInteractions/{employeeId}")]
+        public async Task<IActionResult> GetEmployeeReportInteractions(int employeeId)
         {
-            var traking = await _service.GetEmployeeReportInteractions(id);
+            var traking = await _service.GetEmployeeReportInteractions(employeeId);
             return Ok(traking);
         }
         
         [HttpGet]
-        [Route("GetReportHistoryByCreator/{id}")]
-        public async Task<IActionResult> GetReportHistoryByCreator(int id)
+        [Route("GetReportHistoryByCreator/{employeeId}")]
+        public async Task<IActionResult> GetReportHistoryByCreator(int employeeId)
         {
-            var traking = await _service.GetReportHistoryByCreator(id);
+            var traking = await _service.GetReportHistoryByCreator(employeeId);
             return Ok(traking);
         }
     }

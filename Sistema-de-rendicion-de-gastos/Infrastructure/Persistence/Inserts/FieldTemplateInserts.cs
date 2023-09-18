@@ -50,7 +50,7 @@ namespace Infrastructure.Persistence.Inserts
             {
                 new Field("Destino", (int)Str),
                 new Field("Km", (int)Dec),
-                new Field("Peajes", (int)Bool),
+                new Field("HuboPeajes", (int)Bool),
                 new Field("Monto Peajes", (int)Dec),
             });
             AddTemplate(builder, new List<Field>()

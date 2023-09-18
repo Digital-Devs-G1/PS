@@ -1,17 +1,13 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Inserts
 {
-    public class DeptoTemplateInserts : IEntityTypeConfiguration<DepartmentTemplate>
+    public class DepartmentTemplateInserts : IEntityTypeConfiguration<DepartmentTemplate>
     {
         private int _autoincrement = 1;
+
         public void Configure(EntityTypeBuilder<DepartmentTemplate> builder)
         {
             string[] names = { "Auto Propio", "Servicio Viaje", "Viaticos" };
@@ -37,7 +33,7 @@ namespace Infrastructure.Persistence.Inserts
                 builder.HasData(new DepartmentTemplate()
                 {
                     DepartmentTemplateId = _autoincrement++,
-                    DeptartmentId = departmentId,
+                    DepartmentId = departmentId,
                     DepartmentTemplateName = name
                 });
         }

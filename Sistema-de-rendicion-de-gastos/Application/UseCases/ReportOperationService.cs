@@ -6,9 +6,9 @@ namespace Application.UseCases
 {
     public class ReportOperationService : IReportOperationService
     {
-        private readonly IGenericRepository<ReportOperation> repository;
+        private readonly IGenericRepositoryQuerys<ReportOperation> repository;
 
-        public ReportOperationService(IGenericRepository<ReportOperation> repository)
+        public ReportOperationService(IGenericRepositoryQuerys<ReportOperation> repository)
         {
             this.repository = repository;
         }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,17 +27,17 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DepartmentTemplate",
+                name: "DepartmentTemplates",
                 columns: table => new
                 {
                     DepartmentTemplateId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeptartmentId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentTemplateName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentTemplateName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DepartmentTemplate", x => x.DepartmentTemplateId);
+                    table.PrimaryKey("PK_DepartmentTemplates", x => x.DepartmentTemplateId);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,7 +69,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FieldTemplate",
+                name: "FieldTemplates",
                 columns: table => new
                 {
                     FieldTemplateId = table.Column<int>(type: "int", nullable: false),
@@ -79,9 +79,9 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FieldTemplate", x => new { x.FieldTemplateId, x.FieldNameId });
+                    table.PrimaryKey("PK_FieldTemplates", x => new { x.FieldTemplateId, x.FieldNameId });
                     table.ForeignKey(
-                        name: "FK_FieldTemplate_DataType_DataTypeId",
+                        name: "FK_FieldTemplates_DataType_DataTypeId",
                         column: x => x.DataTypeId,
                         principalTable: "DataType",
                         principalColumn: "DataTypeId",
@@ -97,7 +97,7 @@ namespace Infrastructure.Migrations
                     ReportId = table.Column<int>(type: "int", nullable: false),
                     ReportOperationId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    DateTracking = table.Column<DateTime>(type: "datetime", nullable: false)
+                    TrackingDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,6 +155,20 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "DepartmentTemplates",
+                columns: new[] { "DepartmentTemplateId", "DepartmentId", "DepartmentTemplateName" },
+                values: new object[,]
+                {
+                    { 1, 1, "Auto Propio" },
+                    { 2, 1, "Servicio Viaje" },
+                    { 3, 1, "Viaticos" },
+                    { 4, 2, "Gastos varios" },
+                    { 5, 2, "Materia prima" },
+                    { 6, 3, "Materiales de Construccion" },
+                    { 7, 3, "Placas de Carpinteria" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "ReportOperations",
                 columns: new[] { "ReportOperationId", "ReportOperationName" },
                 values: new object[,]
@@ -176,14 +190,45 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ReportTrackings",
-                columns: new[] { "ReportTrackingId", "DateTracking", "EmployeeId", "ReportId", "ReportOperationId" },
+                table: "FieldTemplates",
+                columns: new[] { "FieldNameId", "FieldTemplateId", "DataTypeId", "Enabled" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified), 1, 1, 1 },
-                    { 2, new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified), 2, 2, 1 },
-                    { 3, new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified), 3, 2, 2 },
-                    { 4, new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified), 2, 3, 1 }
+                    { "Destino", 1, 2, true },
+                    { "Km", 2, 5, true },
+                    { "HuboPeajes", 3, 4, true },
+                    { "Monto Peajes", 4, 5, true },
+                    { "Destino", 5, 2, true },
+                    { "Nombre Servicio", 6, 2, true },
+                    { "Comprobante", 7, 2, true },
+                    { "Viatico", 8, 2, true },
+                    { "Motivo", 9, 2, true },
+                    { "Comprobante", 10, 2, true },
+                    { "Proveedor", 11, 2, true },
+                    { "Contacto", 12, 1, true },
+                    { "Nombre Material", 13, 2, true },
+                    { "Peso [Kg]", 14, 5, true },
+                    { "Ancho [mm]", 15, 1, true },
+                    { "Alto [mm]", 16, 1, true },
+                    { "Viatico", 17, 2, true },
+                    { "Motivo", 18, 2, true },
+                    { "Comprobante", 19, 2, true },
+                    { "Proveedor", 20, 2, true },
+                    { "Tel. Proveedor", 21, 1, true },
+                    { "Ancho [mm]", 22, 1, true },
+                    { "Alto [mm]", 23, 1, true },
+                    { "Peso [Kg]", 24, 5, true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReportTrackings",
+                columns: new[] { "ReportTrackingId", "EmployeeId", "ReportId", "ReportOperationId", "TrackingDate" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, 1, new DateTime(2023, 9, 5, 14, 30, 20, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, 2, 1, new DateTime(2023, 9, 7, 9, 20, 9, 0, DateTimeKind.Unspecified) },
+                    { 3, 3, 2, 2, new DateTime(2023, 9, 15, 16, 15, 43, 0, DateTimeKind.Unspecified) },
+                    { 4, 2, 3, 1, new DateTime(2023, 9, 17, 18, 33, 1, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -201,8 +246,8 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FieldTemplate_DataTypeId",
-                table: "FieldTemplate",
+                name: "IX_FieldTemplates_DataTypeId",
+                table: "FieldTemplates",
                 column: "DataTypeId");
 
             migrationBuilder.CreateIndex(
@@ -225,10 +270,10 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DepartmentTemplate");
+                name: "DepartmentTemplates");
 
             migrationBuilder.DropTable(
-                name: "FieldTemplate");
+                name: "FieldTemplates");
 
             migrationBuilder.DropTable(
                 name: "ReportTrackings");

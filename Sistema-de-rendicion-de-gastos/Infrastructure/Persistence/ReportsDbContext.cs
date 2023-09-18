@@ -12,8 +12,8 @@ namespace Infrastructure.Persistence
         public DbSet<ReportOperation> ReportOperations { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<ReportTracking> ReportTrackings { get; set; }
-        public DbSet<FieldTemplate> FieldTemplateds { get; set; }
-        public DbSet<FieldTemplate> DeptoTemplates { get; set; }
+        public DbSet<FieldTemplate> FieldTemplates { get; set; }
+        public DbSet<DepartmentTemplate> DepartmentTemplates { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,13 +29,15 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new VariableFieldConfiguration());
             modelBuilder.ApplyConfiguration(new DataTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FieldTemplateConfiguration());
-            modelBuilder.ApplyConfiguration(new DeptoTemplateConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentTemplateConfiguration());
 
             modelBuilder.ApplyConfiguration(new DataTypeInserts());
             modelBuilder.ApplyConfiguration(new ReportInserts());
             modelBuilder.ApplyConfiguration(new VariableFieldInserts());
             modelBuilder.ApplyConfiguration(new ReportTrackingInserts());
             modelBuilder.ApplyConfiguration(new ReportOperationInserts());
+            modelBuilder.ApplyConfiguration(new DepartmentTemplateInserts());
+            modelBuilder.ApplyConfiguration(new FieldTemplateInserts());
         }
     }
 }
