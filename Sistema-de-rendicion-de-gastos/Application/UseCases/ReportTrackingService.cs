@@ -46,7 +46,7 @@ namespace Application.UseCases
                 TrackingDate = DateTime.Now,
             };
 
-            await this.command.Add(tracking);
+            await this.command.Add(tracking);   
         }
     }
 }

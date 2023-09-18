@@ -10,6 +10,6 @@ namespace Application.Interfaces.IServices
 
         Task<ReportStatusResponse> GetReportStatusById(int reportId);
 
-        Task AddReport(ReportRequest request);
+        Task AddReport(ReportRequest request, Dictionary<string, string> fields);
     }
 }

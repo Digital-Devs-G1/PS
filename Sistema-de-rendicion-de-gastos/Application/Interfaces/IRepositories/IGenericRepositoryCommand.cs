@@ -8,8 +8,9 @@ namespace Application.Interfaces.IRepositories
 {
     public interface IGenericRepositoryCommand<T> where T : class
     {
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Delete(T entity);
+        public Task<bool> Add(T entity);
+        public Task<bool> Add(IList<T> entities);
+        public Task<bool> Update(T entity);
+        public Task<bool> Delete(T entity);
     }
 }

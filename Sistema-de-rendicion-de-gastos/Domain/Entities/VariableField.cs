@@ -1,7 +1,7 @@
 ﻿
 namespace Domain.Entities
 {
-    public class VariableField
+    public class VariableField : BaseEntity
     {
         // PK
         public required string NameId { get; set; }

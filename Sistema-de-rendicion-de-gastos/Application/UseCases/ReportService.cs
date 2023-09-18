@@ -5,6 +5,7 @@ using Application.Enums;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Domain.Entities;
+using System.Xml.Linq;
 
 namespace Application.UseCases
 {
@@ -14,7 +15,15 @@ namespace Application.UseCases
         private readonly IGenericRepositoryCommand<Report> command;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
-        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService, IGenericRepositoryCommand<Report> command)
+        private readonly IVariableFieldService variableFieldService;
+        private readonly IFieldTemplateService fieldTemplateService;
+
+        public ReportService(
+            IGenericRepositoryQuerys<Report> repository,
+            IReportTrackingService reportTrackingService, 
+            IReportOperationService reportOperationService, 
+            IGenericRepositoryCommand<Report> command
+            )
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
@@ -89,8 +98,17 @@ namespace Application.UseCases
             return reportStatusResponse;
         }
 
-        public async Task AddReport(ReportRequest request)
+        public void CheckField(IList<FieldTemplate> template, Dictionary<string, string> fields)
         {
+
+        }
+
+        public async Task AddReport(ReportRequest request, Dictionary<string, string> fields)
+        {
+            var template = await fieldTemplateService.GetTemplate(request.TemplateId);
+            if (template.Count != fields.Count)
+                throw new ArgumentException("Formato de template incorrecto. Cantidad de campos variables invalida");
+
             var report = new Report
             {
                 EmployeeId = request.EmployeeId,
@@ -98,9 +116,26 @@ namespace Application.UseCases
                 Amount = request.Amount,
             };
 
-            await this.command.Add(report);
+            var entities = new List<VariableField>();
+            for (int i = 0; i < template.Count; i++)
+            {
+                var name = template[i].FieldName;
+                CheckField(template, fields);
 
-            await this.reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
+                entities.Add(new VariableField()
+                {
+                    ReportId = report.ReportId,
+                    NameId = name,
+                    DataTypeId = template[i].DataTypeId,
+                    Value = fields[name]
+                });
+            }
+
+            await command.Add(report);
+
+            await reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
+
+            await variableFieldService.AddFields(entities);
         }
     }
 }
