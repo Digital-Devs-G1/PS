@@ -1,4 +1,4 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.ReportOperationNS;
 using Application.Enums;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
@@ -8,25 +8,26 @@ namespace Application.UseCases
 {
     public class ReportService : IReportService
     {
-        private readonly IGenericRepository<Report> repository;
+        private readonly IGenericRepository<Report> _reportRepo;
         private readonly IReportTrackingService reportTrackingService;
-        private readonly IReportOperationService reportOperationService;
-        public ReportService(IGenericRepository<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService)
+        public ReportService(
+            IGenericRepository<Report> repository, 
+            IReportTrackingService reportTrackingService
+            )
         {
-            this.repository = repository;
+            this._reportRepo = repository;
             this.reportTrackingService = reportTrackingService;
-            this.reportOperationService = reportOperationService;
         }
 
         public async Task<Report> GetById(int id)
         {
-            return await repository.GetByIdAsync(id);
+            return await _reportRepo.GetByIdAsync(id);
         }
 
         public async Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId)
         {
             List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
-            var reports = await this.repository.GetAllAsync();
+            var reports = await this._reportRepo.GetAllAsync();
             var filter = reports.Where(opt => opt.EmployeeId == employeeId);
 
             foreach (var report in filter)
@@ -40,7 +41,7 @@ namespace Application.UseCases
 
                 ReportStatusResponse reportStatusResponse = new ReportStatusResponse
                 {
-                    Id = report.ReportId,
+                    ReportId = report.ReportId,
                     Description = report.Description,
                     Amount = report.Amount,
                     Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
@@ -69,7 +70,7 @@ namespace Application.UseCases
 
             ReportStatusResponse reportStatusResponse = new ReportStatusResponse
             {
-                Id = report.ReportId,
+                ReportId = report.ReportId,
                 Description = report.Description,
                 Amount = report.Amount,
                 Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),

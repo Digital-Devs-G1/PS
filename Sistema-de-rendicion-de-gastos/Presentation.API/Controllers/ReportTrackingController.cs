@@ -1,9 +1,5 @@
 ﻿using Application.Interfaces.IServices;
-using Application.UseCases;
-using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Presentation.API.Controllers
 {
@@ -11,7 +7,7 @@ namespace Presentation.API.Controllers
     [ApiController]
     public class ReportTrackingController : ControllerBase
     {
-        private IReportTrackingService _service;
+        private readonly IReportTrackingService _service;
 
         public ReportTrackingController(IReportTrackingService service)
         {

@@ -1,22 +1,18 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.ReportOperationNS;
 using Application.Interfaces.IRepositories;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Query
 {
-    public class ReportTrackingQuery : IReportTrackingQuery
+    public class ReportTrackingQuery 
+        : GenericRepository<ReportTracking>
+        , IReportTrackingQuery
     {
-        private DbContext _dbContext;
-
+        
         public ReportTrackingQuery(DbContext dbContext)
+            : base(dbContext)
         {
-            _dbContext = dbContext;
         }
 
         public async Task<IEnumerable<ReportTracking>> GetByReportId(int reportId)
@@ -45,7 +41,7 @@ namespace Infrastructure.Repositories
         /// reportes en cuestion.</returns>
         public async Task<IList<ReportOperationHistory>> GetEmployeeReportInteractions(int employeeId)
         {
-            var resultado = await _dbContext
+            var result = await _dbContext
                 .Set<ReportTracking>()
                 .Include(reportTracking => reportTracking.ReportOperationNav)
                 .Where(reportTracking => reportTracking.EmployeeId == employeeId)
@@ -56,7 +52,7 @@ namespace Infrastructure.Repositories
                     Operations = group.ToList()
                 })
                 .ToListAsync();
-            return resultado;
+            return result;
         }
 
         /// <summary>

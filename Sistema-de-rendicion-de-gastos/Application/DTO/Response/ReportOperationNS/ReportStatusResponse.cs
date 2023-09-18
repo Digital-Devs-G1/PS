@@ -1,8 +1,8 @@
-﻿namespace Application.DTO.Response
+﻿namespace Application.DTO.Response.ReportOperationNS
 {
     public class ReportStatusResponse
     {
-        public int Id { get; set; }
+        public int ReportId { get; set; }
 
         public string Description { get; set; }
 

@@ -1,12 +1,9 @@
 
-using Application.DTO.Response;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Application.UseCases;
-using Infrastructure;
 using Infrastructure.Persistence;
-using Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repositories.Query;
 
 namespace Presentation.API
 {
@@ -23,17 +20,16 @@ namespace Presentation.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddSingleton<DbContext, ReportsDbContext>();
+            builder.Services.AddSingleton<ReportsDbContext>();
 
             //repositories
             builder.Services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
-            //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
+            builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
 
             //services
             builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
-            builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
@@ -50,7 +46,6 @@ namespace Presentation.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

@@ -2,45 +2,48 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Query
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        private readonly DbContext context;
-        private readonly DbSet<T> entities;
+        protected readonly DbContext _dbContext;
 
         public GenericRepository(DbContext context)
         {
-            this.context = context;
-            entities = context.Set<T>();
+            this._dbContext = context;
+        }
+
+        private DbSet<T> Entity()
+        {
+            return _dbContext.Set<T>();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await entities.ToListAsync();
+            return await Entity().ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await entities.FindAsync(id);
+            return await Entity().FindAsync(id);
         }
         public async Task Add(T entity)
         {
-            entities.Add(entity);
-            await context.SaveChangesAsync();
+            Entity().Add(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(T entity)
         {
-            entities.Update(entity);
-            await context.SaveChangesAsync();
+            Entity().Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
             T entity = await GetByIdAsync(id);
-            entities.Remove(entity);
-            await context.SaveChangesAsync();
+            Entity().Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

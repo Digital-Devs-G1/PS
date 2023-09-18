@@ -1,4 +1,4 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.ReportOperationNS;
 using Domain.Entities;
 
 namespace Application.Interfaces.IRepositories
