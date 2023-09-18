@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.DTO.Request;
+using Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,14 @@ namespace Presentation.API.Controllers
         {
             var reportsStatus = await reportService.GetReportsStatusById(employeeId);
             return this.Ok(reportsStatus);
+        }
+
+        [HttpPost("Report")]
+        public async Task<IActionResult> AddReport([FromBody] ReportRequest request)
+        {
+            // falta agregar los datos de los variable fields.
+            await this.reportService.AddReport(request);
+            return this.Ok();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Application.DTO.Response.ReportOperationNS;
+﻿using Application.DTO.Request;
+using Application.DTO.Response;
+using Application.DTO.Response.ReportOperationNS;
 using Application.Enums;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
@@ -9,17 +11,26 @@ namespace Application.UseCases
     public class ReportService : IReportService
     {
         private readonly IGenericRepositoryQuerys<Report> repository;
+        private readonly IGenericRepositoryCommand<Report> command;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
-        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService)
+        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService, IGenericRepositoryCommand<Report> command)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
+            this.command = command;
+            this.reportOperationService = reportOperationService;
         }
 
         public async Task<Report> GetById(int id)
         {
             return await repository.GetByIdAsync(id);
+        }
+
+        public async Task<List<Report>> GetAll()
+        {
+            var reports = await this.repository.GetAllAsync();
+            return reports.ToList();
         }
 
         public async Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId)
@@ -35,14 +46,14 @@ namespace Application.UseCases
                 {
                     throw new ArgumentException($"No se han realizado operaciones sobre este reporte");
                 }
-                //var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
+                var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
 
                 ReportStatusResponse reportStatusResponse = new ReportStatusResponse
                 {
                     ReportId = report.ReportId,
                     Description = report.Description,
                     Amount = report.Amount,
-                    Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                    Status = reportOperation.ReportOperationName,
                     DateTracking = lastTracking.TrackingDate,
                 };
 
@@ -64,18 +75,32 @@ namespace Application.UseCases
             {
                 throw new ArgumentException($"No se han realizado operaciones sobre este reporte");
             }
-            //var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
+            var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
 
             ReportStatusResponse reportStatusResponse = new ReportStatusResponse
             {
                 ReportId = report.ReportId,
                 Description = report.Description,
                 Amount = report.Amount,
-                Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                Status = reportOperation.ReportOperationName,
                 DateTracking = lastTracking.TrackingDate,
             };
 
             return reportStatusResponse;
+        }
+
+        public async Task AddReport(ReportRequest request)
+        {
+            var report = new Report
+            {
+                EmployeeId = request.EmployeeId,
+                Description = request.Description,
+                Amount = request.Amount,
+            };
+
+            await this.command.Add(report);
+
+            await this.reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
         }
     }
 }

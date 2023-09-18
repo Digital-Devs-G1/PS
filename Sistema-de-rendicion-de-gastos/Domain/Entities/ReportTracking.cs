@@ -3,7 +3,7 @@
     public class ReportTracking : BaseEntity
     {
         // PK
-        public required int ReportTrackingId { get; set; }
+        public int ReportTrackingId { get; set; }
 
         // FK
         public required int ReportId { get; set; }
