@@ -3,7 +3,7 @@
     public class Report : BaseEntity
     {
         // PK
-        public required int ReportId { get; set; }
+        public int ReportId { get; set; }
 
         // FK
         //public ICollection<ReportTracking>? ReportTrackingCol { get; set; }

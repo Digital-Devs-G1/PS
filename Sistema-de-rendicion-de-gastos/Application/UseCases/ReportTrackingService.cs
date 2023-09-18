@@ -33,5 +33,18 @@ namespace Application.UseCases
         {
             return await _repository.GetReportHistoryByCreator(employeeId);
         }
+
+        public async Task AddCreationTracking(int reportId, int employeeId)
+        {
+            var tracking = new ReportTracking
+            {
+                ReportId = reportId,
+                EmployeeId = employeeId,
+                ReportOperationId = 1,
+                DateTracking = DateTime.Now,
+            };
+
+            await this._repository.Add(tracking);
+        }
     }
 }

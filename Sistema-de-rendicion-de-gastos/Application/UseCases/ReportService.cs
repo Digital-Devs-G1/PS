@@ -1,4 +1,5 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Request;
+using Application.DTO.Response;
 using Application.Enums;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
@@ -23,6 +24,12 @@ namespace Application.UseCases
             return await repository.GetByIdAsync(id);
         }
 
+        public async Task<List<Report>> GetAll()
+        {
+            var reports = await this.repository.GetAllAsync();
+            return reports.ToList();
+        }
+
         public async Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId)
         {
             List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
@@ -36,14 +43,14 @@ namespace Application.UseCases
                 {
                     throw new ArgumentException($"No se han realizado operaciones sobre este reporte");
                 }
-                //var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
+                var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
 
                 ReportStatusResponse reportStatusResponse = new ReportStatusResponse
                 {
                     Id = report.ReportId,
                     Description = report.Description,
                     Amount = report.Amount,
-                    Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                    Status = reportOperation.ReportOperationName,
                     DateTracking = lastTracking.DateTracking,
                 };
 
@@ -65,18 +72,32 @@ namespace Application.UseCases
             {
                 throw new ArgumentException($"No se han realizado operaciones sobre este reporte");
             }
-            //var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
+            var reportOperation = await this.reportOperationService.GetById(lastTracking.ReportOperationId);
 
             ReportStatusResponse reportStatusResponse = new ReportStatusResponse
             {
                 Id = report.ReportId,
                 Description = report.Description,
                 Amount = report.Amount,
-                Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                Status = reportOperation.ReportOperationName,
                 DateTracking = lastTracking.DateTracking,
             };
 
             return reportStatusResponse;
+        }
+
+        public async Task AddReport(ReportRequest request)
+        {
+            var report = new Report
+            {
+                EmployeeId = request.EmployeeId,
+                Description = request.Description,
+                Amount = request.Amount,
+            };
+
+            await this.repository.Add(report);
+
+            await this.reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
         }
     }
 }

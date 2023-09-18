@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class ReportTrackingQuery : IReportTrackingQuery
+    public class ReportTrackingQuery : GenericRepository<ReportTracking>, IReportTrackingQuery
     {
         private DbContext _dbContext;
 
-        public ReportTrackingQuery(DbContext dbContext)
+        public ReportTrackingQuery(DbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }

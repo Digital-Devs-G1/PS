@@ -10,5 +10,7 @@ namespace Application.Interfaces.IServices
         Task<IEnumerable<ReportTracking>> GetByReportId(int reportId);
 
         Task<ReportTracking> GetLastTrackingByReportId(int reportId);
+
+        Task AddCreationTracking(int reportId, int employeeId);
     }
 }
