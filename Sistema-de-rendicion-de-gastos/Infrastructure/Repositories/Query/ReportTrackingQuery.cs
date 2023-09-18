@@ -6,14 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Query
 {
-    public class ReportTrackingQuery 
-        : GenericRepository<ReportTracking>
-        , IReportTrackingQuery
+    public class ReportTrackingQuery : IReportTrackingQuery
     {
         private ReportsDbContext _dbContext;
 
         public ReportTrackingQuery(ReportsDbContext dbContext)
         {
+            _dbContext = dbContext;
         }
 
         public async Task<IEnumerable<ReportTracking>> GetByReportId(int reportId)

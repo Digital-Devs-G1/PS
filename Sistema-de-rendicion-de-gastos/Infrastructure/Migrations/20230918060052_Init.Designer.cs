@@ -12,11 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230918040703_init.Designer.cs
-    [Migration("20230918040703_init")]
-========
-    [Migration("20230918050633_Init")]
->>>>>>>> dev:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230918050633_Init.Designer.cs
+    [Migration("20230918060052_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -178,7 +174,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             FieldTemplateId = 3,
-                            FieldNameId = "Peajes",
+                            FieldNameId = "HuboPeajes",
                             DataTypeId = 4,
                             Enabled = true
                         },

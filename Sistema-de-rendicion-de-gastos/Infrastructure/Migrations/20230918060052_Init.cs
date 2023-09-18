@@ -196,7 +196,7 @@ namespace Infrastructure.Migrations
                 {
                     { "Destino", 1, 2, true },
                     { "Km", 2, 5, true },
-                    { "Peajes", 3, 4, true },
+                    { "HuboPeajes", 3, 4, true },
                     { "Monto Peajes", 4, 5, true },
                     { "Destino", 5, 2, true },
                     { "Nombre Servicio", 6, 2, true },

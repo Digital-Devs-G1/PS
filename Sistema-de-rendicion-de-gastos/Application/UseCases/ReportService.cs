@@ -13,19 +13,19 @@ namespace Application.UseCases
         private readonly IReportOperationService reportOperationService;
         public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService)
         {
-            this._reportRepo = repository;
+            this.repository = repository;
             this.reportTrackingService = reportTrackingService;
         }
 
         public async Task<Report> GetById(int id)
         {
-            return await _reportRepo.GetByIdAsync(id);
+            return await repository.GetByIdAsync(id);
         }
 
         public async Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId)
         {
             List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
-            var reports = await this._reportRepo.GetAllAsync();
+            var reports = await this.repository.GetAllAsync();
             var filter = reports.Where(opt => opt.EmployeeId == employeeId);
             
             foreach (var report in filter)

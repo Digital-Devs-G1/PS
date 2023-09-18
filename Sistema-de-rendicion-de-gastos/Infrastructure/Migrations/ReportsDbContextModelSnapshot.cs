@@ -171,7 +171,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             FieldTemplateId = 3,
-                            FieldNameId = "Peajes",
+                            FieldNameId = "HuboPeajes",
                             DataTypeId = 4,
                             Enabled = true
                         },

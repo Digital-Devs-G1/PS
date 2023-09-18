@@ -5,6 +5,7 @@ using Application.UseCases;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories;
 using Infrastructure.Repositories.Query;
 
 namespace Presentation.API
@@ -27,7 +28,6 @@ namespace Presentation.API
             //repositories
             builder.Services.AddTransient(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
             builder.Services.AddTransient(typeof(IGenericRepositoryCommand<>), typeof(GenericRepositoryCommand<>));
-            builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
             builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IDepartamentTemplateQuery, DepartmentTemplateQuery>();
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
