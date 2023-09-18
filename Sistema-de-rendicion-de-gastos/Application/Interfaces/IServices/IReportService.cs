@@ -1,4 +1,6 @@
-﻿using Application.DTO.Response.ReportOperationNS;
+﻿using Application.DTO.Request;
+using Application.DTO.Response;
+using Application.DTO.Response.ReportOperationNS;
 
 namespace Application.Interfaces.IServices
 {
@@ -8,5 +10,6 @@ namespace Application.Interfaces.IServices
 
         Task<ReportStatusResponse> GetReportStatusById(int reportId);
 
+        Task AddReport(ReportRequest request);
     }
 }
