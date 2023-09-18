@@ -1,6 +1,7 @@
 ﻿using Application.DTO.Response;
 using Application.Interfaces.IRepositories;
 using Domain.Entities;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace Infrastructure.Repositories
 {
     public class ReportTrackingQuery : IReportTrackingQuery
     {
-        private DbContext _dbContext;
+        private ReportsDbContext _dbContext;
 
-        public ReportTrackingQuery(DbContext dbContext)
+        public ReportTrackingQuery(ReportsDbContext dbContext)
         {
             _dbContext = dbContext;
         }
