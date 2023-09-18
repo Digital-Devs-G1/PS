@@ -1,14 +1,15 @@
 ﻿using Application.Interfaces.IRepositories;
 using Domain.Entities;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
     public class VariableFieldQuery : IVariableFieldQuery
     {
-        private DbContext _dbContext;
+        private ReportsDbContext _dbContext;
 
-        public VariableFieldQuery(DbContext dbContext)
+        public VariableFieldQuery(ReportsDbContext dbContext)
         {
             _dbContext = dbContext;
         }

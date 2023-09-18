@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Response;
+using Domain.Entities;
 
 namespace Application.Interfaces.IServices
 {
@@ -7,5 +8,6 @@ namespace Application.Interfaces.IServices
         Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId);
 
         Task<ReportStatusResponse> GetReportStatusById(int reportId);
+
     }
 }

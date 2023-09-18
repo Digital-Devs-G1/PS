@@ -1,29 +1,26 @@
 ﻿using Application.Interfaces.IRepositories;
 using Domain.Entities;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class GenericRepositoryCommand<T> : IGenericRepositoryCommand<T> where T : BaseEntity
     {
-        private readonly DbContext context;
+        private readonly ReportsDbContext context;
         private readonly DbSet<T> entities;
 
-        public GenericRepository(DbContext context)
+        public GenericRepositoryCommand(ReportsDbContext context)
         {
             this.context = context;
             entities = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await entities.ToListAsync();
-        }
-
-        public async Task<T> GetByIdAsync(int id)
-        {
-            return await entities.FindAsync(id);
-        }
         public async Task Add(T entity)
         {
             entities.Add(entity);
@@ -36,11 +33,12 @@ namespace Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
+        // el profe dice que los chequeos x id eran en capa de aplication (Emi y Martin)
         public async Task Delete(int id)
         {
-            T entity = await GetByIdAsync(id);
-            entities.Remove(entity);
-            await context.SaveChangesAsync();
+            //T entity = await GetByIdAsync(id);
+            //entities.Remove(entity);
+            //await context.SaveChangesAsync();
         }
     }
 }

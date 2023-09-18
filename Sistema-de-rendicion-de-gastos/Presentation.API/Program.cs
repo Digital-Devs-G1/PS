@@ -3,6 +3,7 @@ using Application.DTO.Response;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Application.UseCases;
+using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
@@ -23,20 +24,23 @@ namespace Presentation.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddSingleton<DbContext, ReportsDbContext>();
+            builder.Services.AddSingleton<ReportsDbContext>();
 
             //repositories
-            builder.Services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddTransient(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
+            builder.Services.AddTransient(typeof(IGenericRepositoryCommand<>), typeof(GenericRepositoryCommand<>));
             builder.Services.AddSingleton<IVariableFieldQuery, VariableFieldQuery>();
+            builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
+            builder.Services.AddSingleton<IDepartamentTemplateQuery, DepartmentTemplateQuery>();
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services
             builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
-            builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
+            builder.Services.AddSingleton<IDepartmentTemplateServices, DepartmentTemplateServices>();
 
             var app = builder.Build();
 
