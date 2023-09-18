@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Interfaces.IRepositories
 {
-    public interface IReportTrackingQuery : IGenericRepository<ReportTracking>
+    public interface IReportTrackingQuery : IGenericRepositoryCommand<ReportTracking>
     {
         public Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId);
         public Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId);

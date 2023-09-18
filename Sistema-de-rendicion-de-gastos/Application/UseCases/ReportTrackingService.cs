@@ -8,10 +8,12 @@ namespace Application.UseCases
     public class ReportTrackingService : IReportTrackingService
     {
         private IReportTrackingQuery _repository;
+        private readonly IGenericRepositoryCommand<ReportTracking> command;
 
-        public ReportTrackingService(IReportTrackingQuery repository)
+        public ReportTrackingService(IReportTrackingQuery repository, IGenericRepositoryCommand<ReportTracking> command)
         {
             _repository = repository;
+            this.command = command;
         }
 
         public async Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId)
@@ -34,11 +36,6 @@ namespace Application.UseCases
             return _repository.GetLastTrackingByReportIdAsync(reportId);
         }
 
-        public async Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId)
-        {
-            return await _repository.GetReportHistoryByCreator(employeeId);
-        }
-
         public async Task AddCreationTracking(int reportId, int employeeId)
         {
             var tracking = new ReportTracking
@@ -46,10 +43,10 @@ namespace Application.UseCases
                 ReportId = reportId,
                 EmployeeId = employeeId,
                 ReportOperationId = 1,
-                DateTracking = DateTime.Now,
+                TrackingDate = DateTime.Now,
             };
 
-            await this._repository.Add(tracking);
+            await this.command.Add(tracking);
         }
     }
 }

@@ -11,12 +11,15 @@ namespace Application.UseCases
     public class ReportService : IReportService
     {
         private readonly IGenericRepositoryQuerys<Report> repository;
+        private readonly IGenericRepositoryCommand<Report> command;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
-        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService)
+        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService, IGenericRepositoryCommand<Report> command)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
+            this.command = command;
+            this.reportOperationService = reportOperationService;
         }
 
         public async Task<Report> GetById(int id)
@@ -50,7 +53,7 @@ namespace Application.UseCases
                     ReportId = report.ReportId,
                     Description = report.Description,
                     Amount = report.Amount,
-                    Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                    Status = reportOperation.ReportOperationName,
                     DateTracking = lastTracking.TrackingDate,
                 };
 
@@ -79,7 +82,7 @@ namespace Application.UseCases
                 ReportId = report.ReportId,
                 Description = report.Description,
                 Amount = report.Amount,
-                Status = Enum.GetName(typeof(ReportOperationEnum), lastTracking.ReportOperationId),
+                Status = reportOperation.ReportOperationName,
                 DateTracking = lastTracking.TrackingDate,
             };
 
@@ -95,7 +98,7 @@ namespace Application.UseCases
                 Amount = request.Amount,
             };
 
-            await this.repository.Add(report);
+            await this.command.Add(report);
 
             await this.reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
         }

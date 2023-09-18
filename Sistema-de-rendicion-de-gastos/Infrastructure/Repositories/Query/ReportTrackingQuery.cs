@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Query
 {
-    public class ReportTrackingQuery : GenericRepository<ReportTracking>, IReportTrackingQuery
+    public class ReportTrackingQuery : GenericRepositoryCommand<ReportTracking>, IReportTrackingQuery
     {
         private ReportsDbContext _dbContext;
 
-        public ReportTrackingQuery(ReportsDbContext dbContext)
+        public ReportTrackingQuery(ReportsDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }

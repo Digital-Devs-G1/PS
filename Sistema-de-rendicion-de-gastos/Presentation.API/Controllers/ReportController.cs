@@ -33,6 +33,7 @@ namespace Presentation.API.Controllers
         [HttpPost("Report")]
         public async Task<IActionResult> AddReport([FromBody] ReportRequest request)
         {
+            // falta agregar los datos de los variable fields.
             await this.reportService.AddReport(request);
             return this.Ok();
         }
