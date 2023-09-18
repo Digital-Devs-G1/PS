@@ -30,6 +30,7 @@ namespace Presentation.API
             builder.Services.AddTransient(typeof(IGenericRepositoryCommand<>), typeof(GenericRepositoryCommand<>));
             builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IDepartamentTemplateQuery, DepartmentTemplateQuery>();
+            builder.Services.AddSingleton<IFieldTemplateQuerys, FieldTemplateQuerys>();
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services
@@ -38,6 +39,7 @@ namespace Presentation.API
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
             builder.Services.AddSingleton<IDepartmentTemplateServices, DepartmentTemplateServices>();
+            builder.Services.AddSingleton<IFieldTemplateServices, FieldTemplateServices>();
 
             var app = builder.Build();
 

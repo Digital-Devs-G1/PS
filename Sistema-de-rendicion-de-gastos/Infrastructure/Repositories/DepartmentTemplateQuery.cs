@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
         public async Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId)
         {
             return await _context.DepartmentTemplates.Where(dt => dt.DepartmentId == deptoId)
-                                               .ToListAsync();
+                                                     .ToListAsync();
         }
     }
 }
