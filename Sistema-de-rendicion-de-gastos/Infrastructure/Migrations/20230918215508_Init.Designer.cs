@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20230918142507__Init")]
-    partial class _Init
+    [Migration("20230918215508_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,7 +140,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("FieldTemplateId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FieldNameId")
+                    b.Property<string>("FieldName")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -150,7 +150,7 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
-                    b.HasKey("FieldTemplateId", "FieldNameId");
+                    b.HasKey("FieldTemplateId", "FieldName");
 
                     b.HasIndex("DataTypeId");
 
@@ -160,168 +160,168 @@ namespace Infrastructure.Migrations
                         new
                         {
                             FieldTemplateId = 1,
-                            FieldNameId = "Destino",
+                            FieldName = "Destino",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 1,
+                            FieldName = "Km",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 1,
+                            FieldName = "HuboPeajes",
+                            DataTypeId = 4,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 1,
+                            FieldName = "Monto Peajes",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 2,
+                            FieldName = "Destino",
                             DataTypeId = 2,
                             Enabled = true
                         },
                         new
                         {
                             FieldTemplateId = 2,
-                            FieldNameId = "Km",
-                            DataTypeId = 5,
+                            FieldName = "Nombre Servicio",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 2,
+                            FieldName = "Comprobante",
+                            DataTypeId = 2,
                             Enabled = true
                         },
                         new
                         {
                             FieldTemplateId = 3,
-                            FieldNameId = "HuboPeajes",
-                            DataTypeId = 4,
+                            FieldName = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 3,
+                            FieldName = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 3,
+                            FieldName = "Comprobante",
+                            DataTypeId = 2,
                             Enabled = true
                         },
                         new
                         {
                             FieldTemplateId = 4,
-                            FieldNameId = "Monto Peajes",
+                            FieldName = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 4,
+                            FieldName = "Contacto",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 4,
+                            FieldName = "Nombre Material",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 4,
+                            FieldName = "Peso [Kg]",
                             DataTypeId = 5,
                             Enabled = true
                         },
                         new
                         {
+                            FieldTemplateId = 4,
+                            FieldName = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 4,
+                            FieldName = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
                             FieldTemplateId = 5,
-                            FieldNameId = "Destino",
+                            FieldName = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 5,
+                            FieldName = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 5,
+                            FieldName = "Comprobante",
                             DataTypeId = 2,
                             Enabled = true
                         },
                         new
                         {
                             FieldTemplateId = 6,
-                            FieldNameId = "Nombre Servicio",
+                            FieldName = "Proveedor",
                             DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 6,
+                            FieldName = "Tel. Proveedor",
+                            DataTypeId = 1,
                             Enabled = true
                         },
                         new
                         {
                             FieldTemplateId = 7,
-                            FieldNameId = "Comprobante",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 8,
-                            FieldNameId = "Viatico",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 9,
-                            FieldNameId = "Motivo",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 10,
-                            FieldNameId = "Comprobante",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 11,
-                            FieldNameId = "Proveedor",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 12,
-                            FieldNameId = "Contacto",
+                            FieldName = "Ancho [mm]",
                             DataTypeId = 1,
                             Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 13,
-                            FieldNameId = "Nombre Material",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 14,
-                            FieldNameId = "Peso [Kg]",
-                            DataTypeId = 5,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 15,
-                            FieldNameId = "Ancho [mm]",
+                            FieldTemplateId = 7,
+                            FieldName = "Alto [mm]",
                             DataTypeId = 1,
                             Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 16,
-                            FieldNameId = "Alto [mm]",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 17,
-                            FieldNameId = "Viatico",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 18,
-                            FieldNameId = "Motivo",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 19,
-                            FieldNameId = "Comprobante",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 20,
-                            FieldNameId = "Proveedor",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 21,
-                            FieldNameId = "Tel. Proveedor",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 22,
-                            FieldNameId = "Ancho [mm]",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 23,
-                            FieldNameId = "Alto [mm]",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            FieldTemplateId = 24,
-                            FieldNameId = "Peso [Kg]",
+                            FieldTemplateId = 7,
+                            FieldName = "Peso [Kg]",
                             DataTypeId = 5,
                             Enabled = true
                         });

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories
 {
-    public interface IReportQuery
+    public interface IFieldTemplateQuerys
     {
-        public Report GetReport(int idReport);
+        public Task<IList<FieldTemplate>> GetTemplatesById(int tempId);
     }
 }

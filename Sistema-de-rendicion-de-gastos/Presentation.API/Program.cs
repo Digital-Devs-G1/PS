@@ -6,6 +6,7 @@ using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
+using Infrastructure.Repositories.Command;
 using Infrastructure.Repositories.Query;
 
 namespace Presentation.API
@@ -26,18 +27,20 @@ namespace Presentation.API
             builder.Services.AddSingleton<ReportsDbContext>();
 
             //repositories
-            builder.Services.AddTransient(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
-            builder.Services.AddTransient(typeof(IGenericRepositoryCommand<>), typeof(GenericRepositoryCommand<>));
-            builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IDepartamentTemplateQuery, DepartmentTemplateQuery>();
-            //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
+            builder.Services.AddSingleton<IFieldTemplateQuery, FieldTemplateQuery>();
+            builder.Services.AddTransient(typeof(IGenericRepositoryCommand<>), typeof(GenericRepositoryCommand<>));
+            builder.Services.AddTransient(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
+            builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
+            builder.Services.AddSingleton<IVariableFieldCommand, VariableFieldCommand>();
 
             //services
-            builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
+            builder.Services.AddSingleton<IDepartmentTemplateServices, DepartmentTemplateServices>();
+            builder.Services.AddSingleton<IFieldTemplateService, FieldTemplateService>();
+            builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
-            builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
-            builder.Services.AddSingleton<IDepartmentTemplateServices, DepartmentTemplateServices>();
+            builder.Services.AddSingleton<IVariableFieldService, VariableFieldService>();
 
             var app = builder.Build();
 

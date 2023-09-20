@@ -1,6 +1,5 @@
 ﻿using Application.DTO.Request;
 using Application.Interfaces.IServices;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.API.Controllers
@@ -23,18 +22,20 @@ namespace Presentation.API.Controllers
             return this.Ok(reportStatus);
         }
 
-        [HttpGet("ReportsStatus/{employeeId}")]
-        public async Task<IActionResult> GetReportsStatus(int employeeId)
+        [HttpGet("GetEmployeeReportsStatus/{employeeId}")]
+        public async Task<IActionResult> GetEmployeeReportsStatus(int employeeId)
         {
             var reportsStatus = await reportService.GetReportsStatusById(employeeId);
             return this.Ok(reportsStatus);
         }
 
         [HttpPost("Report")]
-        public async Task<IActionResult> AddReport([FromBody] ReportRequest request)
+        public async Task<IActionResult> AddReport(
+            [FromBody] ReportRequest request,
+            [FromQuery(Name = "fields")] List<string> fields
+            )
         {
-            // falta agregar los datos de los variable fields.
-            await this.reportService.AddReport(request);
+            await this.reportService.AddReport(request, fields);
             return this.Ok();
         }
     }

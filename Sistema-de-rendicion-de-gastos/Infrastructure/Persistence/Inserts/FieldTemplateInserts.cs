@@ -96,12 +96,13 @@ namespace Infrastructure.Persistence.Inserts
             foreach (var field in fieldsValues)
                 templateFields.Add(new FieldTemplate()
                 {
-                    FieldTemplateId = _autoincrement++,
-                    FieldNameId = field.Name,
+                    FieldTemplateId = _autoincrement,
+                    FieldName = field.Name,
                     DataTypeId = field.TypeId,
                     Enabled = true,
                 }
                 );
+            _autoincrement++;
             builder.HasData(templateFields);
         }
     }

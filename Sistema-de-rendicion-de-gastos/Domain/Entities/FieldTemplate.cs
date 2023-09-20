@@ -6,7 +6,7 @@ namespace Domain.Entities
     {
         // PK
         public required int FieldTemplateId { get; set; }
-        public required string FieldNameId { get; set; }
+        public required string FieldName { get; set; }
 
         // FK
         public required int DataTypeId { get; set; }

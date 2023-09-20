@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Command
 {
     public class GenericRepositoryCommand<T> : IGenericRepositoryCommand<T> where T : BaseEntity
     {
@@ -21,22 +21,29 @@ namespace Infrastructure.Repositories
             entities = context.Set<T>();
         }
 
-        public async Task Add(T entity)
+        public async Task<bool> Add(T entity)
         {
             entities.Add(entity);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync() > 0;
         }
 
-        public async Task Update(T entity)
+        public async Task<bool> Add(IList<T> entities)
+        {
+            foreach(var entity in entities)
+                entities.Add(entity);
+            return await context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> Update(T entity)
         {
             entities.Update(entity);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync() > 0;
         }
 
-        public async Task Delete(T entity)
+        public async Task<bool> Delete(T entity)
         {
             entities.Remove(entity);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync() > 0;
         }
     }
 }

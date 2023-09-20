@@ -3,7 +3,7 @@ using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Query
 {
     public class DepartmentTemplateQuery : IDepartamentTemplateQuery
     {
@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
         public async Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId)
         {
             return await _context.DepartmentTemplates.Where(dt => dt.DepartmentId == deptoId)
-                                               .ToListAsync();
+                                                     .ToListAsync();
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _Init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,13 +73,13 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     FieldTemplateId = table.Column<int>(type: "int", nullable: false),
-                    FieldNameId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    FieldName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     DataTypeId = table.Column<int>(type: "int", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FieldTemplates", x => new { x.FieldTemplateId, x.FieldNameId });
+                    table.PrimaryKey("PK_FieldTemplates", x => new { x.FieldTemplateId, x.FieldName });
                     table.ForeignKey(
                         name: "FK_FieldTemplates_DataType_DataTypeId",
                         column: x => x.DataTypeId,
@@ -191,33 +191,33 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "FieldTemplates",
-                columns: new[] { "FieldNameId", "FieldTemplateId", "DataTypeId", "Enabled" },
+                columns: new[] { "FieldName", "FieldTemplateId", "DataTypeId", "Enabled" },
                 values: new object[,]
                 {
                     { "Destino", 1, 2, true },
-                    { "Km", 2, 5, true },
-                    { "HuboPeajes", 3, 4, true },
-                    { "Monto Peajes", 4, 5, true },
-                    { "Destino", 5, 2, true },
-                    { "Nombre Servicio", 6, 2, true },
-                    { "Comprobante", 7, 2, true },
-                    { "Viatico", 8, 2, true },
-                    { "Motivo", 9, 2, true },
-                    { "Comprobante", 10, 2, true },
-                    { "Proveedor", 11, 2, true },
-                    { "Contacto", 12, 1, true },
-                    { "Nombre Material", 13, 2, true },
-                    { "Peso [Kg]", 14, 5, true },
-                    { "Ancho [mm]", 15, 1, true },
-                    { "Alto [mm]", 16, 1, true },
-                    { "Viatico", 17, 2, true },
-                    { "Motivo", 18, 2, true },
-                    { "Comprobante", 19, 2, true },
-                    { "Proveedor", 20, 2, true },
-                    { "Tel. Proveedor", 21, 1, true },
-                    { "Ancho [mm]", 22, 1, true },
-                    { "Alto [mm]", 23, 1, true },
-                    { "Peso [Kg]", 24, 5, true }
+                    { "HuboPeajes", 1, 4, true },
+                    { "Km", 1, 5, true },
+                    { "Monto Peajes", 1, 5, true },
+                    { "Comprobante", 2, 2, true },
+                    { "Destino", 2, 2, true },
+                    { "Nombre Servicio", 2, 2, true },
+                    { "Comprobante", 3, 2, true },
+                    { "Motivo", 3, 2, true },
+                    { "Viatico", 3, 2, true },
+                    { "Alto [mm]", 4, 1, true },
+                    { "Ancho [mm]", 4, 1, true },
+                    { "Contacto", 4, 1, true },
+                    { "Nombre Material", 4, 2, true },
+                    { "Peso [Kg]", 4, 5, true },
+                    { "Proveedor", 4, 2, true },
+                    { "Comprobante", 5, 2, true },
+                    { "Motivo", 5, 2, true },
+                    { "Viatico", 5, 2, true },
+                    { "Proveedor", 6, 2, true },
+                    { "Tel. Proveedor", 6, 1, true },
+                    { "Alto [mm]", 7, 1, true },
+                    { "Ancho [mm]", 7, 1, true },
+                    { "Peso [Kg]", 7, 5, true }
                 });
 
             migrationBuilder.InsertData(

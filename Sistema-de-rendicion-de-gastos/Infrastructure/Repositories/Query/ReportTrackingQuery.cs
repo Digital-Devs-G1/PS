@@ -2,6 +2,7 @@
 using Application.Interfaces.IRepositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories.Command;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Query
@@ -76,7 +77,6 @@ namespace Infrastructure.Repositories.Query
                     Operations = group.Select(tracking => new ReportOperationHistoryItem
                     {
                         TrackingDate = tracking.TrackingDate,
-                        EmployeeId = tracking.EmployeeId,
                         ReportOperationName = tracking.ReportOperationNav.ReportOperationName
                     }).ToList()
                 })
