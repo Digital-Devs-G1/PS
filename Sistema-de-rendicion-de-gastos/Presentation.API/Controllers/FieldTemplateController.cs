@@ -9,12 +9,12 @@ namespace Presentation.API.Controllers
     public class FieldTemplateController : ControllerBase
     {
         private readonly IFieldTemplateServices _services;
-        
+
         public FieldTemplateController(IFieldTemplateServices services)
         {
             _services = services;
         }
-        
+
         [HttpGet("GetTemplatesById/{tempId}")]
         public async Task<IActionResult> GetTemplateById(int tempId)
         {

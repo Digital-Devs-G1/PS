@@ -137,7 +137,11 @@ namespace Infrastructure.Migrations
                     b.Property<int>("FieldTemplateId")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
                     b.Property<string>("FieldName")
+=======
+                    b.Property<string>("FieldNameId")
+>>>>>>> martin_feature8
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -147,7 +151,11 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
+<<<<<<< HEAD
                     b.HasKey("FieldTemplateId", "FieldName");
+=======
+                    b.HasKey("FieldTemplateId", "FieldNameId");
+>>>>>>> martin_feature8
 
                     b.HasIndex("DataTypeId");
 
@@ -157,33 +165,53 @@ namespace Infrastructure.Migrations
                         new
                         {
                             FieldTemplateId = 1,
+<<<<<<< HEAD
                             FieldName = "Destino",
+=======
+                            FieldNameId = "Destino",
+>>>>>>> martin_feature8
                             DataTypeId = 2,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 1,
                             FieldName = "Km",
+=======
+                            FieldTemplateId = 2,
+                            FieldNameId = "Km",
+>>>>>>> martin_feature8
                             DataTypeId = 5,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 1,
                             FieldName = "HuboPeajes",
+=======
+                            FieldTemplateId = 3,
+                            FieldNameId = "HuboPeajes",
+>>>>>>> martin_feature8
                             DataTypeId = 4,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 1,
                             FieldName = "Monto Peajes",
+=======
+                            FieldTemplateId = 4,
+                            FieldNameId = "Monto Peajes",
+>>>>>>> martin_feature8
                             DataTypeId = 5,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 2,
                             FieldName = "Destino",
                             DataTypeId = 2,
@@ -284,41 +312,167 @@ namespace Infrastructure.Migrations
                         {
                             FieldTemplateId = 5,
                             FieldName = "Comprobante",
+=======
+                            FieldTemplateId = 5,
+                            FieldNameId = "Destino",
+>>>>>>> martin_feature8
                             DataTypeId = 2,
                             Enabled = true
                         },
                         new
                         {
                             FieldTemplateId = 6,
+<<<<<<< HEAD
                             FieldName = "Proveedor",
+=======
+                            FieldNameId = "Nombre Servicio",
+>>>>>>> martin_feature8
                             DataTypeId = 2,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 6,
                             FieldName = "Tel. Proveedor",
+=======
+                            FieldTemplateId = 7,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 8,
+                            FieldNameId = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 9,
+                            FieldNameId = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 10,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 11,
+                            FieldNameId = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 12,
+                            FieldNameId = "Contacto",
+>>>>>>> martin_feature8
                             DataTypeId = 1,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 7,
                             FieldName = "Ancho [mm]",
+=======
+                            FieldTemplateId = 13,
+                            FieldNameId = "Nombre Material",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 14,
+                            FieldNameId = "Peso [Kg]",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 15,
+                            FieldNameId = "Ancho [mm]",
+>>>>>>> martin_feature8
                             DataTypeId = 1,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 7,
                             FieldName = "Alto [mm]",
+=======
+                            FieldTemplateId = 16,
+                            FieldNameId = "Alto [mm]",
+>>>>>>> martin_feature8
                             DataTypeId = 1,
                             Enabled = true
                         },
                         new
                         {
+<<<<<<< HEAD
                             FieldTemplateId = 7,
                             FieldName = "Peso [Kg]",
+=======
+                            FieldTemplateId = 17,
+                            FieldNameId = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 18,
+                            FieldNameId = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 19,
+                            FieldNameId = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 20,
+                            FieldNameId = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 21,
+                            FieldNameId = "Tel. Proveedor",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 22,
+                            FieldNameId = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 23,
+                            FieldNameId = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            FieldTemplateId = 24,
+                            FieldNameId = "Peso [Kg]",
+>>>>>>> martin_feature8
                             DataTypeId = 5,
                             Enabled = true
                         });
