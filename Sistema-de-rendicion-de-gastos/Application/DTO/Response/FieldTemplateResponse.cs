@@ -16,8 +16,8 @@ namespace Application.DTO.Response
             _fieldTemplate = fieldTemplate;
         }
 
-        public int FieldTemplateId { get { return _fieldTemplate.FieldTemplateId; } set { _fieldTemplate.FieldTemplateId = value; } }
-        public string FieldNameId { get { return _fieldTemplate.FieldName; } set { _fieldTemplate.FieldName = value; } }
+        public int FieldTemplateId { get { return _fieldTemplate.DepartmentTemplateId; } set { _fieldTemplate.DepartmentTemplateId = value; } }
+        public string FieldNameId { get { return _fieldTemplate.Name; } set { _fieldTemplate.Name = value; } }
 
         public int DataTypeId { get { return _fieldTemplate.DataTypeId; } set { _fieldTemplate.DataTypeId = value; } }
 

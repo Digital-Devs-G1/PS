@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.Interfaces.IServices.IReportTraking;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.API.Controllers

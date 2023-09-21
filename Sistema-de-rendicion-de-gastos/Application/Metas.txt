@@ -2,21 +2,3 @@
 2) IList<ResponseFieldTemplate> GetTemplate(templateId)
 3) accept/refuse tracking + reportOperation
 4) insert deptoTemplate + reportTemplate
-
-
-5) IList<RealReport> GetReport(reportId)
-	Emi 
-
-6) IList<ReportTracking> GetReportsStatus(empleadoId, reportId)
-	Maxi
-
-
-7) IList<ReportHistory> GetReportHistory(empleadoId)
-	Martin
-
-
-8) insert report + fields + tracking
-
-
-
-

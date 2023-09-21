@@ -1,7 +1,10 @@
-
-using Application.Interfaces.IRepositories;
+using Application.Interfaces.IRepositories.ICommand;
+using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices;
-using Application.UseCases;
+using Application.Interfaces.IServices.IReportTraking;
+using Application.Interfaces.IServices.IVariableFields;
+using Application.UseCases.ReportTracking;
+using Application.UseCases.VariableFields;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;

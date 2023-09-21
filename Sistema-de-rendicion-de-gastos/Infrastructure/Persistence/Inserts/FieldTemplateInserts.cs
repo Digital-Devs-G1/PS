@@ -92,12 +92,14 @@ namespace Infrastructure.Persistence.Inserts
             IList<Field> fieldsValues
             )
         {
+            int i = 0;
             List<FieldTemplate> templateFields = new List<FieldTemplate>();
             foreach (var field in fieldsValues)
                 templateFields.Add(new FieldTemplate()
                 {
-                    FieldTemplateId = _autoincrement,
-                    FieldName = field.Name,
+                    DepartmentTemplateId = _autoincrement,
+                    OrdinalNumber = ++i,
+                    Name = field.Name,
                     DataTypeId = field.TypeId,
                     Enabled = true,
                 }

@@ -1,5 +1,5 @@
 ﻿using Application.DTO.Response.ReportOperationNS;
-using Application.Interfaces.IRepositories;
+using Application.Interfaces.IRepositories.IQuery;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories.Command;

@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.IRepositories;
+﻿using Application.Interfaces.IRepositories.ICommand;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories.Command
         public async Task<bool> Add(IList<T> entities)
         {
             foreach(var entity in entities)
-                entities.Add(entity);
+                context.Add(entity);
             return await context.SaveChangesAsync() > 0;
         }
 

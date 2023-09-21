@@ -1,5 +1,5 @@
 ﻿using Application.DTO.Response;
-using Application.Interfaces.IServices;
+using Application.Interfaces.IServices.IVariableFields;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +16,7 @@ namespace Presentation.API.Controllers
             _services = services;
         }
 
-        [HttpGet("GetTemplatesByDepartamentId/{deptoId}")]
+        [HttpGet("departamentTemplates/{deptoId}")]
         public async Task<IActionResult> GetTemplatesByDepartamentId (int deptoId)
         {
             var templatesDepto = await _services.GetTemplatesByDeptoId(deptoId);

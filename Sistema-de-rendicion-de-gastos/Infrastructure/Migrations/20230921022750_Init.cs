@@ -72,14 +72,15 @@ namespace Infrastructure.Migrations
                 name: "FieldTemplates",
                 columns: table => new
                 {
-                    FieldTemplateId = table.Column<int>(type: "int", nullable: false),
-                    FieldNameId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    DepartmentTemplateId = table.Column<int>(type: "int", nullable: false),
+                    OrdinalNumber = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     DataTypeId = table.Column<int>(type: "int", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FieldTemplates", x => new { x.FieldTemplateId, x.FieldNameId });
+                    table.PrimaryKey("PK_FieldTemplates", x => new { x.DepartmentTemplateId, x.OrdinalNumber });
                     table.ForeignKey(
                         name: "FK_FieldTemplates_DataType_DataTypeId",
                         column: x => x.DataTypeId,
@@ -120,14 +121,15 @@ namespace Infrastructure.Migrations
                 name: "VariableFields",
                 columns: table => new
                 {
-                    NameId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    OrdinalNumberId = table.Column<int>(type: "int", nullable: false),
                     ReportId = table.Column<int>(type: "int", nullable: false),
                     DataTypeId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.NameId });
+                    table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.OrdinalNumberId });
                     table.ForeignKey(
                         name: "FK_VariableFields_DataType_DataTypeId",
                         column: x => x.DataTypeId,
@@ -191,33 +193,33 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "FieldTemplates",
-                columns: new[] { "FieldNameId", "FieldTemplateId", "DataTypeId", "Enabled" },
+                columns: new[] { "DepartmentTemplateId", "OrdinalNumber", "DataTypeId", "Enabled", "Name" },
                 values: new object[,]
                 {
-                    { "Destino", 1, 2, true },
-                    { "Km", 2, 5, true },
-                    { "HuboPeajes", 3, 4, true },
-                    { "Monto Peajes", 4, 5, true },
-                    { "Destino", 5, 2, true },
-                    { "Nombre Servicio", 6, 2, true },
-                    { "Comprobante", 7, 2, true },
-                    { "Viatico", 8, 2, true },
-                    { "Motivo", 9, 2, true },
-                    { "Comprobante", 10, 2, true },
-                    { "Proveedor", 11, 2, true },
-                    { "Contacto", 12, 1, true },
-                    { "Nombre Material", 13, 2, true },
-                    { "Peso [Kg]", 14, 5, true },
-                    { "Ancho [mm]", 15, 1, true },
-                    { "Alto [mm]", 16, 1, true },
-                    { "Viatico", 17, 2, true },
-                    { "Motivo", 18, 2, true },
-                    { "Comprobante", 19, 2, true },
-                    { "Proveedor", 20, 2, true },
-                    { "Tel. Proveedor", 21, 1, true },
-                    { "Ancho [mm]", 22, 1, true },
-                    { "Alto [mm]", 23, 1, true },
-                    { "Peso [Kg]", 24, 5, true }
+                    { 1, 1, 2, true, "Destino" },
+                    { 1, 2, 5, true, "Km" },
+                    { 1, 3, 4, true, "HuboPeajes" },
+                    { 1, 4, 5, true, "Monto Peajes" },
+                    { 2, 1, 2, true, "Destino" },
+                    { 2, 2, 2, true, "Nombre Servicio" },
+                    { 2, 3, 2, true, "Comprobante" },
+                    { 3, 1, 2, true, "Viatico" },
+                    { 3, 2, 2, true, "Motivo" },
+                    { 3, 3, 2, true, "Comprobante" },
+                    { 4, 1, 2, true, "Proveedor" },
+                    { 4, 2, 1, true, "Contacto" },
+                    { 4, 3, 2, true, "Nombre Material" },
+                    { 4, 4, 5, true, "Peso [Kg]" },
+                    { 4, 5, 1, true, "Ancho [mm]" },
+                    { 4, 6, 1, true, "Alto [mm]" },
+                    { 5, 1, 2, true, "Viatico" },
+                    { 5, 2, 2, true, "Motivo" },
+                    { 5, 3, 2, true, "Comprobante" },
+                    { 6, 1, 2, true, "Proveedor" },
+                    { 6, 2, 1, true, "Tel. Proveedor" },
+                    { 7, 1, 1, true, "Ancho [mm]" },
+                    { 7, 2, 1, true, "Alto [mm]" },
+                    { 7, 3, 5, true, "Peso [Kg]" }
                 });
 
             migrationBuilder.InsertData(
@@ -233,16 +235,16 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "VariableFields",
-                columns: new[] { "NameId", "ReportId", "DataTypeId", "Value" },
+                columns: new[] { "OrdinalNumberId", "ReportId", "DataTypeId", "Name", "Value" },
                 values: new object[,]
                 {
-                    { "Proveedor", 1, 2, "Constructura X SRL" },
-                    { "Tel. Proveedor", 1, 1, "42561873" },
-                    { "Alto [mm]", 2, 1, "180" },
-                    { "Ancho [mm]", 2, 1, "270" },
-                    { "Peso [kg]", 2, 5, "58.8" },
-                    { "Proveedor", 2, 2, "Constructura X SRL" },
-                    { "Tel. Proveedor", 2, 1, "42561873" }
+                    { 1, 1, 2, "Proveedor", "Constructura X SRL" },
+                    { 2, 1, 1, "Tel. Proveedor", "42561873" },
+                    { 1, 2, 1, "Ancho [mm]", "270" },
+                    { 2, 2, 1, "Alto [mm]", "180" },
+                    { 3, 2, 5, "Peso [kg]", "58.8" },
+                    { 1, 3, 2, "Proveedor", "Constructura X SRL" },
+                    { 2, 3, 1, "Tel. Proveedor", "42561873" }
                 });
 
             migrationBuilder.CreateIndex(

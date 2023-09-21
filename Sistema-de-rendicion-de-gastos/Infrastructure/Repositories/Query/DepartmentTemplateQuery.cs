@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.IRepositories;
+﻿using Application.Interfaces.IRepositories.IQuery;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

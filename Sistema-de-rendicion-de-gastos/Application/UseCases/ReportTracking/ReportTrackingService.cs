@@ -1,9 +1,10 @@
 ﻿using Application.DTO.Response.ReportOperationNS;
-using Application.Interfaces.IRepositories;
-using Application.Interfaces.IServices;
+using Application.Interfaces.IRepositories.ICommand;
+using Application.Interfaces.IRepositories.IQuery;
+using Application.Interfaces.IServices.IReportTraking;
 using Domain.Entities;
 
-namespace Application.UseCases
+namespace Application.UseCases.ReportTracking
 {
     public class ReportTrackingService : IReportTrackingService
     {
@@ -45,8 +46,7 @@ namespace Application.UseCases
                 ReportOperationId = 1,
                 TrackingDate = DateTime.Now,
             };
-
-            await this.command.Add(tracking);   
+            await command.Add(tracking);
         }
     }
 }

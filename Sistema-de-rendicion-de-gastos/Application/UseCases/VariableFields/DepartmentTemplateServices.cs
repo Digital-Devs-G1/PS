@@ -1,6 +1,6 @@
 ﻿using Application.DTO.Response;
-using Application.Interfaces.IRepositories;
-using Application.Interfaces.IServices;
+using Application.Interfaces.IRepositories.IQuery;
+using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases
+namespace Application.UseCases.VariableFields
 {
     public class DepartmentTemplateServices : IDepartmentTemplateServices
     {
@@ -24,7 +24,7 @@ namespace Application.UseCases
             IList<DepartmentTemplateResponse> list = new List<DepartmentTemplateResponse>();
             foreach (DepartmentTemplate elem in await _query.GetTemplatesByDeptoId(deptoId))
             {
-                 list.Add(new DepartmentTemplateResponse(elem));
+                list.Add(new DepartmentTemplateResponse(elem));
             }
             return list;
         }

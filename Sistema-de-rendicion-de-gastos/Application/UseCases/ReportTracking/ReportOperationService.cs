@@ -1,8 +1,8 @@
-﻿using Application.Interfaces.IRepositories;
-using Application.Interfaces.IServices;
+﻿using Application.Interfaces.IRepositories.IQuery;
+using Application.Interfaces.IServices.IReportTraking;
 using Domain.Entities;
 
-namespace Application.UseCases
+namespace Application.UseCases.ReportTracking
 {
     public class ReportOperationService : IReportOperationService
     {
@@ -15,7 +15,7 @@ namespace Application.UseCases
 
         public Task<ReportOperation> GetById(int reportOperationId)
         {
-            return this.repository.GetByIdAsync(reportOperationId);
+            return repository.GetByIdAsync(reportOperationId);
         }
     }
 }

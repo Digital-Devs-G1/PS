@@ -5,8 +5,10 @@ namespace Domain.Entities
     public class FieldTemplate
     {
         // PK
-        public required int FieldTemplateId { get; set; }
-        public required string FieldName { get; set; }
+        public required int DepartmentTemplateId { get; set; }
+        public required int OrdinalNumber { get; set; }
+
+        public required string Name { get; set; }
 
         // FK
         public required int DataTypeId { get; set; }

@@ -1,4 +1,7 @@
 
+Report
+------
+
 Los nombres se parecen demasiado, la 's' esta en medio:
 	GetReportStatusById
 	GetReportsStatusById
@@ -12,7 +15,9 @@ operacion de Creacion para el reporte {id}". Esto es porque no queda
 claro el problema real, al usuario no de deberia llegar esta info pero
 si deberia estar en un log.
 
-----------------------------------------------------------------------
+
+Notas
+-----
 
 Un repository por service. Usar otros service como inyeccion para supli
 otros repos.

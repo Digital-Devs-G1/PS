@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.IRepositories;
+﻿using Application.Interfaces.IRepositories.IQuery;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +18,14 @@ namespace Infrastructure.Repositories.Query
         {
             return await _context
                 .Set<FieldTemplate>()
-                .Where(field=> field.FieldTemplateId == templateId)
+                .Where(field=> field.DepartmentTemplateId == templateId)
                 .ToListAsync();
+        }
+
+        public async Task<IList<FieldTemplate>> GetTemplatesById(int tempId)
+        {
+            return await _context.FieldTemplates.Where(ft => ft.DepartmentTemplateId == tempId)
+                                                .ToListAsync();
         }
     }
 }

@@ -32,12 +32,10 @@ namespace Infrastructure.Persistence.Inserts
             foreach (var name in names)
                 builder.HasData(new DepartmentTemplate()
                 {
-                    DepartmentTemplateId = _autoincrement,
+                    DepartmentTemplateId = _autoincrement++,
                     DepartmentId = departmentId,
                     DepartmentTemplateName = name
                 });
-
-            _autoincrement++;
         }
     }
 }

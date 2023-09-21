@@ -1,4 +1,4 @@
-﻿namespace Application.Interfaces.IRepositories
+﻿namespace Application.Interfaces.IRepositories.IQuery
 {
     public interface IGenericRepositoryQuerys<T> where T : class
     {

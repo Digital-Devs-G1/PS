@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.Interfaces.IServices.IVariableFields;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +8,9 @@ namespace Presentation.API.Controllers
     [ApiController]
     public class FieldTemplateController : ControllerBase
     {
-        private readonly IFieldTemplateServices _services;
+        private readonly IFieldTemplateService _services;
 
-        public FieldTemplateController(IFieldTemplateServices services)
+        public FieldTemplateController(IFieldTemplateService services)
         {
             _services = services;
         }

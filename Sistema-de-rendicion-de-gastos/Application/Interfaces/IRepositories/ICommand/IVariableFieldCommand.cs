@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.IRepositories
+namespace Application.Interfaces.IRepositories.ICommand
 {
     public interface IVariableFieldCommand : IGenericRepositoryCommand<VariableField>
     {

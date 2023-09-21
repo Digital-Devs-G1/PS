@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.IServices
+namespace Application.Interfaces.IServices.IVariableFields
 {
     public interface IVariableFieldService
     {
