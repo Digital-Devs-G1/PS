@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTO.Response
+namespace Application.DTO.Response.Response.EntityProxy
 {
     public class FieldTemplateResponse
     {

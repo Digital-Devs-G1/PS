@@ -46,7 +46,7 @@ namespace Application.UseCases.ReportTracking
                 ReportOperationId = 1,
                 TrackingDate = DateTime.Now,
             };
-            await command.Add(tracking);
+            await command.AddAndCommit(tracking);
         }
     }
 }

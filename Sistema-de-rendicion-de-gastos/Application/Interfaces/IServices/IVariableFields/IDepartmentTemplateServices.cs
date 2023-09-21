@@ -1,5 +1,4 @@
-﻿using Application.DTO.Response;
-
+﻿using Application.DTO.Response.Response.EntityProxy;
 
 namespace Application.Interfaces.IServices.IVariableFields
 {

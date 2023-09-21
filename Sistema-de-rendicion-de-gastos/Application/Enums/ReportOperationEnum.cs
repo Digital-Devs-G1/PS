@@ -2,10 +2,9 @@
 {
     public enum ReportOperationEnum
     {
-        Pendiente = 1,
-
-        Aceptado = 2,
-
-        Rechazado = 3,
+        Create = 1,
+        Review,
+        Approval,
+        Refuse
     }
 }

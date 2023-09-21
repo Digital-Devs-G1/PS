@@ -20,7 +20,14 @@ namespace Application.UseCases.VariableFields
 
         public async Task<bool> AddFields(IList<VariableField> fields)
         {
-            return await variableFieldCommand.Add(fields);
+            return await variableFieldCommand.AddAndCommit(fields);
         }
     }
 }
+
+
+
+
+
+
+

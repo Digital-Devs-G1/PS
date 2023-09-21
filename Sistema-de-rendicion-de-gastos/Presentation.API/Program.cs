@@ -3,6 +3,7 @@ using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices;
 using Application.Interfaces.IServices.IReportTraking;
 using Application.Interfaces.IServices.IVariableFields;
+using Application.UseCases;
 using Application.UseCases.ReportTracking;
 using Application.UseCases.VariableFields;
 using Domain.Entities;

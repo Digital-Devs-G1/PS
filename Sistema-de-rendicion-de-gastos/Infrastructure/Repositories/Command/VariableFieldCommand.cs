@@ -1,11 +1,7 @@
-﻿using Application.Interfaces.IRepositories.ICommand;
+﻿using Application.Dto.Response.StatusResponseNS;
+using Application.Interfaces.IRepositories.ICommand;
 using Domain.Entities;
 using Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Command
 {
@@ -13,7 +9,11 @@ namespace Infrastructure.Repositories.Command
         : GenericRepositoryCommand<VariableField>
         , IVariableFieldCommand
     {
-        public VariableFieldCommand(ReportsDbContext context) : base(context)
+        public VariableFieldCommand(
+            ReportsDbContext context,
+            IRepositoryResponseFactory responseFactory) 
+            : 
+            base(context, responseFactory)
         {
         }
     }

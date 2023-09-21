@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Infrastructure.Persistence.Inserts.ReportOperationEnum;
+using static Application.Enums.ReportOperationEnum;
 
 namespace Infrastructure.Persistence.Configurations
 {

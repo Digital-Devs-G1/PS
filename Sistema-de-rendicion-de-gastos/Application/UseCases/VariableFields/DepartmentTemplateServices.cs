@@ -1,4 +1,4 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;

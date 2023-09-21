@@ -1,4 +1,4 @@
-﻿using Application.DTO.Response;
+﻿using Application.DTO.Response.Response.EntityProxy;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;

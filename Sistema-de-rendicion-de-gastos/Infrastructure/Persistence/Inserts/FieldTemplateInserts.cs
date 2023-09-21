@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using static Infrastructure.Persistence.Inserts.DataTypeEnum;
+using static Application.Enums.DataTypeEnum;
 
 namespace Infrastructure.Persistence.Inserts
 {

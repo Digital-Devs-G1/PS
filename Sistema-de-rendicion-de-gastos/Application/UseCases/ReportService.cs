@@ -1,17 +1,14 @@
-﻿using Application.DTO.Request;
-using Application.DTO.Response;
+﻿using Application.Dto.Response.StatusResponseNS;
+using Application.DTO.Request;
 using Application.DTO.Response.ReportOperationNS;
-using Application.Enums;
 using Application.Interfaces.IRepositories.ICommand;
 using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices;
 using Application.Interfaces.IServices.IReportTraking;
 using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;
-using System.Collections.Immutable;
-using System.Xml.Linq;
 
-namespace Application.UseCases.ReportTracking
+namespace Application.UseCases
 {
     public class ReportService : IReportService
     {
@@ -21,6 +18,7 @@ namespace Application.UseCases.ReportTracking
         private readonly IReportOperationService reportOperationService;
         private readonly IVariableFieldService variableFieldService;
         private readonly IFieldTemplateService fieldTemplateService;
+        private readonly IServiceResponseFactory responseFactory;
 
         public ReportService(
             IGenericRepositoryQuerys<Report> repository,
@@ -28,8 +26,8 @@ namespace Application.UseCases.ReportTracking
             IReportOperationService reportOperationService,
             IGenericRepositoryCommand<Report> command,
             IVariableFieldService variableFieldService,
-            IFieldTemplateService fieldTemplateService
-            )
+            IFieldTemplateService fieldTemplateService,
+            IServiceResponseFactory responseFactory)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
@@ -37,6 +35,7 @@ namespace Application.UseCases.ReportTracking
             this.variableFieldService = variableFieldService;
             this.fieldTemplateService = fieldTemplateService;
             this.reportOperationService = reportOperationService;
+            this.responseFactory = responseFactory;
         }
 
         public async Task<Report> GetById(int id)
@@ -114,42 +113,63 @@ namespace Application.UseCases.ReportTracking
         public async Task AddReport(ReportRequest request, List<string> fields)
         {
             var template = await fieldTemplateService.GetTemplate(request.TemplateId);
+            Report report;
+            var errors = new List<StatusResponse>();
             if (template.Count * 2 != fields.Count)
-                throw new ArgumentException("Formato de template incorrecto. Cantidad de campos variables invalida");
-
-            var report = new Report
+                errors.Add(responseFactory.WrongNumberOfFields());
+            else
             {
-                EmployeeId = request.EmployeeId,
-                Description = request.Description,
-                Amount = request.Amount,
-            };
+                report = new Report
+                {
+                    EmployeeId = request.EmployeeId,
+                    Description = request.Description,
+                    Amount = request.Amount,
+                };
+                await command.AddAndCommit(report);
+            }
 
-            await command.Add(report);
+            await variableFieldService.AddFields(entities);
+            await reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
+        }
 
-            var entities = new List<VariableField>();
+        private void CheckVariableFields(
+            IList<FieldTemplate> template,
+            List<string> fields,
+            IList<StatusResponse> errors
+            )
+        {
             for (int i = 0; i < template.Count; i++)
             {
                 int j = i * 2;
                 var name = template[i].Name;
                 if (name.CompareTo(fields[j]) != 0)
-                    throw new ArgumentException("Formato de template incorrecto. Se esperaba el campo " + name + " pero se recibio " + fields[j]);
+                    errors.Add(responseFactory.UnexpectedField(name, fields[j]));
                 var type = template[i].DataTypeId;
                 if (!TryCast(type, fields[j + 1]))
-                    throw new ArgumentException("Formato de template incorrecto. Se esperaba el campo del tipo " + type + " pero se recibio el valor " + fields[j + 1]);
+                    errors.Add(responseFactory.UnexpectedDataType(type, fields[j + 1]));
+            }
+        }
 
+        private IList<VariableField> CreateVariableFields(
+            IList<FieldTemplate> template,
+            List<string> fields,
+            Report report
+            )
+        {
+            var entities = new List<VariableField>();
+            for (int i = 0; i < template.Count; i++)
+            {
+                int j = i * 2 + 1;
                 entities.Add(new VariableField()
                 {
                     OrdinalNumberId = i + 1,
                     ReportId = report.ReportId,
-                    Name = name,
-                    DataTypeId = type,
-                    Value = fields[j + 1]
+                    Name = template[i].Name,
+                    DataTypeId = template[i].DataTypeId,
+                    Value = fields[j]
                 });
             }
-
-            await reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
-
-            await variableFieldService.AddFields(entities);
+            return entities;
         }
     }
 }
