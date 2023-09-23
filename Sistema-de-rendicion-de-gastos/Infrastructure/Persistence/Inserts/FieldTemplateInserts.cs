@@ -89,19 +89,19 @@ namespace Infrastructure.Persistence.Inserts
 
         private void AddTemplate(
             EntityTypeBuilder<FieldTemplate> builder,
-            IList<Field> fieldsValues
-            )
+            IList<Field> fieldsValues)
         {
             List<FieldTemplate> templateFields = new List<FieldTemplate>();
             foreach (var field in fieldsValues)
                 templateFields.Add(new FieldTemplate()
                 {
-                    FieldTemplateId = _autoincrement++,
+                    FieldTemplateId = _autoincrement,
                     FieldNameId = field.Name,
                     DataTypeId = field.TypeId,
                     Enabled = true,
                 }
                 );
+            _autoincrement++;
             builder.HasData(templateFields);
         }
     }

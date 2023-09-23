@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class DepartmentTemplateController : ControllerBase
     {
@@ -16,19 +16,11 @@ namespace Presentation.API.Controllers
             _services = services;
         }
 
-        [HttpGet("GetTemplatesByDepartamentId/{deptoId}")]
-        public async Task<IActionResult> GetTemplatesByDepartamentId (int deptoId)
+        [HttpGet("v1/Departament/{id}/templates")]
+        public async Task<IActionResult> GetTemplatesByDepartamentId (int id)
         {
-            var templatesDepto = await _services.GetTemplatesByDeptoId(deptoId);
+            var templatesDepto = await _services.GetTemplatesByDeptoId(id);
             return this.Ok(templatesDepto);
         }
-
-        //[HttpPost("AddDeptoTemplate")]
-        //public IActionResult AddDepartamentTemplated(DepartamentTemplateResponse deptoTemp)
-        //{
-        //    var nuevoDeptTemp = _services.Add(deptoTemp);
-        //    return new JsonResult(nuevoDeptTemp);
-        //}
-
     }
 }

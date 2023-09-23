@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories
 {
-    public interface IGenericRepositoryCommand<T> where T : class
+    public interface IFieldTemplateCommands
     {
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Delete(T entity);
+        public Task DeleteRange(FieldTemplate entity);
     }
 }

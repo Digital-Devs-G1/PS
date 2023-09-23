@@ -10,5 +10,7 @@ namespace Application.Interfaces.IRepositories
     public interface IFieldTemplateQuerys
     {
         public Task<IList<FieldTemplate>> GetTemplatesById(int tempId);
+        public Task<FieldTemplate> GetFirstTemplateById(int tempId);
+        public Task<FieldTemplate> GetTemplate(string tempName, int tempId);
     }
 }
