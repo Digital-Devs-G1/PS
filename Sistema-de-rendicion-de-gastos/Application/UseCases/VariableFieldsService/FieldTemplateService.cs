@@ -3,7 +3,7 @@ using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;
 
-namespace Application.UseCases.VariableFields
+namespace Application.UseCases.VariableFieldsService
 {
     public class FieldTemplateService : IFieldTemplateService
     {

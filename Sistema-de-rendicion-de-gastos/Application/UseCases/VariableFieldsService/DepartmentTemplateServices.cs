@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.VariableFields
+namespace Application.UseCases.VariableFieldsService
 {
     public class DepartmentTemplateServices : IDepartmentTemplateServices
     {

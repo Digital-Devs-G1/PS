@@ -6,6 +6,6 @@ namespace Application.Dto.Response.StatusResponseNS
         public StatusResponse Ok();
         public StatusResponse WrongNumberOfFields();
         public StatusResponse UnexpectedField(string expectedField, string receivedField);
-        public StatusResponse UnexpectedDataType(string expectedType, string receivedType);
+        public StatusResponse UnexpectedDataType(int expectedType, string receivedType);
     }
 }

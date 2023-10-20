@@ -5,7 +5,7 @@ namespace Application.Interfaces.IRepositories.ICommand
 {
     public interface IGenericRepositoryCommand<T> where T : class
     {
-        public Task<int> CommitAsync(ConcurrentBag<StatusResponse> errors);
+        public Task<int> SaveChangesAsync(ConcurrentBag<StatusResponse> errors);
 
         public Task<int> AddAndCommit(ConcurrentBag<StatusResponse> errors, T entity);
 

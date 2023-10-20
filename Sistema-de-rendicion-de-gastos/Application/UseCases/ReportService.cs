@@ -7,6 +7,7 @@ using Application.Interfaces.IServices;
 using Application.Interfaces.IServices.IReportTraking;
 using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;
+using System.Collections.Concurrent;
 
 namespace Application.UseCases
 {
@@ -114,30 +115,36 @@ namespace Application.UseCases
         {
             var template = await fieldTemplateService.GetTemplate(request.TemplateId);
             Report report;
-            var errors = new List<StatusResponse>();
+            var errors = new ConcurrentBag<StatusResponse>();
             if (template.Count * 2 != fields.Count)
                 errors.Add(responseFactory.WrongNumberOfFields());
             else
             {
-                report = new Report
+                if (CheckVariableFields(template, fields, errors))
                 {
-                    EmployeeId = request.EmployeeId,
-                    Description = request.Description,
-                    Amount = request.Amount,
-                };
-                await command.AddAndCommit(report);
+                    report = new Report
+                    {
+                        EmployeeId = request.EmployeeId,
+                        Description = request.Description,
+                        Amount = request.Amount,
+                    };
+                    if (1 == await command.AddAndCommit(errors, report))
+                    {
+                        var entities = CreateVariableFields(template, fields, report);
+                        if (await variableFieldService.AddFields(entities))
+                            await reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
+                    }
+                }   
             }
-
-            await variableFieldService.AddFields(entities);
-            await reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
         }
 
-        private void CheckVariableFields(
+        private bool CheckVariableFields(
             IList<FieldTemplate> template,
             List<string> fields,
-            IList<StatusResponse> errors
+            ConcurrentBag<StatusResponse> errors
             )
         {
+            int errorsCount = errors.Count;
             for (int i = 0; i < template.Count; i++)
             {
                 int j = i * 2;
@@ -148,6 +155,7 @@ namespace Application.UseCases
                 if (!TryCast(type, fields[j + 1]))
                     errors.Add(responseFactory.UnexpectedDataType(type, fields[j + 1]));
             }
+            return errorsCount == errors.Count;
         }
 
         private IList<VariableField> CreateVariableFields(

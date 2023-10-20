@@ -3,8 +3,10 @@ using Application.Interfaces.IRepositories.ICommand;
 using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices.IReportTraking;
 using Domain.Entities;
+using System.Diagnostics;
+using static Application.Enums.ReportOperationEnum;
 
-namespace Application.UseCases.ReportTracking
+namespace Application.UseCases.ReportTrackingService
 {
     public class ReportTrackingService : IReportTrackingService
     {
@@ -39,11 +41,30 @@ namespace Application.UseCases.ReportTracking
 
         public async Task AddCreationTracking(int reportId, int employeeId)
         {
+            await AddTracking(reportId, employeeId, (int)Create);
+        }
+
+        public async Task AddAcceptTracking(int reportId, int employeeId)
+        {
+            await AddTracking(reportId, employeeId, (int)Approval);
+        }
+
+        public async Task AddDismissTracking(int reportId, int employeeId)
+        {
+            await AddTracking(reportId, employeeId, (int)Refuse);
+        }
+
+        private async Task AddTracking(
+            int reportId, 
+            int employeeId,
+            int operationId
+            )
+        {
             var tracking = new ReportTracking
             {
                 ReportId = reportId,
                 EmployeeId = employeeId,
-                ReportOperationId = 1,
+                ReportOperationId = operationId,
                 TrackingDate = DateTime.Now,
             };
             await command.AddAndCommit(tracking);

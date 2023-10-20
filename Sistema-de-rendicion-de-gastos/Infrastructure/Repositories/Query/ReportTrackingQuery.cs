@@ -1,4 +1,5 @@
-﻿using Application.DTO.Response.ReportOperationNS;
+﻿using Application.Dto.Response.StatusResponseNS;
+using Application.DTO.Response.ReportOperationNS;
 using Application.Interfaces.IRepositories.IQuery;
 using Domain.Entities;
 using Infrastructure.Persistence;
@@ -11,7 +12,11 @@ namespace Infrastructure.Repositories.Query
     {
         private ReportsDbContext _dbContext;
 
-        public ReportTrackingQuery(ReportsDbContext dbContext) : base(dbContext)
+        public ReportTrackingQuery(
+            ReportsDbContext dbContext,
+            IRepositoryResponseFactory responseFactory
+            ) 
+            : base(dbContext, responseFactory)
         {
             _dbContext = dbContext;
         }

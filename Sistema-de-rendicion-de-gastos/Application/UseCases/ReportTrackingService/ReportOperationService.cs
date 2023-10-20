@@ -2,7 +2,7 @@
 using Application.Interfaces.IServices.IReportTraking;
 using Domain.Entities;
 
-namespace Application.UseCases.ReportTracking
+namespace Application.UseCases.ReportTrackingService
 {
     public class ReportOperationService : IReportOperationService
     {

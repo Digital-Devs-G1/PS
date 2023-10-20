@@ -3,6 +3,7 @@ using Application.Interfaces.IRepositories.ICommand;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Concurrent;
 using System.Data.Entity.Validation;
 
@@ -13,6 +14,7 @@ namespace Infrastructure.Repositories.Command
         private readonly ReportsDbContext context;
         private readonly DbSet<T> entities;
         private readonly IRepositoryResponseFactory _responseFactory;
+        private IDbContextTransaction _transaction;
 
         public GenericRepositoryCommand(
             ReportsDbContext context, 
@@ -23,8 +25,31 @@ namespace Infrastructure.Repositories.Command
             entities = context.Set<T>();
             _responseFactory = responseFactory;
         }
-        
-        public async Task<int> CommitAsync(ConcurrentBag<StatusResponse> errors)
+
+        public void StartTransaction()
+        {
+            _transaction = context.Database.BeginTransaction();
+        }
+
+        public void Commit()
+        {
+            try
+            {
+                _transaction?.Commit();
+            }
+            catch
+            {
+                Rollback();
+                throw;
+            }
+        }
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
+        }
+
+        public async Task<int> SaveChangesAsync(ConcurrentBag<StatusResponse> errors)
         {
             int written = 0;
 
@@ -58,13 +83,18 @@ namespace Infrastructure.Repositories.Command
             return written;
         }
 
+        public void Add(T entity)
+        {
+            entities.Add(entity);
+        }
+
         public async Task<int> AddAndCommit(
             ConcurrentBag<StatusResponse> errors,
             T entity
             )
         {
             entities.Add(entity);
-            return await CommitAsync(errors);
+            return await SaveChangesAsync(errors);
         }
 
         public async Task<int> AddAndCommit(
@@ -74,7 +104,7 @@ namespace Infrastructure.Repositories.Command
         {
             foreach(var entity in entities)
                 context.Add(entity);
-            return await CommitAsync(errors);
+            return await SaveChangesAsync(errors);
         }
 
         public async Task<int> UpdateAndCommit(
@@ -83,7 +113,7 @@ namespace Infrastructure.Repositories.Command
             )
         {
             entities.Update(entity);
-            return await CommitAsync(errors);
+            return await SaveChangesAsync(errors);
         }
 
         public async Task<int> DeleteAndCommit(
@@ -92,7 +122,7 @@ namespace Infrastructure.Repositories.Command
             )
         {
             entities.Remove(entity);
-            return await CommitAsync(errors);
+            return await SaveChangesAsync(errors);
         }
     }
 }
