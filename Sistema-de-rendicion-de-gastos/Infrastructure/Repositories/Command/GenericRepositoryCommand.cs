@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Application.Dto.Response.StatusResponseNS;
 using Application.Interfaces.IRepositories.ICommand;
 using Domain.Entities;
@@ -6,6 +7,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Concurrent;
 using System.Data.Entity.Validation;
+=======
+﻿using Application.Interfaces.IRepositories;
+using Domain.Entities;
+using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> emi_feature3
 
 namespace Infrastructure.Repositories.Command
 {
@@ -13,6 +25,7 @@ namespace Infrastructure.Repositories.Command
     {
         private readonly ReportsDbContext context;
         private readonly DbSet<T> entities;
+<<<<<<< HEAD
         private readonly IRepositoryResponseFactory _responseFactory;
         private IDbContextTransaction _transaction;
 
@@ -126,3 +139,31 @@ namespace Infrastructure.Repositories.Command
         }
     }
 }
+=======
+
+        public GenericRepositoryCommand(ReportsDbContext context)
+        {
+            this.context = context;
+            entities = context.Set<T>();
+        }
+
+        public async Task Add(T entity)
+        {
+            entities.Add(entity);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Update(T entity)
+        {
+            entities.Update(entity);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Delete(T entity)
+        {
+            entities.Remove(entity);
+            await context.SaveChangesAsync();
+        }
+    }
+}
+>>>>>>> emi_feature3

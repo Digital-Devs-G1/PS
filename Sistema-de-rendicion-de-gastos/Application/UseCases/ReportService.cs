@@ -179,5 +179,10 @@ namespace Application.UseCases
             }
             return entities;
         }
+
+        public async Task<bool> ExistReportById(int reportId)
+        {
+            return await _query.ExistReportById(reportId);
+        }
     }
 }

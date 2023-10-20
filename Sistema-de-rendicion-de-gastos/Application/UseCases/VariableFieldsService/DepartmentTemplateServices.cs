@@ -12,9 +12,9 @@ namespace Application.UseCases.VariableFieldsService
 {
     public class DepartmentTemplateServices : IDepartmentTemplateServices
     {
-        public readonly IDepartamentTemplateQuery _query;
+        public readonly IDepartmentTemplateQuery _query;
 
-        public DepartmentTemplateServices(IDepartamentTemplateQuery query)
+        public DepartmentTemplateServices(IDepartmentTemplateQuery query)
         {
             _query = query;
         }

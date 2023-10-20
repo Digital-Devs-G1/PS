@@ -168,184 +168,184 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            DepartmentTemplateId = 1,
-                            OrdinalNumber = 2,
+                            FieldTemplateId = 1,
+                            FieldNameId = "Km",
                             DataTypeId = 5,
                             Enabled = true,
                             Name = "Km"
                         },
                         new
                         {
-                            DepartmentTemplateId = 1,
-                            OrdinalNumber = 3,
+                            FieldTemplateId = 1,
+                            FieldNameId = "HuboPeajes",
                             DataTypeId = 4,
                             Enabled = true,
                             Name = "HuboPeajes"
                         },
                         new
                         {
-                            DepartmentTemplateId = 1,
-                            OrdinalNumber = 4,
+                            FieldTemplateId = 1,
+                            FieldNameId = "Monto Peajes",
                             DataTypeId = 5,
                             Enabled = true,
                             Name = "Monto Peajes"
                         },
                         new
                         {
-                            DepartmentTemplateId = 2,
-                            OrdinalNumber = 1,
+                            FieldTemplateId = 2,
+                            FieldNameId = "Destino",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Destino"
                         },
                         new
                         {
-                            DepartmentTemplateId = 2,
-                            OrdinalNumber = 2,
+                            FieldTemplateId = 2,
+                            FieldNameId = "Nombre Servicio",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Nombre Servicio"
                         },
                         new
                         {
-                            DepartmentTemplateId = 2,
-                            OrdinalNumber = 3,
+                            FieldTemplateId = 2,
+                            FieldNameId = "Comprobante",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Comprobante"
                         },
                         new
                         {
-                            DepartmentTemplateId = 3,
-                            OrdinalNumber = 1,
+                            FieldTemplateId = 3,
+                            FieldNameId = "Viatico",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Viatico"
                         },
                         new
                         {
-                            DepartmentTemplateId = 3,
-                            OrdinalNumber = 2,
+                            FieldTemplateId = 3,
+                            FieldNameId = "Motivo",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Motivo"
                         },
                         new
                         {
-                            DepartmentTemplateId = 3,
-                            OrdinalNumber = 3,
+                            FieldTemplateId = 3,
+                            FieldNameId = "Comprobante",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Comprobante"
                         },
                         new
                         {
-                            DepartmentTemplateId = 4,
-                            OrdinalNumber = 1,
+                            FieldTemplateId = 4,
+                            FieldNameId = "Proveedor",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Proveedor"
                         },
                         new
                         {
-                            DepartmentTemplateId = 4,
-                            OrdinalNumber = 2,
+                            FieldTemplateId = 4,
+                            FieldNameId = "Contacto",
                             DataTypeId = 1,
                             Enabled = true,
                             Name = "Contacto"
                         },
                         new
                         {
-                            DepartmentTemplateId = 4,
-                            OrdinalNumber = 3,
+                            FieldTemplateId = 4,
+                            FieldNameId = "Nombre Material",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Nombre Material"
                         },
                         new
                         {
-                            DepartmentTemplateId = 4,
-                            OrdinalNumber = 4,
+                            FieldTemplateId = 4,
+                            FieldNameId = "Peso [Kg]",
                             DataTypeId = 5,
                             Enabled = true,
                             Name = "Peso [Kg]"
                         },
                         new
                         {
-                            DepartmentTemplateId = 4,
-                            OrdinalNumber = 5,
+                            FieldTemplateId = 4,
+                            FieldNameId = "Ancho [mm]",
                             DataTypeId = 1,
                             Enabled = true,
                             Name = "Ancho [mm]"
                         },
                         new
                         {
-                            DepartmentTemplateId = 4,
-                            OrdinalNumber = 6,
+                            FieldTemplateId = 4,
+                            FieldNameId = "Alto [mm]",
                             DataTypeId = 1,
                             Enabled = true,
                             Name = "Alto [mm]"
                         },
                         new
                         {
-                            DepartmentTemplateId = 5,
-                            OrdinalNumber = 1,
+                            FieldTemplateId = 5,
+                            FieldNameId = "Viatico",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Viatico"
                         },
                         new
                         {
-                            DepartmentTemplateId = 5,
-                            OrdinalNumber = 2,
+                            FieldTemplateId = 5,
+                            FieldNameId = "Motivo",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Motivo"
                         },
                         new
                         {
-                            DepartmentTemplateId = 5,
-                            OrdinalNumber = 3,
+                            FieldTemplateId = 5,
+                            FieldNameId = "Comprobante",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Comprobante"
                         },
                         new
                         {
-                            DepartmentTemplateId = 6,
-                            OrdinalNumber = 1,
+                            FieldTemplateId = 6,
+                            FieldNameId = "Proveedor",
                             DataTypeId = 2,
                             Enabled = true,
                             Name = "Proveedor"
                         },
                         new
                         {
-                            DepartmentTemplateId = 6,
-                            OrdinalNumber = 2,
+                            FieldTemplateId = 6,
+                            FieldNameId = "Tel. Proveedor",
                             DataTypeId = 1,
                             Enabled = true,
                             Name = "Tel. Proveedor"
                         },
                         new
                         {
-                            DepartmentTemplateId = 7,
-                            OrdinalNumber = 1,
+                            FieldTemplateId = 7,
+                            FieldNameId = "Ancho [mm]",
                             DataTypeId = 1,
                             Enabled = true,
                             Name = "Ancho [mm]"
                         },
                         new
                         {
-                            DepartmentTemplateId = 7,
-                            OrdinalNumber = 2,
+                            FieldTemplateId = 7,
+                            FieldNameId = "Alto [mm]",
                             DataTypeId = 1,
                             Enabled = true,
                             Name = "Alto [mm]"
                         },
                         new
                         {
-                            DepartmentTemplateId = 7,
-                            OrdinalNumber = 3,
+                            FieldTemplateId = 7,
+                            FieldNameId = "Peso [Kg]",
                             DataTypeId = 5,
                             Enabled = true,
                             Name = "Peso [Kg]"
