@@ -16,29 +16,50 @@ namespace Presentation.API.Controllers
         }
 
         [HttpGet("v1/Templates/{id}")]
-        public async Task<IActionResult> GetTemplateById(int id)
+        public async Task<IActionResult> GetTemplateById(uint id)
         {
-            var templatesDepto = await _services.GetTemplatesById(id);
-            return this.Ok(templatesDepto);
+            if (id == 0) 
+            {
+                return BadRequest("El ID no puede ser 0.");  
+            }
+            var templates = await _services.GetTemplatesById((int)id);
+
+            if (templates.Count() == 0)
+            {
+                return NotFound("No existe templates para ese Departamento."); 
+            }
+            return this.Ok(templates);
         }
 
         [HttpPost("v1/Template")]
         public async Task<IActionResult> CreateTemplate(FieldTemplateRequest template)
         {
-            await _services.CreateTemplates(template);
-            return this.Ok();
+            if (template == null) 
+            {
+                return BadRequest("El ID no puede ser 0."); 
+            }
+            await _services.CreateFieldTemplate(template);
+            return new JsonResult(template) { StatusCode = 201 };
         }
 
         [HttpDelete("v1/Templates/{id}")]
-        public async Task<IActionResult> DeleteTempletes(int id)
+        public async Task<IActionResult> DeleteTempletes(uint id)
         {
-            await _services.DeleteTemplates(id);
+            if (id == 0)
+            {
+                return BadRequest("El ID no puede ser 0.");
+            }
+            await _services.DeleteFieldTemplatesById((int)id);
             return this.Ok();
         }   
-        [HttpDelete("v2/Template/{id}{name}")]
-        public async Task<IActionResult> DeleteTemplete(int id, string name)
+        [HttpDelete("v1/Template/{id}/{name}")]
+        public async Task<IActionResult> DeleteTemplete(uint id, string name)
         {
-            await _services.DeleteTemplate(name, id);
+            if (id == 0 & string.IsNullOrEmpty(name))
+            {
+                return BadRequest("El ID no puede ser 0.");
+            }
+            await _services.DeleteTemplateById(name, (int)id);
             return this.Ok();
         }
     }

@@ -4,7 +4,7 @@
 4) insert deptoTemplate + reportTemplate
 
 
-5) IList<RealReport> GetReport(reportId)
+5) RealReport GetReport(reportId)
 	Emi 
 
 6) IList<ReportTracking> GetReportsStatus(empleadoId, reportId)

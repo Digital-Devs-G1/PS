@@ -11,5 +11,7 @@ namespace Application.Interfaces.IServices
         Task<ReportStatusResponse> GetReportStatusById(int reportId);
 
         Task AddReport(ReportRequest request);
+
+        Task<bool> ExistReportById(int reportId);
     }
 }

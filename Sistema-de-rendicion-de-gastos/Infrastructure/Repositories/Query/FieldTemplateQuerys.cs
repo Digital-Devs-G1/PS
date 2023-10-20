@@ -3,7 +3,7 @@ using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Query
 {
     public class FieldTemplateQuerys : IFieldTemplateQuerys
     {
@@ -27,7 +27,8 @@ namespace Infrastructure.Repositories
 
         public async Task<FieldTemplate> GetTemplate(string tempName, int tempId)
         {
-            return await _context.FieldTemplates.FindAsync(new object [] {tempId, tempName});
+            var result = await _context.FieldTemplates.FindAsync(new object[] { tempId, tempName });
+            return result;
         }
     }
 }

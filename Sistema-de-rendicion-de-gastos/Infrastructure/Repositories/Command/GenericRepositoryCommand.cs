@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Command
 {
     public class GenericRepositoryCommand<T> : IGenericRepositoryCommand<T> where T : BaseEntity
     {

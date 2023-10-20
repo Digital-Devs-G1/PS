@@ -7,9 +7,9 @@ namespace Application.Interfaces.IServices
     {
         public Task<IList<FieldTemplateResponse>> GetTemplatesById(int tempId);
         public Task<FieldTemplateResponse> GetFirstTemplateById(int tempId);
-        public Task CreateTemplates (FieldTemplateRequest template);
-        public Task DeleteTemplates (int idTemplate);
-        public Task DeleteTemplate(string tempName, int idTemplate);
-        public Task UpdateTemplates (FieldTemplateResponse template);
+        public Task CreateFieldTemplate (FieldTemplateRequest template);
+        public Task DeleteFieldTemplatesById (int idTemplate);
+        public Task DeleteTemplateById(string tempName, int idTemplate);
+        public Task UpdateTemplates (FieldTemplateRequest template);
     }
 }

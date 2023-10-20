@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories
 {
-    public interface IDepartamentTemplateQuery
+    public interface IDepartmentTemplateQuery
     {
         public Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId);
+        public Task<bool> ExistDepartamentId(int id);
     }
 }

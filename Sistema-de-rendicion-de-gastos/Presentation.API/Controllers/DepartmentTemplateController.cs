@@ -17,10 +17,21 @@ namespace Presentation.API.Controllers
         }
 
         [HttpGet("v1/Departament/{id}/templates")]
-        public async Task<IActionResult> GetTemplatesByDepartamentId (int id)
+        public async Task<IActionResult> GetTemplatesByDepartamentId (uint id)
         {
-            var templatesDepto = await _services.GetTemplatesByDeptoId(id);
-            return this.Ok(templatesDepto);
+            if(id == 0) 
+            {
+                return BadRequest("El ID no puede ser 0."); 
+            }
+
+            var templatesDepto = await _services.GetTemplatesByDeptoId((int)id);
+
+            if(templatesDepto.Count() == 0)
+            {
+                return NotFound("No existe templates para ese Departamento."); 
+            }
+
+            return this.Ok(templatesDepto); 
         }
     }
 }

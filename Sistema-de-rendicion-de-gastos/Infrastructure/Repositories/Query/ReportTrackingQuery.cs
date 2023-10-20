@@ -2,6 +2,7 @@
 using Application.Interfaces.IRepositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories.Command;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Query

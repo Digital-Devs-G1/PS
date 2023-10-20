@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories
 {
-    public interface IReportQuery
+    public interface IVariableFieldQuery
     {
-        public Report GetReport(int idReport);
-
-        Task<bool> ExistReportById (int id);
-
+        public Task<List<VariableField>> GetVariablesFieldByReportId(int reportId);
     }
 }

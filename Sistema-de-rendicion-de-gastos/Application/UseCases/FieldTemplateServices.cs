@@ -34,8 +34,10 @@ namespace Application.UseCases
             return new FieldTemplateResponse(fieldTemp);
         }
 
-        public async Task CreateTemplates (FieldTemplateRequest template)
+        public async Task CreateFieldTemplate (FieldTemplateRequest template)
         {
+            if (await _query.GetTemplate(template.FieldNameId, template.FieldTemplateId) != null)
+                throw new Exception(null);
             await _commandGeneric.Add(new FieldTemplate
             {
                 FieldTemplateId = template.FieldTemplateId,
@@ -45,17 +47,22 @@ namespace Application.UseCases
             });
         }
 
-        public async Task DeleteTemplates (int idTemplate)
+        public async Task DeleteFieldTemplatesById (int idTemplate)
         {
+            if ((await _query.GetTemplatesById(idTemplate)).Count() == 0)
+                throw new Exception();
             await _command.DeleteRange (await _query.GetFirstTemplateById(idTemplate));
         }
 
-        public async Task DeleteTemplate(string tempName, int idTemplate)
+        public async Task DeleteTemplateById(string tempName, int idTemplate)
         {
+            if (await _query.GetTemplate(tempName, idTemplate) == null)
+                throw new Exception(null);
             await _commandGeneric.Delete(await _query.GetTemplate(tempName, idTemplate));
         }
 
-        public async Task UpdateTemplates (FieldTemplateResponse template)
+        //no implementado
+        public async Task UpdateTemplates (FieldTemplateRequest template)
         {
             await _commandGeneric.Update(new FieldTemplate
             {

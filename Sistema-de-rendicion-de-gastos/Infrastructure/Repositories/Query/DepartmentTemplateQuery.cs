@@ -3,9 +3,9 @@ using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Query
 {
-    public class DepartmentTemplateQuery : IDepartamentTemplateQuery
+    public class DepartmentTemplateQuery : IDepartmentTemplateQuery
     {
         public readonly ReportsDbContext _context;
 
@@ -13,7 +13,12 @@ namespace Infrastructure.Repositories
         {
             _context = context;
         }
-        //retorna los DeptoTemplate mediante un deptoId
+
+        public async Task<bool> ExistDepartamentId(int id)
+        {
+            return await _context.DepartmentTemplates.AnyAsync(dt => dt.DepartmentId == id);
+        }
+
         public async Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId)
         {
             return await _context.DepartmentTemplates.Where(dt => dt.DepartmentId == deptoId)

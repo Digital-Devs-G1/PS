@@ -14,12 +14,16 @@ namespace Application.UseCases
         private readonly IGenericRepositoryCommand<Report> command;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
-        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, IReportOperationService reportOperationService, IGenericRepositoryCommand<Report> command)
+        private readonly IReportQuery _query;
+        public ReportService(IGenericRepositoryQuerys<Report> repository, IReportTrackingService reportTrackingService, 
+                            IReportOperationService reportOperationService, IGenericRepositoryCommand<Report> command,
+                            IReportQuery query)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
             this.command = command;
             this.reportOperationService = reportOperationService;
+            _query = query;
         }
 
         public async Task<Report> GetById(int id)
@@ -101,6 +105,11 @@ namespace Application.UseCases
             await this.command.Add(report);
 
             await this.reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
+        }
+
+        public async Task<bool> ExistReportById(int reportId)
+        {
+            return await _query.ExistReportById(reportId);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Application.DTO.Response.ReportNS
     {
         public required string Label { get; set; }
         public required string Value { get; set; }
-        public required string DataType { get; set; }
+        public required int DataType { get; set; }
     }
 }
