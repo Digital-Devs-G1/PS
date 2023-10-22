@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 
 namespace Application.Dto.Response.StatusResponseNS
-{
+{/*
     public class RepositoryResponseFactory : IRepositoryResponseFactory
     {
         public StatusResponse DbUpdateException()
@@ -39,5 +39,5 @@ namespace Application.Dto.Response.StatusResponseNS
         {
             return new OkResponse(200, "Ok");
         }
-    }
+    }*/
 }

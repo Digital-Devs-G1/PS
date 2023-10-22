@@ -8,7 +8,13 @@ namespace Application.Exceptions
 {
     public class NonExistentReferenceException : Exception
     {
-        public NonExistentReferenceException() : base() { }
-        public NonExistentReferenceException(string message) : base(message) { }
+        private static readonly string description = 
+            "El id no corresponde a ningun elemento registrado. " ;
+        public NonExistentReferenceException() : base(description)
+        { }
+
+        public NonExistentReferenceException(string message) 
+            : base(description + message) 
+        { }
     }
 }

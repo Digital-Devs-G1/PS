@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 
 namespace Application.Dto.Response.StatusResponseNS
-{/*
+{
     public class ServiceResponseFactory : IServiceResponseFactory
     {
         public StatusResponse WrongNumberOfFields()
@@ -24,5 +24,10 @@ namespace Application.Dto.Response.StatusResponseNS
         {
             return new OkResponse(200, "Ok");
         }
-    }*/
+
+        public StatusResponse UnexpectedDataType(int expectedType, string receivedType)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

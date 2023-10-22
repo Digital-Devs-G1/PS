@@ -20,7 +20,7 @@ namespace Application.UseCases
         {
             if(reportId <= 0) throw new InvalidFormatIdException("El id debe ser un entero positivo");
 
-            bool validReportId = await _reportServices.ExistReportById(reportId);
+            bool validReportId = default;// await _reportServices.ExistReportById(reportId);
 
             if(!validReportId) throw new NonExistentReferenceException($"No existe un reporte con el id {reportId}"); 
 
@@ -30,7 +30,7 @@ namespace Application.UseCases
             {
                 responseListField.Add(new VariableFieldResponse
                 {
-                    Label = item.NameId,
+                    Label = item.Name,
                     Value = item.Value,
                     DataType = item.DataTypeId
                 });

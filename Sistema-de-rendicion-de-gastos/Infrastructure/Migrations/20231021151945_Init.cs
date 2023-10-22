@@ -61,7 +61,8 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false)
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    ApproverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,14 +74,13 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     DepartmentTemplateId = table.Column<int>(type: "int", nullable: false),
-                    OrdinalNumber = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     DataTypeId = table.Column<int>(type: "int", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FieldTemplates", x => new { x.DepartmentTemplateId, x.OrdinalNumber });
+                    table.PrimaryKey("PK_FieldTemplates", x => new { x.DepartmentTemplateId, x.Name });
                     table.ForeignKey(
                         name: "FK_FieldTemplates_DataType_DataTypeId",
                         column: x => x.DataTypeId,
@@ -183,70 +183,43 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Reports",
-                columns: new[] { "ReportId", "Amount", "Description", "EmployeeId" },
+                columns: new[] { "ReportId", "Amount", "ApproverId", "Description", "EmployeeId" },
                 values: new object[,]
                 {
-                    { 1, 7500.0, "Bolsa de cemento", 1 },
-                    { 2, 15000.0, "Placa Mdf", 2 },
-                    { 3, 3500.0, "Bola de cal", 2 }
+                    { 1, 7500.0, 1, "Bolsa de cemento", 1 },
+                    { 2, 15000.0, 1, "Placa Mdf", 2 },
+                    { 3, 3500.0, 1, "Bola de cal", 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "FieldTemplates",
-                columns: new[] { "DepartmentTemplateId", "OrdinalNumber", "DataTypeId", "Enabled", "Name" },
+                columns: new[] { "DepartmentTemplateId", "Name", "DataTypeId", "Enabled" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.cs
-                    { 1, 1, 2, true, "Destino" },
-                    { 1, 2, 5, true, "Km" },
-                    { 1, 3, 4, true, "HuboPeajes" },
-                    { 1, 4, 5, true, "Monto Peajes" },
-                    { 2, 1, 2, true, "Destino" },
-                    { 2, 2, 2, true, "Nombre Servicio" },
-                    { 2, 3, 2, true, "Comprobante" },
-                    { 3, 1, 2, true, "Viatico" },
-                    { 3, 2, 2, true, "Motivo" },
-                    { 3, 3, 2, true, "Comprobante" },
-                    { 4, 1, 2, true, "Proveedor" },
-                    { 4, 2, 1, true, "Contacto" },
-                    { 4, 3, 2, true, "Nombre Material" },
-                    { 4, 4, 5, true, "Peso [Kg]" },
-                    { 4, 5, 1, true, "Ancho [mm]" },
-                    { 4, 6, 1, true, "Alto [mm]" },
-                    { 5, 1, 2, true, "Viatico" },
-                    { 5, 2, 2, true, "Motivo" },
-                    { 5, 3, 2, true, "Comprobante" },
-                    { 6, 1, 2, true, "Proveedor" },
-                    { 6, 2, 1, true, "Tel. Proveedor" },
-                    { 7, 1, 1, true, "Ancho [mm]" },
-                    { 7, 2, 1, true, "Alto [mm]" },
-                    { 7, 3, 5, true, "Peso [Kg]" }
-========
-                    { "Destino", 1, 2, true },
-                    { "HuboPeajes", 1, 4, true },
-                    { "Km", 1, 5, true },
-                    { "Monto Peajes", 1, 5, true },
-                    { "Comprobante", 2, 2, true },
-                    { "Destino", 2, 2, true },
-                    { "Nombre Servicio", 2, 2, true },
-                    { "Comprobante", 3, 2, true },
-                    { "Motivo", 3, 2, true },
-                    { "Viatico", 3, 2, true },
-                    { "Alto [mm]", 4, 1, true },
-                    { "Ancho [mm]", 4, 1, true },
-                    { "Contacto", 4, 1, true },
-                    { "Nombre Material", 4, 2, true },
-                    { "Peso [Kg]", 4, 5, true },
-                    { "Proveedor", 4, 2, true },
-                    { "Comprobante", 5, 2, true },
-                    { "Motivo", 5, 2, true },
-                    { "Viatico", 5, 2, true },
-                    { "Proveedor", 6, 2, true },
-                    { "Tel. Proveedor", 6, 1, true },
-                    { "Alto [mm]", 7, 1, true },
-                    { "Ancho [mm]", 7, 1, true },
-                    { "Peso [Kg]", 7, 5, true }
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.cs
+                    { 1, "Destino", 2, true },
+                    { 1, "HuboPeajes", 4, true },
+                    { 1, "Km", 5, true },
+                    { 1, "Monto Peajes", 5, true },
+                    { 2, "Comprobante", 2, true },
+                    { 2, "Destino", 2, true },
+                    { 2, "Nombre Servicio", 2, true },
+                    { 3, "Comprobante", 2, true },
+                    { 3, "Motivo", 2, true },
+                    { 3, "Viatico", 2, true },
+                    { 4, "Alto [mm]", 1, true },
+                    { 4, "Ancho [mm]", 1, true },
+                    { 4, "Contacto", 1, true },
+                    { 4, "Nombre Material", 2, true },
+                    { 4, "Peso [Kg]", 5, true },
+                    { 4, "Proveedor", 2, true },
+                    { 5, "Comprobante", 2, true },
+                    { 5, "Motivo", 2, true },
+                    { 5, "Viatico", 2, true },
+                    { 6, "Proveedor", 2, true },
+                    { 6, "Tel. Proveedor", 1, true },
+                    { 7, "Alto [mm]", 1, true },
+                    { 7, "Ancho [mm]", 1, true },
+                    { 7, "Peso [Kg]", 5, true }
                 });
 
             migrationBuilder.InsertData(

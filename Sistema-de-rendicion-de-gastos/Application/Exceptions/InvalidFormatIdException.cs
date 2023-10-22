@@ -8,7 +8,13 @@ namespace Application.Exceptions
 {
     public class InvalidFormatIdException : Exception
     {
-        public InvalidFormatIdException() : base() { }
-        public InvalidFormatIdException(string message) : base(message) { }
+        private static readonly string description = "El id debe ser mayor a 0. ";
+        public InvalidFormatIdException()
+        : base(description)
+        { }
+
+        public InvalidFormatIdException(string message) 
+            : base(description + message) 
+        { }
     }
 }

@@ -96,8 +96,8 @@ namespace Infrastructure.Persistence.Inserts
             foreach (var field in fieldsValues)
                 templateFields.Add(new FieldTemplate()
                 {
-                    FieldTemplateId = _autoincrement,
-                    FieldNameId = field.Name,
+                    DepartmentTemplateId = _autoincrement,
+                    Name = field.Name,
                     DataTypeId = field.TypeId,
                     Enabled = true,
                 }

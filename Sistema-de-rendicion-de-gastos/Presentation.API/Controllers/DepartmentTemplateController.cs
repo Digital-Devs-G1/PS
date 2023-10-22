@@ -2,11 +2,13 @@
 using Application.Interfaces.IServices.IVariableFields;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Handlers;
 
 namespace Presentation.API.Controllers
 {
     [Route("api/")]
     [ApiController]
+    [TypeFilter(typeof(ExceptionFilter))]
     public class DepartmentTemplateController : ControllerBase
     {
         private readonly IDepartmentTemplateServices _services;

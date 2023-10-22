@@ -12,11 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
-    [Migration("20230921022750_Init")]
-========
-    [Migration("20231020025704_Init")]
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+    [Migration("20231021151945_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -24,7 +20,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -144,8 +140,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("DepartmentTemplateId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrdinalNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("DataTypeId")
                         .HasColumnType("int");
@@ -153,12 +150,7 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("DepartmentTemplateId", "OrdinalNumber");
+                    b.HasKey("DepartmentTemplateId", "Name");
 
                     b.HasIndex("DataTypeId");
 
@@ -168,309 +160,170 @@ namespace Infrastructure.Migrations
                         new
                         {
                             DepartmentTemplateId = 1,
-                            OrdinalNumber = 1,
+                            Name = "Destino",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Destino"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 1,
-                            OrdinalNumber = 2,
-========
-                            FieldTemplateId = 1,
-                            FieldNameId = "Km",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Km",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Km"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 1,
-                            OrdinalNumber = 3,
-========
-                            FieldTemplateId = 1,
-                            FieldNameId = "HuboPeajes",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "HuboPeajes",
                             DataTypeId = 4,
-                            Enabled = true,
-                            Name = "HuboPeajes"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 1,
-                            OrdinalNumber = 4,
-========
-                            FieldTemplateId = 1,
-                            FieldNameId = "Monto Peajes",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Monto Peajes",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Monto Peajes"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 2,
-                            OrdinalNumber = 1,
-========
-                            FieldTemplateId = 2,
-                            FieldNameId = "Destino",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Destino",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Destino"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 2,
-                            OrdinalNumber = 2,
-========
-                            FieldTemplateId = 2,
-                            FieldNameId = "Nombre Servicio",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Nombre Servicio",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Nombre Servicio"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 2,
-                            OrdinalNumber = 3,
-========
-                            FieldTemplateId = 2,
-                            FieldNameId = "Comprobante",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Comprobante",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Comprobante"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 3,
-                            OrdinalNumber = 1,
-========
-                            FieldTemplateId = 3,
-                            FieldNameId = "Viatico",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Viatico",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Viatico"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 3,
-                            OrdinalNumber = 2,
-========
-                            FieldTemplateId = 3,
-                            FieldNameId = "Motivo",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Motivo",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Motivo"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 3,
-                            OrdinalNumber = 3,
-========
-                            FieldTemplateId = 3,
-                            FieldNameId = "Comprobante",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Comprobante",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Comprobante"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 4,
-                            OrdinalNumber = 1,
-========
-                            FieldTemplateId = 4,
-                            FieldNameId = "Proveedor",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Proveedor",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Proveedor"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 4,
-                            OrdinalNumber = 2,
-========
-                            FieldTemplateId = 4,
-                            FieldNameId = "Contacto",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Contacto",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Contacto"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 4,
-                            OrdinalNumber = 3,
-========
-                            FieldTemplateId = 4,
-                            FieldNameId = "Nombre Material",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Nombre Material",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Nombre Material"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 4,
-                            OrdinalNumber = 4,
-========
-                            FieldTemplateId = 4,
-                            FieldNameId = "Peso [Kg]",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Peso [Kg]",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Peso [Kg]"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 4,
-                            OrdinalNumber = 5,
-========
-                            FieldTemplateId = 4,
-                            FieldNameId = "Ancho [mm]",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Ancho [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Ancho [mm]"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 4,
-                            OrdinalNumber = 6,
-========
-                            FieldTemplateId = 4,
-                            FieldNameId = "Alto [mm]",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Alto [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Alto [mm]"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 5,
-                            OrdinalNumber = 1,
-========
-                            FieldTemplateId = 5,
-                            FieldNameId = "Viatico",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Viatico",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Viatico"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 5,
-                            OrdinalNumber = 2,
-========
-                            FieldTemplateId = 5,
-                            FieldNameId = "Motivo",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Motivo",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Motivo"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 5,
-                            OrdinalNumber = 3,
-========
-                            FieldTemplateId = 5,
-                            FieldNameId = "Comprobante",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Comprobante",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Comprobante"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 6,
-                            OrdinalNumber = 1,
-========
-                            FieldTemplateId = 6,
-                            FieldNameId = "Proveedor",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Proveedor",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Proveedor"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 6,
-                            OrdinalNumber = 2,
-========
-                            FieldTemplateId = 6,
-                            FieldNameId = "Tel. Proveedor",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Tel. Proveedor",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Tel. Proveedor"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 7,
-                            OrdinalNumber = 1,
-========
-                            FieldTemplateId = 7,
-                            FieldNameId = "Ancho [mm]",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Ancho [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Ancho [mm]"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 7,
-                            OrdinalNumber = 2,
-========
-                            FieldTemplateId = 7,
-                            FieldNameId = "Alto [mm]",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Alto [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Alto [mm]"
+                            Enabled = true
                         },
                         new
                         {
-<<<<<<<< HEAD:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20230921022750_Init.Designer.cs
                             DepartmentTemplateId = 7,
-                            OrdinalNumber = 3,
-========
-                            FieldTemplateId = 7,
-                            FieldNameId = "Peso [Kg]",
->>>>>>>> emi_feature3:Sistema-de-rendicion-de-gastos/Infrastructure/Migrations/20231020025704_Init.Designer.cs
+                            Name = "Peso [Kg]",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Peso [Kg]"
+                            Enabled = true
                         });
                 });
 
@@ -485,6 +338,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
+
+                    b.Property<int>("ApproverId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -503,6 +359,7 @@ namespace Infrastructure.Migrations
                         {
                             ReportId = 1,
                             Amount = 7500.0,
+                            ApproverId = 1,
                             Description = "Bolsa de cemento",
                             EmployeeId = 1
                         },
@@ -510,6 +367,7 @@ namespace Infrastructure.Migrations
                         {
                             ReportId = 2,
                             Amount = 15000.0,
+                            ApproverId = 1,
                             Description = "Placa Mdf",
                             EmployeeId = 2
                         },
@@ -517,6 +375,7 @@ namespace Infrastructure.Migrations
                         {
                             ReportId = 3,
                             Amount = 3500.0,
+                            ApproverId = 1,
                             Description = "Bola de cal",
                             EmployeeId = 2
                         });

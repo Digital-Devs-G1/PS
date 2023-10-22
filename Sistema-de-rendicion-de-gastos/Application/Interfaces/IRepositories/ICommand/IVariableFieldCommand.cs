@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories.ICommand
 {
-    public interface IVariableFieldCommand : IGenericRepositoryCommand<VariableField>
+    public interface IVariableFieldCommand : IGenericCommand<VariableField>
     {
         public Report GetReport(int idReport);
 

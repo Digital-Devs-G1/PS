@@ -13,5 +13,6 @@
         public required int EmployeeId { get; set; }
         public required string Description { get; set; }
         public required double Amount { get; set; }
+        public required int ApproverId { get; set; }
     }
 }

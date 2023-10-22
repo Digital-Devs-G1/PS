@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -137,8 +137,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("DepartmentTemplateId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrdinalNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("DataTypeId")
                         .HasColumnType("int");
@@ -146,12 +147,7 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("DepartmentTemplateId", "OrdinalNumber");
+                    b.HasKey("DepartmentTemplateId", "Name");
 
                     b.HasIndex("DataTypeId");
 
@@ -161,194 +157,170 @@ namespace Infrastructure.Migrations
                         new
                         {
                             DepartmentTemplateId = 1,
-                            OrdinalNumber = 1,
+                            Name = "Destino",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Destino"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 1,
-                            FieldNameId = "Km",
+                            DepartmentTemplateId = 1,
+                            Name = "Km",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Km"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 1,
-                            FieldNameId = "HuboPeajes",
+                            DepartmentTemplateId = 1,
+                            Name = "HuboPeajes",
                             DataTypeId = 4,
-                            Enabled = true,
-                            Name = "HuboPeajes"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 1,
-                            FieldNameId = "Monto Peajes",
+                            DepartmentTemplateId = 1,
+                            Name = "Monto Peajes",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Monto Peajes"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 2,
-                            FieldNameId = "Destino",
+                            DepartmentTemplateId = 2,
+                            Name = "Destino",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Destino"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 2,
-                            FieldNameId = "Nombre Servicio",
+                            DepartmentTemplateId = 2,
+                            Name = "Nombre Servicio",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Nombre Servicio"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 2,
-                            FieldNameId = "Comprobante",
+                            DepartmentTemplateId = 2,
+                            Name = "Comprobante",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Comprobante"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 3,
-                            FieldNameId = "Viatico",
+                            DepartmentTemplateId = 3,
+                            Name = "Viatico",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Viatico"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 3,
-                            FieldNameId = "Motivo",
+                            DepartmentTemplateId = 3,
+                            Name = "Motivo",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Motivo"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 3,
-                            FieldNameId = "Comprobante",
+                            DepartmentTemplateId = 3,
+                            Name = "Comprobante",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Comprobante"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 4,
-                            FieldNameId = "Proveedor",
+                            DepartmentTemplateId = 4,
+                            Name = "Proveedor",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Proveedor"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 4,
-                            FieldNameId = "Contacto",
+                            DepartmentTemplateId = 4,
+                            Name = "Contacto",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Contacto"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 4,
-                            FieldNameId = "Nombre Material",
+                            DepartmentTemplateId = 4,
+                            Name = "Nombre Material",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Nombre Material"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 4,
-                            FieldNameId = "Peso [Kg]",
+                            DepartmentTemplateId = 4,
+                            Name = "Peso [Kg]",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Peso [Kg]"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 4,
-                            FieldNameId = "Ancho [mm]",
+                            DepartmentTemplateId = 4,
+                            Name = "Ancho [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Ancho [mm]"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 4,
-                            FieldNameId = "Alto [mm]",
+                            DepartmentTemplateId = 4,
+                            Name = "Alto [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Alto [mm]"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 5,
-                            FieldNameId = "Viatico",
+                            DepartmentTemplateId = 5,
+                            Name = "Viatico",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Viatico"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 5,
-                            FieldNameId = "Motivo",
+                            DepartmentTemplateId = 5,
+                            Name = "Motivo",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Motivo"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 5,
-                            FieldNameId = "Comprobante",
+                            DepartmentTemplateId = 5,
+                            Name = "Comprobante",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Comprobante"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 6,
-                            FieldNameId = "Proveedor",
+                            DepartmentTemplateId = 6,
+                            Name = "Proveedor",
                             DataTypeId = 2,
-                            Enabled = true,
-                            Name = "Proveedor"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 6,
-                            FieldNameId = "Tel. Proveedor",
+                            DepartmentTemplateId = 6,
+                            Name = "Tel. Proveedor",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Tel. Proveedor"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 7,
-                            FieldNameId = "Ancho [mm]",
+                            DepartmentTemplateId = 7,
+                            Name = "Ancho [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Ancho [mm]"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 7,
-                            FieldNameId = "Alto [mm]",
+                            DepartmentTemplateId = 7,
+                            Name = "Alto [mm]",
                             DataTypeId = 1,
-                            Enabled = true,
-                            Name = "Alto [mm]"
+                            Enabled = true
                         },
                         new
                         {
-                            FieldTemplateId = 7,
-                            FieldNameId = "Peso [Kg]",
+                            DepartmentTemplateId = 7,
+                            Name = "Peso [Kg]",
                             DataTypeId = 5,
-                            Enabled = true,
-                            Name = "Peso [Kg]"
+                            Enabled = true
                         });
                 });
 
@@ -363,6 +335,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
+
+                    b.Property<int>("ApproverId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -381,6 +356,7 @@ namespace Infrastructure.Migrations
                         {
                             ReportId = 1,
                             Amount = 7500.0,
+                            ApproverId = 1,
                             Description = "Bolsa de cemento",
                             EmployeeId = 1
                         },
@@ -388,6 +364,7 @@ namespace Infrastructure.Migrations
                         {
                             ReportId = 2,
                             Amount = 15000.0,
+                            ApproverId = 1,
                             Description = "Placa Mdf",
                             EmployeeId = 2
                         },
@@ -395,6 +372,7 @@ namespace Infrastructure.Migrations
                         {
                             ReportId = 3,
                             Amount = 3500.0,
+                            ApproverId = 1,
                             Description = "Bola de cal",
                             EmployeeId = 2
                         });

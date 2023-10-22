@@ -19,7 +19,10 @@ namespace Presentation.Handlers
                 message.Add(context.Exception.Message);
 
             }
-            else if (context.Exception is NonExistentReferenceException)
+            else if (
+                context.Exception is NonExistentReferenceException ||
+                context.Exception is NoFilterMatchesException
+                )
             {
                 statusCode = HttpStatusCode.NotFound;
                 message.Add(context.Exception.Message);

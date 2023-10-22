@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<FieldTemplate> builder)
         {
-            builder.HasKey(ft => new {ft.DepartmentTemplateId, ft.OrdinalNumber});
+            builder.HasKey(ft => new {ft.DepartmentTemplateId, ft.Name});
             builder.HasOne(fieldTemplate => fieldTemplate.DataTypeNav)
                    .WithMany()
                    .HasForeignKey(fieldTemplate => fieldTemplate.DataTypeId);

@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response;
+using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Domain.Entities;
@@ -9,16 +10,16 @@ namespace Application.UseCases
     public class FieldTemplateServices : IFieldTemplateServices
     {
         public readonly IFieldTemplateQuerys _query;
-        public readonly IGenericRepositoryCommand<FieldTemplate> _commandGeneric;
+        public readonly IGenericCommand<FieldTemplate> _commandGeneric;
         public readonly IFieldTemplateCommands _command;
 
-        public FieldTemplateServices(IFieldTemplateQuerys query, IGenericRepositoryCommand<FieldTemplate> commandGeneric, IFieldTemplateCommands command)
+        public FieldTemplateServices(IFieldTemplateQuerys query, IGenericCommand<FieldTemplate> commandGeneric, IFieldTemplateCommands command)
         {
             _query = query;
             _command = command;
             _commandGeneric = commandGeneric;
         }
-        public async Task<IList<FieldTemplateResponse>> GetTemplatesById(int tempId)
+        public async Task<IList<DTO.Response.Response.EntityProxy.FieldTemplateResponse>> GetTemplatesById(int tempId)
         {
             IList<FieldTemplateResponse> list = new List<FieldTemplateResponse>();
             foreach (FieldTemplate elem in await _query.GetTemplatesById(tempId))
@@ -40,8 +41,8 @@ namespace Application.UseCases
                 throw new Exception(null);
             await _commandGeneric.Add(new FieldTemplate
             {
-                FieldTemplateId = template.FieldTemplateId,
-                FieldNameId = template.FieldNameId,
+                DepartmentTemplateId = template.FieldTemplateId,
+                Name = template.FieldNameId,
                 DataTypeId = template.DataTypeId,
                 Enabled = true
             });
@@ -66,8 +67,8 @@ namespace Application.UseCases
         {
             await _commandGeneric.Update(new FieldTemplate
             {
-                FieldTemplateId = template.FieldTemplateId,
-                FieldNameId = template.FieldNameId,
+                DepartmentTemplateId = template.FieldTemplateId,
+                Name = template.FieldNameId,
                 DataTypeId = template.DataTypeId,
                 Enabled = true
             });

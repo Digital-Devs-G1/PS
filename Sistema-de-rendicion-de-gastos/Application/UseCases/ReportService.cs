@@ -1,11 +1,15 @@
 ﻿using Application.Dto.Response.StatusResponseNS;
 using Application.DTO.Request;
 using Application.DTO.Response.ReportOperationNS;
+using Application.DTO.Response.Response.EntityProxy;
+using Application.Exceptions;
+using Application.Interfaces.IRepositories;
 using Application.Interfaces.IRepositories.ICommand;
 using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices;
 using Application.Interfaces.IServices.IReportTraking;
 using Application.Interfaces.IServices.IVariableFields;
+using Application.UseCases.VariableFieldsService;
 using Domain.Entities;
 using System.Collections.Concurrent;
 
@@ -14,21 +18,23 @@ namespace Application.UseCases
     public class ReportService : IReportService
     {
         private readonly IGenericRepositoryQuerys<Report> repository;
-        private readonly IGenericRepositoryCommand<Report> command;
+        private readonly IGenericCommand<Report> command;
+        private readonly IReportQuery _reportQuery;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
         private readonly IVariableFieldService variableFieldService;
-        private readonly IFieldTemplateService fieldTemplateService;
+        private readonly IFieldTemplateServices fieldTemplateService;
         private readonly IServiceResponseFactory responseFactory;
 
         public ReportService(
             IGenericRepositoryQuerys<Report> repository,
             IReportTrackingService reportTrackingService,
             IReportOperationService reportOperationService,
-            IGenericRepositoryCommand<Report> command,
+            IGenericCommand<Report> command,
             IVariableFieldService variableFieldService,
-            IFieldTemplateService fieldTemplateService,
-            IServiceResponseFactory responseFactory)
+            IFieldTemplateServices fieldTemplateService,
+            IServiceResponseFactory responseFactory,
+            IReportQuery reportQuery)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
@@ -37,6 +43,7 @@ namespace Application.UseCases
             this.fieldTemplateService = fieldTemplateService;
             this.reportOperationService = reportOperationService;
             this.responseFactory = responseFactory;
+            _reportQuery = reportQuery;
         }
 
         public async Task<Report> GetById(int id)
@@ -112,7 +119,7 @@ namespace Application.UseCases
         }
 
         public async Task AddReport(ReportRequest request, List<string> fields)
-        {
+        {/*
             var template = await fieldTemplateService.GetTemplate(request.TemplateId);
             Report report;
             var errors = new ConcurrentBag<StatusResponse>();
@@ -135,7 +142,7 @@ namespace Application.UseCases
                             await reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
                     }
                 }   
-            }
+            }*/
         }
 
         private bool CheckVariableFields(
@@ -182,7 +189,17 @@ namespace Application.UseCases
 
         public async Task<bool> ExistReportById(int reportId)
         {
-            return await _query.ExistReportById(reportId);
+            return default;// await _query.ExistReportById(reportId);
+        }
+
+        public async Task<IList<ReportResponse>> GetPendingApprovals(int approverId)
+        {
+            if (approverId < 1)
+                throw new InvalidFormatIdException("Id de aprovador invalido. ");
+            var reports = await _reportQuery.GetPendingApprovals(approverId);
+            if (reports == null || reports.Count == 0)
+                throw new NoFilterMatchesException("No hay nada por aprovar. ");
+            return reports;
         }
     }
 }

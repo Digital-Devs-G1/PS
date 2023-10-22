@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories.Command
 
         public async Task DeleteRange(FieldTemplate entity)
         { 
-            List<FieldTemplate> fields = await _context.FieldTemplates.Where(f => f.FieldTemplateId == entity.FieldTemplateId).ToListAsync();
+            List<FieldTemplate> fields = await _context.FieldTemplates.Where(f => f.DepartmentTemplateId == entity.DepartmentTemplateId).ToListAsync();
             _context.FieldTemplates.RemoveRange(fields);
             await _context.SaveChangesAsync();
         }

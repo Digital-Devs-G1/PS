@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IRepositories.ICommand;
+﻿using Application.Interfaces.IRepositories;
+using Application.Interfaces.IRepositories.ICommand;
 using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;
 using System;
@@ -11,16 +12,16 @@ namespace Application.UseCases.VariableFieldsService
 {
     public class VariableFieldService : IVariableFieldService
     {
-        private readonly IGenericRepositoryCommand<VariableField> variableFieldCommand;
+        private readonly IGenericCommand<VariableField> variableFieldCommand;
 
-        public VariableFieldService(IGenericRepositoryCommand<VariableField> repository)
+        public VariableFieldService(IGenericCommand<VariableField> repository)
         {
             variableFieldCommand = repository;
         }
 
         public async Task<bool> AddFields(IList<VariableField> fields)
         {
-            return await variableFieldCommand.AddAndCommit(fields);
+            return default;// await variableFieldCommand.AddAndCommit(fields);
         }
     }
 }

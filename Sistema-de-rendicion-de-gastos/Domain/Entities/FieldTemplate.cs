@@ -6,7 +6,6 @@ namespace Domain.Entities
     {
         // PK
         public required int DepartmentTemplateId { get; set; }
-        public required int OrdinalNumber { get; set; }
 
         public required string Name { get; set; }
 

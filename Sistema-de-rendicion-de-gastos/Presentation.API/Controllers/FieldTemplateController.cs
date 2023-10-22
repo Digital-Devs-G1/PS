@@ -1,16 +1,18 @@
 ﻿using Application.DTO.Request;
 using Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Handlers;
 
 namespace Presentation.API.Controllers
 {
     [Route("api/")]
     [ApiController]
+    [TypeFilter(typeof(ExceptionFilter))]
     public class FieldTemplateController : ControllerBase
     {
-        private readonly IFieldTemplateService _services;
+        private readonly IFieldTemplateServices _services;
 
-        public FieldTemplateController(IFieldTemplateService services)
+        public FieldTemplateController(IFieldTemplateServices services)
         {
             _services = services;
         }

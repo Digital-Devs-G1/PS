@@ -1,16 +1,16 @@
-﻿using Application.DTO.Response.Response.EntityProxy;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.DTO.Request;
+using Application.DTO.Response;
+using Application.DTO.Response.Response.EntityProxy;
 
-namespace Application.Interfaces.IServices.IVariableFields
+namespace Application.Interfaces.IServices
 {
-    public interface IFieldTemplateService
+    public interface IFieldTemplateServices
     {
-        public Task<IList<FieldTemplate>> GetTemplate(int templateId);
-        public Task<IList<FieldTemplateResponse>> GetTemplateById(int tempId);
+        public Task<IList<FieldTemplateResponse>> GetTemplatesById(int tempId);
+        public Task<FieldTemplateResponse> GetFirstTemplateById(int tempId);
+        public Task CreateFieldTemplate(FieldTemplateRequest template);
+        public Task DeleteFieldTemplatesById(int idTemplate);
+        public Task DeleteTemplateById(string tempName, int idTemplate);
+        public Task UpdateTemplates(FieldTemplateRequest template);
     }
 }

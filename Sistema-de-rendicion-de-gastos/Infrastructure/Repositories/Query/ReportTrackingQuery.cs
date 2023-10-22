@@ -8,15 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Query
 {
-    public class ReportTrackingQuery : GenericRepositoryCommand<ReportTracking>, IReportTrackingQuery
+    public class ReportTrackingQuery : GenericCommand<ReportTracking>, IReportTrackingQuery
     {
         private ReportsDbContext _dbContext;
 
         public ReportTrackingQuery(
-            ReportsDbContext dbContext,
-            IRepositoryResponseFactory responseFactory
+            ReportsDbContext dbContext
+            //IRepositoryResponseFactory responseFactory
             ) 
-            : base(dbContext, responseFactory)
+            : base(dbContext/*, responseFactory*/)
         {
             _dbContext = dbContext;
         }

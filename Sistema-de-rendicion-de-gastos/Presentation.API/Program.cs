@@ -17,6 +17,7 @@ using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Command;
 using Infrastructure.Repositories.Query;
+using Application.Dto.Response.StatusResponseNS;
 
 namespace Presentation.API
 {
@@ -36,9 +37,9 @@ namespace Presentation.API
             builder.Services.AddSingleton<ReportsDbContext>();
 
             //repositories
-            builder.Services.AddSingleton<IDepartamentTemplateQuery, DepartmentTemplateQuery>();
+            builder.Services.AddSingleton<IDepartmentTemplateQuery, DepartmentTemplateQuery>();
             builder.Services.AddSingleton<IFieldTemplateQuery, FieldTemplateQuery>();
-            builder.Services.AddTransient(typeof(IGenericRepositoryCommand<>), typeof(GenericRepositoryCommand<>));
+            builder.Services.AddTransient(typeof(IGenericCommand<>), typeof(GenericCommand<>));
             builder.Services.AddTransient(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
             builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IVariableFieldCommand, VariableFieldCommand>();
@@ -52,7 +53,7 @@ namespace Presentation.API
 
             //services
             builder.Services.AddSingleton<IDepartmentTemplateServices, DepartmentTemplateServices>();
-            builder.Services.AddSingleton<IFieldTemplateService, FieldTemplateService>();
+            builder.Services.AddSingleton<IFieldTemplateServices, FieldTemplateService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
@@ -64,6 +65,9 @@ namespace Presentation.API
             builder.Services.AddTransient<IDepartmentTemplateServices, DepartmentTemplateServices>();
             builder.Services.AddTransient<IFieldTemplateServices, FieldTemplateServices>();
             builder.Services.AddTransient<IVariableFieldServices, VariableFieldServices>();
+            builder.Services.AddTransient<IReportTrackingQuery, ReportTrackingQuery>();
+            builder.Services.AddTransient<IServiceResponseFactory, ServiceResponseFactory>();
+            builder.Services.AddTransient<IAddReportTrackingService, AddReportTrackingService>();
 
             //validators
             builder.Services.AddScoped<IValidator<VariableFieldResponse>, VariableFieldValidator>();

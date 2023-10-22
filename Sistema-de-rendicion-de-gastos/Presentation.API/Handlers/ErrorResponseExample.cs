@@ -1,4 +1,4 @@
-﻿namespace Presentation.API.Controllers
+﻿namespace Presentation.API.Handlers
 {
     public class ErrorResponseExample
     {

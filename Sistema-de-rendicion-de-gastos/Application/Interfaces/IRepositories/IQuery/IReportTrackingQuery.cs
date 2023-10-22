@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Interfaces.IRepositories.IQuery
 {
-    public interface IReportTrackingQuery : IGenericRepositoryCommand<ReportTracking>
+    public interface IReportTrackingQuery : IGenericCommand<ReportTracking>
     {
         public Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId);
         public Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId);

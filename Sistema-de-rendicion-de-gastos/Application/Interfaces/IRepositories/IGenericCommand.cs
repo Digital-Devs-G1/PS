@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories
 {
-    public interface IGenericRepositoryCommand<T> where T : class
+    public interface IGenericCommand<T> where T : class
     {
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Delete(T entity);
+        public Task Add(T entity);
+        public Task Update(T entity);
+        public Task Delete(T entity);
     }
 }
