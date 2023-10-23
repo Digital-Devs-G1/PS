@@ -1,6 +1,7 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;

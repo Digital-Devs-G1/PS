@@ -1,4 +1,7 @@
-﻿using Application.Interfaces.IServices.IReportTraking;
+﻿using Application.Exceptions;
+using Application.Interfaces.IServices.IReportTraking;
+using Infrastructure.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -14,19 +17,16 @@ namespace Presentation.API.Controllers
     {
         private readonly IReportTrackingService _getService;
         private readonly IAddReportTrackingService _addService;
-
-
-        public int employeeId = 1;
-
-
+        private readonly IJwtHelper jwtHelper;
 
         public ReportTrackingController(
-            IReportTrackingService service, 
-            IAddReportTrackingService addService
-            )
+            IReportTrackingService service,
+            IAddReportTrackingService addService,
+            IJwtHelper jwtHelper)
         {
             _getService = service;
             _addService = addService;
+            this.jwtHelper = jwtHelper;
         }
 
         [HttpGet]
@@ -56,11 +56,15 @@ namespace Presentation.API.Controllers
             type: typeof(ErrorResponseExample),
             description: "Bad Request")
         ]
+        [Authorize]
         public async Task<IActionResult> AcceptReport(
             [FromRoute(Name = "id")][Required] int reportId
             )
         {
-            await _addService.AddAcceptTracking(reportId, employeeId);
+            await _addService.AddAcceptTracking(
+                reportId, 
+                jwtHelper.GetEmployeeId()
+            );
             return NoContent();
         }
 
@@ -79,7 +83,10 @@ namespace Presentation.API.Controllers
             [FromRoute(Name = "id")][Required] int reportId
             )
         {
-            await _addService.AddDismissTracking(reportId, employeeId);
+            await _addService.AddDismissTracking(
+                reportId,
+                jwtHelper.GetEmployeeId()
+            );
             return NoContent();
         }
     }

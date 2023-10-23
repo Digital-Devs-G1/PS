@@ -28,6 +28,19 @@ namespace Presentation.Handlers
                 message.Add(context.Exception.Message);
 
             }
+            else if (
+                context.Exception is InvalidTokenInformation
+                )
+            {
+                statusCode = HttpStatusCode.UnprocessableEntity;
+                /*
+                 * 
+                 * RESOLVER LOGER O CONSOLE
+                 * 
+                **message.Add("context.Exception.Message");
+                 * 
+                 */
+            }
             else
             {
                 statusCode = HttpStatusCode.InternalServerError;

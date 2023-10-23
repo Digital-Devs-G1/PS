@@ -1,8 +1,10 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces.IRepositories;
+using Application.Interfaces.IRepositories.Microservices;
 using Application.Interfaces.IServices.IReportTraking;
 using Domain.Entities;
-
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using static Application.Enums.ReportOperationEnum;
 
 namespace Application.UseCases.ReportTrackingService
@@ -10,17 +12,19 @@ namespace Application.UseCases.ReportTrackingService
     public class AddReportTrackingService : IAddReportTrackingService
     {
         private readonly IGenericCommand<ReportTracking> command;
+        private readonly IMicroserviceClient microserviceClient;
 
         public AddReportTrackingService(
-            IGenericCommand<ReportTracking> command
-            )
+            IGenericCommand<ReportTracking> command, 
+            IMicroserviceClient microserviceClient)
         {
             this.command = command;
+            this.microserviceClient = microserviceClient;
         }
 
-        public async Task AddCreationTracking(int reportId, int employeeId)
+        public async Task AddCreationTracking()
         {
-            await AddTracking(reportId, employeeId, (int)Create);
+            await AddTracking((int)Create);
 
 
             /*
@@ -41,7 +45,13 @@ namespace Application.UseCases.ReportTrackingService
 
         public async Task AddAcceptTracking(int reportId, int employeeId)
         {
-            await AddTracking(reportId, employeeId, (int)Approval);
+            string eid = await microserviceClient.sendRequest(
+                "https://localhost:7296/api/Employee/GetDepartmentByEmployee"
+            );
+
+
+
+            //await AddTracking(reportId, employeeId, (int)Approval);
 
             /*
              * 
@@ -73,9 +83,8 @@ namespace Application.UseCases.ReportTrackingService
         }
 
         private async Task AddTracking(
-            int reportId,
-            int employeeId,
-            int operationId
+            int operationId,
+            int? reportId = null
             )
         {
             if (reportId < 1)
@@ -83,7 +92,6 @@ namespace Application.UseCases.ReportTrackingService
             var tracking = new ReportTracking
             {
                 ReportId = reportId,
-                EmployeeId = employeeId,
                 ReportOperationId = operationId,
                 TrackingDate = DateTime.Now,
             };
