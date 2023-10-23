@@ -1,6 +1,5 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces.IRepositories;
-using Application.Interfaces.IRepositories.Microservices;
 using Application.Interfaces.IServices.IReportTraking;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -12,18 +11,20 @@ namespace Application.UseCases.ReportTrackingService
     public class AddReportTrackingService : IAddReportTrackingService
     {
         private readonly IGenericCommand<ReportTracking> command;
-        private readonly IMicroserviceClient microserviceClient;
+        //private readonly ICompanyClient _companyClient;
 
         public AddReportTrackingService(
-            IGenericCommand<ReportTracking> command, 
-            IMicroserviceClient microserviceClient)
+            IGenericCommand<ReportTracking> command 
+            )//ICompanyClient companyClient)
         {
             this.command = command;
-            this.microserviceClient = microserviceClient;
+           // _companyClient = companyClient;
         }
 
-        public async Task AddCreationTracking()
+
+        public async Task AddCreationTracking(int reportId, int employeeId)
         {
+         
             await AddTracking((int)Create);
 
 
@@ -45,17 +46,13 @@ namespace Application.UseCases.ReportTrackingService
 
         public async Task AddAcceptTracking(int reportId, int employeeId)
         {
-            string eid = await microserviceClient.sendRequest(
-                "https://localhost:7296/api/Employee/GetDepartmentByEmployee"
-            );
-
-
+            //int departmentId = await _companyClient.GetDepartmentId(employeeId);
 
             //await AddTracking(reportId, employeeId, (int)Approval);
 
             /*
              * 
-             * RECUPERAR SIGUIENTE APROBADOR 
+             * recuperar el SIGUIENTE APROBADOR 
              * 
              * ASIGNAR APROBADOR AL REPORT
              * 
@@ -70,7 +67,7 @@ namespace Application.UseCases.ReportTrackingService
 
         public async Task AddDismissTracking(int reportId, int employeeId)
         {
-            await AddTracking(reportId, employeeId, (int)Refuse);
+            //await AddTracking(reportId, employeeId, (int)Refuse);
 
             /*
             * 
@@ -97,5 +94,6 @@ namespace Application.UseCases.ReportTrackingService
             };
             await command.Add(tracking);
         }
+
     }
 }

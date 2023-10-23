@@ -23,8 +23,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Application.Interfaces.IRepositories.Microservices;
-using Infrastructure.Microservices;
 using Infrastructure.Authentication;
+using Infrastructure.MicroservicesClient.GenericClient;
+using Application.Interfaces.IMicroservices.Generic;
+using Application.Interfaces.IMicroservicesClient;
+using Infrastructure.MicroservicesClient;
 
 namespace Presentation.API
 {
@@ -115,9 +118,11 @@ namespace Presentation.API
             builder.Services.AddTransient<IFieldTemplateCommands, FieldTemplateCommands>();
             builder.Services.AddTransient<IVariableFieldQuery, VariableFieldQuery>();
             builder.Services.AddTransient<IReportQuery, ReportQuery>();
-            builder.Services.AddTransient<IMicroserviceClient, MicroserviceClient>();
             builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddTransient<IJwtHelper, JwtHelper>();
+            builder.Services.AddTransient<IGetMicroserviceClient, GetMicroserviceClient>();
+            builder.Services.AddTransient<IPostMicroserviceClient, PostMicroservicClient>();
+            builder.Services.AddTransient<ICompanyClient, CompanyClient>();
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services

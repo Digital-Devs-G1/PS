@@ -43,12 +43,12 @@ namespace Presentation.API.Controllers
         ]
         [SwaggerResponse(
             statusCode: 400,
-            type: typeof(ErrorResponseExample),
+            type: typeof(ErrorResponse),
             description: "Bad Request")
         ]
         [SwaggerResponse(
             statusCode: 404,
-            type: typeof(ErrorResponseExample),
+            type: typeof(ErrorResponse),
             description: "Not Found")
         ]
         public async Task<IActionResult> GetPendingApprovals(

@@ -17,7 +17,6 @@ namespace Presentation.Handlers
             {
                 statusCode = HttpStatusCode.BadRequest;
                 message.Add(context.Exception.Message);
-
             }
             else if (
                 context.Exception is NonExistentReferenceException ||
@@ -26,10 +25,12 @@ namespace Presentation.Handlers
             {
                 statusCode = HttpStatusCode.NotFound;
                 message.Add(context.Exception.Message);
-
             }
             else if (
-                context.Exception is InvalidTokenInformation
+                context.Exception is InvalidTokenInformation ||
+                context.Exception is MicroserviceComunicationException ||
+                context.Exception is InvalidMicroserviceResponseFormatException ||
+                context.Exception is MicroserviceErrorResponseException
                 )
             {
                 statusCode = HttpStatusCode.UnprocessableEntity;
