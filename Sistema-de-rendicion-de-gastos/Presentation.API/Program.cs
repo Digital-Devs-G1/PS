@@ -64,7 +64,6 @@ namespace Presentation.API
             builder.Services.AddTransient<IReportOperationService, ReportOperationService>();
             builder.Services.AddTransient<IDepartmentTemplateServices, DepartmentTemplateServices>();
             builder.Services.AddTransient<IFieldTemplateServices, FieldTemplateServices>();
-            builder.Services.AddTransient<IVariableFieldServices, VariableFieldServices>();
             builder.Services.AddTransient<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddTransient<IServiceResponseFactory, ServiceResponseFactory>();
             builder.Services.AddTransient<IAddReportTrackingService, AddReportTrackingService>();

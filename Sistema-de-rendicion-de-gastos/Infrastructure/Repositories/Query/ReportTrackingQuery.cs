@@ -32,8 +32,8 @@ namespace Infrastructure.Repositories.Query
         public async Task<ReportTracking> GetLastTrackingByReportIdAsync(int reportId)
         {
             var trackings = await _dbContext.Set<ReportTracking>()
-                .Where(e => e.ReportId == reportId)
-                .ToListAsync();
+                                            .Where(e => e.ReportId == reportId)
+                                            .ToListAsync();
             return trackings.OrderByDescending(e => e.TrackingDate).FirstOrDefault();
         }
 

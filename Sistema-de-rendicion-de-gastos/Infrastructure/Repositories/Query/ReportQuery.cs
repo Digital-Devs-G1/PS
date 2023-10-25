@@ -28,9 +28,18 @@ namespace Infrastructure.Repositories.Query
             return await _context.Reports.AnyAsync(r => r.ReportId == id);
         }
 
-        public Report GetReport(int idReport)
+        private async Task<bool> ExistReportByEmplyeeId(int employeeId)
         {
-            throw new NotImplementedException();
+            return await _context.Reports.AnyAsync(r => r.EmployeeId == employeeId);
+        }
+
+        public async Task<List<Report>> GetReportByEmployeeId(int employeeId)
+        {
+            if (await ExistReportByEmplyeeId(employeeId))
+            {
+                return await _context.Reports.Where(r => r.EmployeeId == employeeId).ToListAsync();
+            }
+            return null;
         }
 
         public async Task<IList<ReportResponse>> GetPendingApprovals(int approverId)

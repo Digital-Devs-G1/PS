@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Response.Response.EntityProxy;
+using Application.Exceptions;
 using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;
@@ -21,12 +22,19 @@ namespace Application.UseCases.VariableFieldsService
 
         public async Task<IList<DepartmentTemplateResponse>> GetTemplatesByDeptoId(int deptoId)
         {
-            IList<DepartmentTemplateResponse> list = new List<DepartmentTemplateResponse>();
-            foreach (DepartmentTemplate elem in await _query.GetTemplatesByDeptoId(deptoId))
+            if (deptoId <= 0)
+                throw new InvalidFormatIdException();
+
+            var templatesList = await _query.GetTemplatesByDeptoId(deptoId);
+            if(templatesList.Count() == 0)
+                throw new NonExistentReferenceException();
+
+            IList<DepartmentTemplateResponse> departentResponseList = new List<DepartmentTemplateResponse>();
+            foreach (DepartmentTemplate elem in templatesList)
             {
-                list.Add(new DepartmentTemplateResponse(elem));
+                departentResponseList.Add(new DepartmentTemplateResponse(elem));
             }
-            return list;
+            return departentResponseList;
         }
     }
 }

@@ -2,9 +2,9 @@
 namespace Infrastructure.Microservices
 {
     public class MicroserviceClient
-    { 
+    {
         public async Task<string> sendRequest(string apiUrl)
-        {   
+        {
             using (HttpClient client = new HttpClient())
             {
                 try

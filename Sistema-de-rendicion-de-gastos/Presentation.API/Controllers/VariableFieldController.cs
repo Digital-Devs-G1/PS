@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.DTO.Response.Response.EntityProxy;
+using Application.Interfaces.IServices.IVariableFields;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -12,9 +13,9 @@ namespace Presentation.API.Controllers
     [TypeFilter(typeof(ExceptionFilter))]
     public class VariableFieldController : ControllerBase
     {
-        public readonly IVariableFieldServices _services;
+        public readonly IVariableFieldService _services;
 
-        public VariableFieldController(IVariableFieldServices services)
+        public VariableFieldController(IVariableFieldService services)
         {
             _services = services;
         }
@@ -22,6 +23,11 @@ namespace Presentation.API.Controllers
         [HttpGet]
         [Route("VariableFields/{id}")]
 
+        [SwaggerResponse(
+            statusCode: 200,
+            type: typeof(ReportResponse),
+            description: "Campos variables del Reporte {id}")
+        ]
         [SwaggerResponse(
             statusCode: 400,
             type: typeof(ErrorResponseExample),

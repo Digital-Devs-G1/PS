@@ -1,14 +1,11 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.DTO.Response.ReportNS;
+using Domain.Entities;
 
 namespace Application.Interfaces.IServices.IVariableFields
 {
     public interface IVariableFieldService
     {
         public Task<bool> AddFields(IList<VariableField> fields);
+        public Task<List<VariableFieldResponse>> GetVariableFieldResponseByReportId(int reportId);
     }
 }

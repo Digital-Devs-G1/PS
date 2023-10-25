@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
 using Swashbuckle.AspNetCore.Annotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     [TypeFilter(typeof(ExceptionFilter))]
     public class ReportController : ControllerBase
@@ -27,12 +28,34 @@ namespace Presentation.API.Controllers
             return this.Ok(reportStatus);
         }
 
-        [HttpGet("GetEmployeeReportsStatus/{employeeId}")]
-        public async Task<IActionResult> GetEmployeeReportsStatus(int employeeId)
+
+
+
+        [HttpGet]
+        [Route("ReportsStatus/{id}")]
+        [SwaggerResponse(
+            statusCode: 200,
+            type: typeof(ReportResponse),
+            description: "Estado del Reporte {id}")
+        ]
+        [SwaggerResponse(
+            statusCode: 400,
+            type: typeof(ErrorResponseExample),
+            description: "Bad Request")
+        ]
+        [SwaggerResponse(
+            statusCode: 404,
+            type: typeof(ErrorResponseExample),
+            description: "Not Found")
+        ]
+        public async Task<IActionResult> GetEmployeeReportsStatus([FromRoute(Name = "id")] [Required] int employeeId)
         {
             var reportsStatus = await reportService.GetReportsStatusById(employeeId);
             return this.Ok(reportsStatus);
         }
+
+
+
 
         [HttpGet("/PendingApprovals")]
         [SwaggerResponse(

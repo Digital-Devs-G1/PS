@@ -2,7 +2,10 @@
 using Application.Interfaces.IServices.IVariableFields;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.API.Handlers;
 using Presentation.Handlers;
+using Swashbuckle.AspNetCore.Annotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.API.Controllers
 {
@@ -18,21 +21,22 @@ namespace Presentation.API.Controllers
             _services = services;
         }
 
-        [HttpGet("v1/Departament/{id}/templates")]
-        public async Task<IActionResult> GetTemplatesByDepartamentId (uint id)
+        [HttpGet]
+        [Route("v1/Departament/{id}/templates")]
+
+        [SwaggerResponse(
+            statusCode: 400,
+            type: typeof(ErrorResponseExample),
+            description: "Bad Request")
+        ]
+        [SwaggerResponse(
+            statusCode: 404,
+            type: typeof(ErrorResponseExample),
+            description: "Not Found")
+        ]
+        public async Task<IActionResult> GetTemplatesByDepartamentId ([FromRoute(Name = "id")][Required] int departmentId)
         {
-            if(id == 0) 
-            {
-                return BadRequest("El ID no puede ser 0."); 
-            }
-
-            var templatesDepto = await _services.GetTemplatesByDeptoId((int)id);
-
-            if(templatesDepto.Count() == 0)
-            {
-                return NotFound("No existe templates para ese Departamento."); 
-            }
-
+            var templatesDepto = await _services.GetTemplatesByDeptoId(departmentId);
             return this.Ok(templatesDepto); 
         }
     }

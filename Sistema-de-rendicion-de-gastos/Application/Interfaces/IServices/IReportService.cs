@@ -14,5 +14,7 @@ namespace Application.Interfaces.IServices
         public Task AddReport(ReportRequest request, List<string> fields);
 
         public Task<IList<ReportResponse>> GetPendingApprovals(int approverId);
+
+        public Task<bool> ExistReportById(int reportId);
     }
 }

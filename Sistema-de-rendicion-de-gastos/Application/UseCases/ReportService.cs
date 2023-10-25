@@ -10,6 +10,7 @@ using Application.Interfaces.IServices;
 using Application.Interfaces.IServices.IReportTraking;
 using Application.Interfaces.IServices.IVariableFields;
 using Application.UseCases.VariableFieldsService;
+using Application.Validations;
 using Domain.Entities;
 using System.Collections.Concurrent;
 
@@ -18,32 +19,26 @@ namespace Application.UseCases
     public class ReportService : IReportService
     {
         private readonly IGenericRepositoryQuerys<Report> repository;
-        private readonly IGenericCommand<Report> command;
         private readonly IReportQuery _reportQuery;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
-        private readonly IVariableFieldService variableFieldService;
-        private readonly IFieldTemplateServices fieldTemplateService;
         private readonly IServiceResponseFactory responseFactory;
+        private readonly IReportQuery _query;
 
         public ReportService(
             IGenericRepositoryQuerys<Report> repository,
             IReportTrackingService reportTrackingService,
             IReportOperationService reportOperationService,
-            IGenericCommand<Report> command,
-            IVariableFieldService variableFieldService,
-            IFieldTemplateServices fieldTemplateService,
             IServiceResponseFactory responseFactory,
-            IReportQuery reportQuery)
+            IReportQuery reportQuery,
+            IReportQuery query)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
-            this.command = command;
-            this.variableFieldService = variableFieldService;
-            this.fieldTemplateService = fieldTemplateService;
             this.reportOperationService = reportOperationService;
             this.responseFactory = responseFactory;
             _reportQuery = reportQuery;
+            _query = query;
         }
 
         public async Task<Report> GetById(int id)
@@ -59,17 +54,23 @@ namespace Application.UseCases
 
         public async Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId)
         {
-            List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
-            var reports = await repository.GetAllAsync();
-            var filter = reports.Where(opt => opt.EmployeeId == employeeId);
+            if (employeeId <= 0) throw new InvalidFormatIdException();
 
-            foreach (var report in filter)
+            //validar el id del empleado ---> Microservices Company
+            //bool existEmployee = await ValidateEmployeeId.ValidateEmployeeExists(employeeId);
+            //if(!existEmployee) throw new NonExistentReferenceException();
+
+            List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
+
+            var reportes = await _reportQuery.GetReportByEmployeeId(employeeId);
+            if (reportes == null) 
+                throw new NonExistentReferenceException();
+
+            foreach (var report in reportes)
             {
-                var lastTracking = await reportTrackingService.GetLastTrackingByReportId(report.ReportId);
-                if (lastTracking == null)
-                {
-                    throw new ArgumentException($"No se han realizado operaciones sobre este reporte");
-                }
+                var lastTracking = await reportTrackingService.GetLastTrackingByReportId(report.ReportId); //ReportsTraking order desc x date
+                if (lastTracking == null) throw new ArgumentException($"No se han realizado operaciones sobre este reporte");
+                
                 var reportOperation = await reportOperationService.GetById(lastTracking.ReportOperationId);
 
                 ReportStatusResponse reportStatusResponse = new ReportStatusResponse
@@ -189,7 +190,7 @@ namespace Application.UseCases
 
         public async Task<bool> ExistReportById(int reportId)
         {
-            return default;// await _query.ExistReportById(reportId);
+            return await _query.ExistReportById(reportId);
         }
 
         public async Task<IList<ReportResponse>> GetPendingApprovals(int approverId)
