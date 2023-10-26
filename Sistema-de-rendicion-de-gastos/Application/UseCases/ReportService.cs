@@ -57,8 +57,6 @@ namespace Application.UseCases
             if (employeeId <= 0) throw new InvalidFormatIdException();
 
             //validar el id del empleado ---> Microservices Company
-            //bool existEmployee = await ValidateEmployeeId.ValidateEmployeeExists(employeeId);
-            //if(!existEmployee) throw new NonExistentReferenceException();
 
             List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
 

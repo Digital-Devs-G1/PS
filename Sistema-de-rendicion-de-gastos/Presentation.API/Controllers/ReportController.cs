@@ -1,6 +1,7 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -65,12 +66,12 @@ namespace Presentation.API.Controllers
         ]
         [SwaggerResponse(
             statusCode: 400,
-            type: typeof(ErrorResponseExample),
+            type: typeof(ErrorResponse),
             description: "Bad Request")
         ]
         [SwaggerResponse(
             statusCode: 404,
-            type: typeof(ErrorResponseExample),
+            type: typeof(ErrorResponse),
             description: "Not Found")
         ]
         public async Task<IActionResult> GetPendingApprovals(

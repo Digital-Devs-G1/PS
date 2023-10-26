@@ -1,6 +1,6 @@
 ﻿namespace Presentation.API.Handlers
 {
-    public class ErrorResponseExample
+    public class ErrorResponse
     {
         public required string message { get; set; }
     }

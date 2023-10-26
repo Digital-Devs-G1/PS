@@ -2,7 +2,8 @@
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices.IReportTraking;
 using Domain.Entities;
-
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using static Application.Enums.ReportOperationEnum;
 
 namespace Application.UseCases.ReportTrackingService
@@ -10,17 +11,21 @@ namespace Application.UseCases.ReportTrackingService
     public class AddReportTrackingService : IAddReportTrackingService
     {
         private readonly IGenericCommand<ReportTracking> command;
+        //private readonly ICompanyClient _companyClient;
 
         public AddReportTrackingService(
-            IGenericCommand<ReportTracking> command
-            )
+            IGenericCommand<ReportTracking> command 
+            )//ICompanyClient companyClient)
         {
             this.command = command;
+           // _companyClient = companyClient;
         }
+
 
         public async Task AddCreationTracking(int reportId, int employeeId)
         {
-            await AddTracking(reportId, employeeId, (int)Create);
+         
+            await AddTracking((int)Create);
 
 
             /*
@@ -41,11 +46,13 @@ namespace Application.UseCases.ReportTrackingService
 
         public async Task AddAcceptTracking(int reportId, int employeeId)
         {
-            await AddTracking(reportId, employeeId, (int)Approval);
+            //int departmentId = await _companyClient.GetDepartmentId(employeeId);
+
+            //await AddTracking(reportId, employeeId, (int)Approval);
 
             /*
              * 
-             * RECUPERAR SIGUIENTE APROBADOR 
+             * recuperar el SIGUIENTE APROBADOR 
              * 
              * ASIGNAR APROBADOR AL REPORT
              * 
@@ -60,7 +67,7 @@ namespace Application.UseCases.ReportTrackingService
 
         public async Task AddDismissTracking(int reportId, int employeeId)
         {
-            await AddTracking(reportId, employeeId, (int)Refuse);
+            //await AddTracking(reportId, employeeId, (int)Refuse);
 
             /*
             * 
@@ -73,9 +80,8 @@ namespace Application.UseCases.ReportTrackingService
         }
 
         private async Task AddTracking(
-            int reportId,
-            int employeeId,
-            int operationId
+            int operationId,
+            int? reportId = null
             )
         {
             if (reportId < 1)
@@ -83,11 +89,11 @@ namespace Application.UseCases.ReportTrackingService
             var tracking = new ReportTracking
             {
                 ReportId = reportId,
-                EmployeeId = employeeId,
                 ReportOperationId = operationId,
                 TrackingDate = DateTime.Now,
             };
             await command.Add(tracking);
         }
+
     }
 }
