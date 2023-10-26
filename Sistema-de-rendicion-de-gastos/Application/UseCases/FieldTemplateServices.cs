@@ -2,21 +2,18 @@
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases
 {
     public class FieldTemplateServices : IFieldTemplateServices
     {
         public readonly IFieldTemplateQuerys _query;
+        private readonly IFieldTemplateCommand _command;
 
-        public FieldTemplateServices(IFieldTemplateQuerys query)
+        public FieldTemplateServices(IFieldTemplateQuerys query, IFieldTemplateCommand command)
         {
             _query = query;
+            _command = command;
         }
 
         public async Task<IList<FieldTemplateResponse>> GetTemplateById(int tempId)
@@ -27,6 +24,12 @@ namespace Application.UseCases
                 list.Add(new FieldTemplateResponse(elem));
             }
             return list;
+        }
+
+        public async Task AddRange(List<FieldTemplate> fields, int deptoTemplateId)
+        {
+            foreach (var field in fields) { field.FieldTemplateId = deptoTemplateId; }
+            await _command.AddRange(fields);
         }
     }
 }

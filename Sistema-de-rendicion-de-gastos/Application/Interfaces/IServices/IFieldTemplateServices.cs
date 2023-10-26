@@ -1,14 +1,12 @@
 ﻿using Application.DTO.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Application.Interfaces.IServices
 {
     public interface IFieldTemplateServices
     {
         public Task<IList<FieldTemplateResponse>> GetTemplateById(int tempId);
+
+        Task AddRange(List<FieldTemplate> fields, int deptoTemplateId);
     }
 }

@@ -17,7 +17,7 @@ namespace Infrastructure.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-0M320PM;Database=ExpenseReport;Trusted_Connection=true;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-VAO1UL8\\MAXIMILIANO;Database=ExpenseReport;Trusted_Connection=true;TrustServerCertificate=True;");
             optionsBuilder.EnableSensitiveDataLogging(); // Eliminar en Produccion
         }
 

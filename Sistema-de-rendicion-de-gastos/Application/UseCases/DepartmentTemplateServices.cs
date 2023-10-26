@@ -2,21 +2,20 @@
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases
 {
     public class DepartmentTemplateServices : IDepartmentTemplateServices
     {
         public readonly IDepartamentTemplateQuery _query;
+        public readonly IDepartamentTemplateCommand _command;
+        private readonly IFieldTemplateServices _fieldTemplateService;
 
-        public DepartmentTemplateServices(IDepartamentTemplateQuery query)
+        public DepartmentTemplateServices(IDepartamentTemplateQuery query, IDepartamentTemplateCommand command, IFieldTemplateServices fieldTemplateService)
         {
             _query = query;
+            _command = command;
+            _fieldTemplateService = fieldTemplateService;
         }
 
         public async Task<IList<DepartmentTemplateResponse>> GetTemplatesByDeptoId(int deptoId)
@@ -27,6 +26,15 @@ namespace Application.UseCases
                  list.Add(new DepartmentTemplateResponse(elem));
             }
             return list;
+        }
+
+        public async Task AddTemplate(DepartmentTemplate temp, List<FieldTemplate> fields)
+        {
+            var deptoId = 1; //solicitar el id del departamente del usuario
+            temp.DepartmentId = deptoId;
+            await _command.Add(temp);
+
+            await _fieldTemplateService.AddRange(fields, temp.DepartmentTemplateId);
         }
     }
 }
