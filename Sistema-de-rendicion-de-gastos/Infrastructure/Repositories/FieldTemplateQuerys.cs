@@ -2,11 +2,6 @@
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -17,6 +12,11 @@ namespace Infrastructure.Repositories
         public FieldTemplateQuerys(ReportsDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<FieldTemplate> GetById(int id, string fieldName)
+        {
+            return await _context.FieldTemplates.Where(x => x.FieldTemplateId == id && x.FieldNameId == fieldName).FirstOrDefaultAsync();
         }
 
         public async Task<IList<FieldTemplate>> GetTemplatesById(int tempId)

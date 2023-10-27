@@ -23,5 +23,12 @@ namespace Infrastructure.Repositories.Command
             _dbContext.DepartmentTemplates.Add(command);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task Update(DepartmentTemplate command)
+        {
+            _dbContext.DepartmentTemplates.Update(command);
+
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -13,6 +13,12 @@ namespace Infrastructure.Repositories
         {
             _context = context;
         }
+
+        public async Task<DepartmentTemplate> GetById(int id)
+        {
+            return await _context.DepartmentTemplates.Where(x => x.DepartmentTemplateId == id).FirstOrDefaultAsync();
+        }
+
         //retorna los DeptoTemplate mediante un deptoId
         public async Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId)
         {

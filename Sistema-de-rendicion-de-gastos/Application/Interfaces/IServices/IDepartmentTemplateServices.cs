@@ -8,5 +8,7 @@ namespace Application.Interfaces.IServices
         public Task<IList<DepartmentTemplateResponse>> GetTemplatesByDeptoId (int deptoId);
 
         Task AddTemplate(DepartmentTemplate temp, List<FieldTemplate> fields);
+
+        Task UpdateTemplate(DepartmentTemplate temp);
     }
 }

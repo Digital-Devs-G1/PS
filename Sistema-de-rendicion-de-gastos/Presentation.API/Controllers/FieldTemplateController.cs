@@ -1,5 +1,7 @@
-﻿using Application.Interfaces.IServices;
-using Microsoft.AspNetCore.Http;
+﻿using Application.DTO.Request;
+using Application.Interfaces.IServices;
+using AutoMapper;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.API.Controllers
@@ -9,10 +11,12 @@ namespace Presentation.API.Controllers
     public class FieldTemplateController : ControllerBase
     {
         private readonly IFieldTemplateServices _services;
+        private readonly IMapper _mapper;
 
-        public FieldTemplateController(IFieldTemplateServices services)
+        public FieldTemplateController(IFieldTemplateServices services, IMapper mapper)
         {
             _services = services;
+            _mapper = mapper;
         }
 
         [HttpGet("GetTemplatesById/{tempId}")]
@@ -20,6 +24,14 @@ namespace Presentation.API.Controllers
         {
             var templatesDepto = await _services.GetTemplateById(tempId);
             return this.Ok(templatesDepto);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateFieldRequest request)
+        {
+            var field = this._mapper.Map<FieldTemplate>(request);
+            await _services.UpdateField(field);
+            return this.Ok(field);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Application.Interfaces.IRepositories
 {
     public interface IDepartamentTemplateQuery
     {
+        Task<DepartmentTemplate> GetById(int id);
+
         public Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId);
     }
 }

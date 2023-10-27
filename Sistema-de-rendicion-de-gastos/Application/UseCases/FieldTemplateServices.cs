@@ -31,5 +31,20 @@ namespace Application.UseCases
             foreach (var field in fields) { field.FieldTemplateId = deptoTemplateId; }
             await _command.AddRange(fields);
         }
+
+        public async Task UpdateField(FieldTemplate updateField)
+        {
+            var field = await _query.GetById(updateField.FieldTemplateId, updateField.FieldNameId);
+
+            if (field == null)
+            {
+                throw new InvalidOperationException("El nombre del campo variable ya existe.");
+            }
+
+            field.DataTypeId = updateField.DataTypeId;
+            field.Enabled = updateField.Enabled;
+
+            await _command.Update(field);
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace Application.Interfaces.IServices
         public Task<IList<FieldTemplateResponse>> GetTemplateById(int tempId);
 
         Task AddRange(List<FieldTemplate> fields, int deptoTemplateId);
+
+        Task UpdateField(FieldTemplate field);
     }
 }

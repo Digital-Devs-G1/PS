@@ -34,8 +34,17 @@ namespace Presentation.API.Controllers
 
             await _services.AddTemplate(departamentTemplate, fieldTemplates);
 
-            return this.Created("GetTemplatesByDepartamentId/{deptoId}", new { });
+            return this.Created("GetTemplatesByDepartamentId/{deptoId}", departamentTemplate);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] DepartamentTemplateNameRequest request)
+        {
+            var departamentTemplate = this._mapper.Map<DepartmentTemplate>(request);
+
+            await _services.UpdateTemplate(departamentTemplate);
+
+            return this.Ok(departamentTemplate);
+        }
     }
 }

@@ -36,5 +36,19 @@ namespace Application.UseCases
 
             await _fieldTemplateService.AddRange(fields, temp.DepartmentTemplateId);
         }
+
+        public async Task UpdateTemplate(DepartmentTemplate temp)
+        {
+            var template = await _query.GetById(temp.DepartmentTemplateId);
+
+            if (template == null)
+            {
+                throw new InvalidOperationException("No se encontró el template.");
+            }
+
+            template.DepartmentTemplateName = temp.DepartmentTemplateName;
+
+            await _command.Update(template);
+        }
     }
 }
