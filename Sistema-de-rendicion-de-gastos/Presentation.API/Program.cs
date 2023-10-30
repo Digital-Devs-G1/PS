@@ -22,7 +22,6 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Application.Interfaces.IRepositories.Microservices;
 using Infrastructure.Authentication;
 using Infrastructure.MicroservicesClient.GenericClient;
 using Application.Interfaces.IMicroservices.Generic;

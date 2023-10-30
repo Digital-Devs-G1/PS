@@ -53,17 +53,17 @@ namespace Presentation.API.Controllers
         ]
         [SwaggerResponse(
             statusCode: 400,
-            type: typeof(ErrorResponseExample),
+            type: typeof(ErrorResponse),
             description: "Bad Request")
         ]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> AcceptReport(
             [FromRoute(Name = "id")][Required] int reportId
             )
         {
             await _addService.AddAcceptTracking(
                 reportId, 
-                jwtHelper.GetEmployeeId()
+                1//jwtHelper.GetEmployeeId()
             );
             return NoContent();
         }
@@ -76,7 +76,7 @@ namespace Presentation.API.Controllers
         ]
         [SwaggerResponse(
             statusCode: 400,
-            type: typeof(ErrorResponseExample),
+            type: typeof(ErrorResponse),
             description: "Bad Request")
         ]
         public async Task<IActionResult> DismissReport(
@@ -85,7 +85,7 @@ namespace Presentation.API.Controllers
         {
             await _addService.AddDismissTracking(
                 reportId,
-                jwtHelper.GetEmployeeId()
+                1//jwtHelper.GetEmployeeId()
             );
             return NoContent();
         }

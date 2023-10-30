@@ -35,19 +35,14 @@ namespace Infrastructure.Repositories.Query
 
         public async Task<IList<ReportResponse>> GetPendingApprovals(int approverId)
         {
-            return await _context.ReportTrackings
-                .Include(x => x.ReportNav)
-                .Include(x => x.ReportOperationNav)
-                .Where(x => 
-                    x.ReportNav.ApproverId == approverId &&
-                    x.ReportOperationNav.ReportOperationId == (int)Create
-                )
+            return await _context.Set<Report>()
+                .Where(x => x.ApproverId == approverId)
                 .Select((x) => new ReportResponse()
                 {
                     ReportId = x.ReportId,
-                    Description = x.ReportNav.Description,
-                    Amount = x.ReportNav.Amount,
-                    DateTracking = x.TrackingDate
+                    Description = x.Description,
+                    Amount = x.Amount,
+                    DateTracking = x.date
                 })
                 .ToListAsync();
         }

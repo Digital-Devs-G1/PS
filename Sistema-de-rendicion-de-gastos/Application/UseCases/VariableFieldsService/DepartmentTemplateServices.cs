@@ -1,4 +1,6 @@
 ﻿using Application.DTO.Response.Response.EntityProxy;
+using Application.Interfaces.IMicroservices.Generic;
+using Application.Interfaces.IMicroservicesClient;
 using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices.IVariableFields;
 using Domain.Entities;
@@ -12,15 +14,21 @@ namespace Application.UseCases.VariableFieldsService
 {
     public class DepartmentTemplateServices : IDepartmentTemplateServices
     {
-        public readonly IDepartmentTemplateQuery _query;
+        private readonly IDepartmentTemplateQuery _query;
+        private readonly ICompanyClient _companyClient;
 
-        public DepartmentTemplateServices(IDepartmentTemplateQuery query)
+        public DepartmentTemplateServices(
+            IDepartmentTemplateQuery query, 
+            ICompanyClient companyClient
+            )
         {
             _query = query;
+            _companyClient = companyClient;
         }
 
-        public async Task<IList<DepartmentTemplateResponse>> GetTemplatesByDeptoId(int deptoId)
+        public async Task<IList<DepartmentTemplateResponse>> GetTemplatesBy(int employeeId)
         {
+            int deptoId = await _companyClient.GetDepartmentId( employeeId );
             IList<DepartmentTemplateResponse> list = new List<DepartmentTemplateResponse>();
             foreach (DepartmentTemplate elem in await _query.GetTemplatesByDeptoId(deptoId))
             {

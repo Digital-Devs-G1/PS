@@ -8,9 +8,9 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<VariableField> table)
         {
-            table.HasKey(x => new { x.ReportId, x.OrdinalNumberId });
+            table.HasKey(x => new { x.ReportId , x.Name});
             table.HasOne(variableField => variableField.ReportNav)
-                .WithMany()
+                .WithMany(r=>r.VariableFieldCol)
                 .HasForeignKey(variableField => variableField.ReportId);
             table.HasOne(variableField => variableField.DataTypeNav)
                 .WithMany()

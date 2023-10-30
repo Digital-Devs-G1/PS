@@ -1,7 +1,6 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IServices;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -20,7 +19,7 @@ namespace Presentation.API.Controllers
         {
             this.reportService = reportService;
         }
-
+        
         [HttpGet("ReportStatus/{reportId}")]
         public async Task<IActionResult> GetReportStatus(int reportId)
         {
@@ -51,22 +50,19 @@ namespace Presentation.API.Controllers
             type: typeof(ErrorResponse),
             description: "Not Found")
         ]
-        public async Task<IActionResult> GetPendingApprovals(
-            [FromQuery] int approverId
-            )
+        public async Task<IActionResult> GetPendingApprovals()
         {
-            var reportsStatus = await reportService.GetPendingApprovals(approverId);
+            var reportsStatus = await reportService.GetPendingApprovals(1);
             return this.Ok(reportsStatus);
         }
-
-        [HttpPost("Report")]
+        
+        [HttpPost]
         public async Task<IActionResult> AddReport(
-            [FromBody] ReportRequest request,
-            [FromQuery(Name = "fields")] List<string> fields
+            [FromBody] AddReportRequest report
             )
         {
-            await this.reportService.AddReport(request, fields);
-            return this.Ok();
+            int id = await reportService.AddReport(report,1 );
+            return Created("/api/Report/" + id, id);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Presentation.API.Controllers
         [HttpGet("v1/Templates/{id}")]
         public async Task<IActionResult> GetTemplateById(uint id)
         {
-            if (id == 0) 
+            if (id < 1) 
             {
                 return BadRequest("El ID no puede ser 0.");  
             }
@@ -47,7 +47,7 @@ namespace Presentation.API.Controllers
         [HttpDelete("v1/Templates/{id}")]
         public async Task<IActionResult> DeleteTempletes(uint id)
         {
-            if (id == 0)
+            if (id < 1)
             {
                 return BadRequest("El ID no puede ser 0.");
             }
@@ -57,7 +57,7 @@ namespace Presentation.API.Controllers
         [HttpDelete("v1/Template/{id}/{name}")]
         public async Task<IActionResult> DeleteTemplete(uint id, string name)
         {
-            if (id == 0 & string.IsNullOrEmpty(name))
+            if (id<1 & string.IsNullOrEmpty(name))
             {
                 return BadRequest("El ID no puede ser 0.");
             }

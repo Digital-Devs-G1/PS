@@ -62,7 +62,8 @@ namespace Infrastructure.Migrations
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
-                    ApproverId = table.Column<int>(type: "int", nullable: false)
+                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ApproverId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,7 +96,7 @@ namespace Infrastructure.Migrations
                 {
                     ReportTrackingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReportId = table.Column<int>(type: "int", nullable: false),
+                    ReportId = table.Column<int>(type: "int", nullable: true),
                     ReportOperationId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     TrackingDate = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -113,23 +114,21 @@ namespace Infrastructure.Migrations
                         name: "FK_ReportTrackings_Reports_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Reports",
-                        principalColumn: "ReportId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ReportId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "VariableFields",
                 columns: table => new
                 {
-                    OrdinalNumberId = table.Column<int>(type: "int", nullable: false),
                     ReportId = table.Column<int>(type: "int", nullable: false),
-                    DataTypeId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    DataTypeId = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.OrdinalNumberId });
+                    table.PrimaryKey("PK_VariableFields", x => new { x.ReportId, x.Name });
                     table.ForeignKey(
                         name: "FK_VariableFields_DataType_DataTypeId",
                         column: x => x.DataTypeId,
@@ -183,12 +182,12 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Reports",
-                columns: new[] { "ReportId", "Amount", "ApproverId", "Description", "EmployeeId" },
+                columns: new[] { "ReportId", "Amount", "ApproverId", "Description", "EmployeeId", "date" },
                 values: new object[,]
                 {
-                    { 1, 7500.0, 1, "Bolsa de cemento", 1 },
-                    { 2, 15000.0, 1, "Placa Mdf", 2 },
-                    { 3, 3500.0, 1, "Bola de cal", 2 }
+                    { 1, 7500.0, 1, "Bolsa de cemento", 1, new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9761) },
+                    { 2, 15000.0, 1, "Placa Mdf", 2, new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9774) },
+                    { 3, 3500.0, 1, "Bola de cal", 2, new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9775) }
                 });
 
             migrationBuilder.InsertData(
@@ -235,16 +234,16 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "VariableFields",
-                columns: new[] { "OrdinalNumberId", "ReportId", "DataTypeId", "Name", "Value" },
+                columns: new[] { "Name", "ReportId", "DataTypeId", "Value" },
                 values: new object[,]
                 {
-                    { 1, 1, 2, "Proveedor", "Constructura X SRL" },
-                    { 2, 1, 1, "Tel. Proveedor", "42561873" },
-                    { 1, 2, 1, "Ancho [mm]", "270" },
-                    { 2, 2, 1, "Alto [mm]", "180" },
-                    { 3, 2, 5, "Peso [kg]", "58.8" },
-                    { 1, 3, 2, "Proveedor", "Constructura X SRL" },
-                    { 2, 3, 1, "Tel. Proveedor", "42561873" }
+                    { "Proveedor", 1, 2, "Constructura X SRL" },
+                    { "Tel. Proveedor", 1, 1, "42561873" },
+                    { "Alto [mm]", 2, 1, "180" },
+                    { "Ancho [mm]", 2, 1, "270" },
+                    { "Peso [kg]", 2, 5, "58.8" },
+                    { "Proveedor", 3, 2, "Constructura X SRL" },
+                    { "Tel. Proveedor", 3, 1, "42561873" }
                 });
 
             migrationBuilder.CreateIndex(

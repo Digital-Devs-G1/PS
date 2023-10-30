@@ -7,12 +7,13 @@
 
         // FK
         //public ICollection<ReportTracking>? ReportTrackingCol { get; set; }
-        //public ICollection<VariableField>? VariableFieldCol { get; set; }
+        public ICollection<VariableField>? VariableFieldCol { get; set; }
 
         // DATA
         public required int EmployeeId { get; set; }
         public required string Description { get; set; }
         public required double Amount { get; set; }
-        public required int ApproverId { get; set; }
+        public required DateTime date { get; set; }
+        public int? ApproverId { get; set; }
     }
 }

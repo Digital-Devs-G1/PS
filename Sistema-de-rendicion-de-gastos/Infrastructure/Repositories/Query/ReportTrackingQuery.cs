@@ -46,7 +46,7 @@ namespace Infrastructure.Repositories.Query
         /// <returns>Lista de Historiales de operacion que el empleado realizo en cada uno de los 
         /// reportes en cuestion.</returns>
         public async Task<IList<ReportInteraction>> GetEmployeeReportInteractions(int employeeId)
-        {
+        {/*
             var result = await _dbContext
                 .Set<ReportTracking>()
                 .Include(reportTracking => reportTracking.ReportOperationNav)
@@ -58,7 +58,8 @@ namespace Infrastructure.Repositories.Query
                     ReportOperationName = rt.ReportOperationNav.ReportOperationName
                 })
                 .ToListAsync();
-            return result;
+            return result;*/
+            return null;
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Infrastructure.Repositories.Query
         /// <returns>Lista de historiales de operacion de reportes creados por un empleado
         /// en particular.</returns>
         public async Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId)
-        {
+        {/*
             var resultado = await _dbContext
                 .Set<ReportTracking>()
                 .Include(reportTracking => reportTracking.ReportOperationNav)
@@ -86,7 +87,8 @@ namespace Infrastructure.Repositories.Query
                     }).ToList()
                 })
                 .ToListAsync();
-            return resultado;
+            return resultado;*/
+            return null;
         }
     }
 }

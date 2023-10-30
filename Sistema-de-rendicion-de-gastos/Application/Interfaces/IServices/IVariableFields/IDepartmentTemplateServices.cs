@@ -4,6 +4,6 @@ namespace Application.Interfaces.IServices.IVariableFields
 {
     public interface IDepartmentTemplateServices
     {
-        public Task<IList<DepartmentTemplateResponse>> GetTemplatesByDeptoId(int deptoId);
+        public Task<IList<DepartmentTemplateResponse>> GetTemplatesBy(int deptoId);
     }
 }

@@ -12,13 +12,14 @@ using Application.Interfaces.IServices.IVariableFields;
 using Application.UseCases.VariableFieldsService;
 using Domain.Entities;
 using System.Collections.Concurrent;
+using System.Text;
 
 namespace Application.UseCases
 {
     public class ReportService : IReportService
     {
         private readonly IGenericRepositoryQuerys<Report> repository;
-        private readonly IGenericCommand<Report> command;
+        private readonly IGenericCommand<Report> _reportCommand;
         private readonly IReportQuery _reportQuery;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
@@ -38,7 +39,7 @@ namespace Application.UseCases
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
-            this.command = command;
+            this._reportCommand = command;
             this.variableFieldService = variableFieldService;
             this.fieldTemplateService = fieldTemplateService;
             this.reportOperationService = reportOperationService;
@@ -118,31 +119,58 @@ namespace Application.UseCases
             return true;
         }
 
-        public async Task AddReport(ReportRequest request, List<string> fields)
-        {/*
-            var template = await fieldTemplateService.GetTemplate(request.TemplateId);
-            Report report;
-            var errors = new ConcurrentBag<StatusResponse>();
-            if (template.Count * 2 != fields.Count)
-                errors.Add(responseFactory.WrongNumberOfFields());
-            else
+        public async Task<int> AddReport(AddReportRequest reportRequest, int employeeId)
+        {
+            var templates = await fieldTemplateService.GetTemplatesById(reportRequest.TemplateId);
+            StringBuilder errorBuilder = new StringBuilder();
+            if (templates.Count != reportRequest.Fields.Count)
+                errorBuilder.Append("La cantidad de campos no coincide con las del template.");
+            foreach ( var field in templates)
             {
-                if (CheckVariableFields(template, fields, errors))
+                var f = reportRequest.Fields.Where(f => f.Name.Equals(field.Name));
+                if ( f.Count() == 0 )
+                    errorBuilder.Append("No se encuentra el campo " + field.Name);
+                else if(field.DataTypeId != f.ElementAt(0).DataTypeId)
+                    errorBuilder.Append("El tipo de dato del campo " + field.Name + " es incorrecto");
+                else if(f.Count() > 1)
+                    errorBuilder.Append("No se permiten nombres de campos repetidos.");
+            }       
+            if(reportRequest.Report.Amount <=0 )
+                errorBuilder.Append("El monto es incorrecto");
+            if (reportRequest.Report.Description.Equals(""))
+                errorBuilder.Append("No se especifo descripcion");
+            if (errorBuilder.Length > 0)
+                throw new BadRequestException(errorBuilder.ToString());
+
+            // CLIENT COMPANY READ APPROVER
+            int approverId = 1;
+
+            var fields = new List<VariableField>();
+            foreach ( var field in reportRequest.Fields)
+            {
+                fields.Add(new VariableField()
                 {
-                    report = new Report
-                    {
-                        EmployeeId = request.EmployeeId,
-                        Description = request.Description,
-                        Amount = request.Amount,
-                    };
-                    if (1 == await command.AddAndCommit(errors, report))
-                    {
-                        var entities = CreateVariableFields(template, fields, report);
-                        if (await variableFieldService.AddFields(entities))
-                            await reportTrackingService.AddCreationTracking(report.ReportId, request.EmployeeId);
-                    }
-                }   
-            }*/
+                    DataTypeId = field.DataTypeId,
+                    Name = field.Name,
+                    Value = field.Value,
+                });
+            }
+
+            // BEGIN TRANSATION
+            var report = new Report()
+            {
+                EmployeeId = employeeId,
+                Description = reportRequest.Report.Description,
+                Amount = reportRequest.Report.Amount,
+                ApproverId = approverId,
+                VariableFieldCol = fields,
+                date = DateTime.Now,
+            };
+
+            await _reportCommand.Add(report);
+
+            // END TRANSACTION
+            return report.ReportId;
         }
 
         private bool CheckVariableFields(
@@ -177,7 +205,7 @@ namespace Application.UseCases
                 int j = i * 2 + 1;
                 entities.Add(new VariableField()
                 {
-                    OrdinalNumberId = i + 1,
+                   
                     ReportId = report.ReportId,
                     Name = template[i].Name,
                     DataTypeId = template[i].DataTypeId,
@@ -189,7 +217,7 @@ namespace Application.UseCases
 
         public async Task<bool> ExistReportById(int reportId)
         {
-            return default;// await _query.ExistReportById(reportId);
+            return await _reportQuery.ExistReportById(reportId);
         }
 
         public async Task<IList<ReportResponse>> GetPendingApprovals(int approverId)
@@ -201,5 +229,6 @@ namespace Application.UseCases
                 throw new NoFilterMatchesException("No hay nada por aprovar. ");
             return reports;
         }
+
     }
 }

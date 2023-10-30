@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20231021151945_Init")]
+    [Migration("20231030035307_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -339,7 +339,7 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<int>("ApproverId")
+                    b.Property<int?>("ApproverId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -349,6 +349,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ReportId");
 
@@ -361,7 +364,8 @@ namespace Infrastructure.Migrations
                             Amount = 7500.0,
                             ApproverId = 1,
                             Description = "Bolsa de cemento",
-                            EmployeeId = 1
+                            EmployeeId = 1,
+                            date = new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9761)
                         },
                         new
                         {
@@ -369,7 +373,8 @@ namespace Infrastructure.Migrations
                             Amount = 15000.0,
                             ApproverId = 1,
                             Description = "Placa Mdf",
-                            EmployeeId = 2
+                            EmployeeId = 2,
+                            date = new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9774)
                         },
                         new
                         {
@@ -377,7 +382,8 @@ namespace Infrastructure.Migrations
                             Amount = 3500.0,
                             ApproverId = 1,
                             Description = "Bola de cal",
-                            EmployeeId = 2
+                            EmployeeId = 2,
+                            date = new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9775)
                         });
                 });
 
@@ -431,10 +437,11 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportTrackingId"));
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("ReportId")
+                    b.Property<int?>("ReportId")
                         .HasColumnType("int");
 
                     b.Property<int>("ReportOperationId")
@@ -489,26 +496,22 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrdinalNumberId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DataTypeId")
+                    b.Property<int?>("ReportId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("DataTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ReportId", "OrdinalNumberId");
+                    b.HasKey("ReportId", "Name");
 
                     b.HasIndex("DataTypeId");
 
@@ -518,57 +521,50 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ReportId = 1,
-                            OrdinalNumberId = 1,
-                            DataTypeId = 2,
                             Name = "Proveedor",
+                            DataTypeId = 2,
                             Value = "Constructura X SRL"
                         },
                         new
                         {
                             ReportId = 1,
-                            OrdinalNumberId = 2,
-                            DataTypeId = 1,
                             Name = "Tel. Proveedor",
+                            DataTypeId = 1,
                             Value = "42561873"
                         },
                         new
                         {
                             ReportId = 2,
-                            OrdinalNumberId = 1,
-                            DataTypeId = 1,
                             Name = "Ancho [mm]",
+                            DataTypeId = 1,
                             Value = "270"
                         },
                         new
                         {
                             ReportId = 2,
-                            OrdinalNumberId = 2,
-                            DataTypeId = 1,
                             Name = "Alto [mm]",
+                            DataTypeId = 1,
                             Value = "180"
                         },
                         new
                         {
                             ReportId = 2,
-                            OrdinalNumberId = 3,
-                            DataTypeId = 5,
                             Name = "Peso [kg]",
+                            DataTypeId = 5,
                             Value = "58.8"
                         },
                         new
                         {
                             ReportId = 3,
-                            OrdinalNumberId = 1,
-                            DataTypeId = 2,
                             Name = "Proveedor",
+                            DataTypeId = 2,
                             Value = "Constructura X SRL"
                         },
                         new
                         {
                             ReportId = 3,
-                            OrdinalNumberId = 2,
-                            DataTypeId = 1,
                             Name = "Tel. Proveedor",
+                            DataTypeId = 1,
                             Value = "42561873"
                         });
                 });
@@ -588,9 +584,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.Report", "ReportNav")
                         .WithMany()
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReportId");
 
                     b.HasOne("Domain.Entities.ReportOperation", "ReportOperationNav")
                         .WithMany()
@@ -612,7 +606,7 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Report", "ReportNav")
-                        .WithMany()
+                        .WithMany("VariableFieldCol")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -620,6 +614,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("DataTypeNav");
 
                     b.Navigation("ReportNav");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Report", b =>
+                {
+                    b.Navigation("VariableFieldCol");
                 });
 #pragma warning restore 612, 618
         }

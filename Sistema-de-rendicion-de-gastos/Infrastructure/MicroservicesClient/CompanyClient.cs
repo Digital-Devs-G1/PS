@@ -1,4 +1,5 @@
 ﻿using Application.Dto.Response.StatusResponseNS;
+using Application.DTO.Response.Microservices;
 using Application.Exceptions;
 using Application.Interfaces.IMicroservices.Generic;
 using Application.Interfaces.IMicroservicesClient;
@@ -18,18 +19,24 @@ namespace Infrastructure.MicroservicesClient
 
         public async Task<int> GetDepartmentId(int employeeId)
         {
-            string url = "https://localhost:7296/api/Employee/GetDepartmentByEmployee";
+            string url = "https://localhost:7296/api/Department/GetDepartment/" + employeeId;
             HttpResponseMessage response = await _getClient.Get(url);
             if (response.IsSuccessStatusCode)
             {
-                string id = await response.Content.ReadAsStringAsync();
-                int departmentId;
-                if (int.TryParse(id, out departmentId))
+                DepartmentResponse department;
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                try
+                {
+                    department = JsonConvert.DeserializeObject<DepartmentResponse>(jsonResponse);
+                }
+                catch (Exception)
+                {
                     throw new InvalidMicroserviceResponseFormatException(
                         url,
                         "Se esperaba un entero para el id de departamento"
                     );
-                return departmentId;
+                }
+                return department.DepartmentId;
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {

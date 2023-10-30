@@ -17,7 +17,8 @@ namespace Infrastructure.Persistence.Configurations
                     EmployeeId = 1,
                     Description = "Bolsa de cemento",
                     Amount = 7500.0,
-                    ApproverId = approverId
+                    ApproverId = approverId,
+                    date = DateTime.Now,
                 }, 
                 new Report()
                 {
@@ -25,7 +26,8 @@ namespace Infrastructure.Persistence.Configurations
                     EmployeeId = 2,
                     Description = "Placa Mdf",
                     Amount = 15000.0,
-                    ApproverId = approverId
+                    ApproverId = approverId,
+                    date = DateTime.Now
                 }, 
                 new Report()
                 {
@@ -33,7 +35,8 @@ namespace Infrastructure.Persistence.Configurations
                     EmployeeId = 2,
                     Description = "Bola de cal",
                     Amount = 3500,
-                    ApproverId = approverId
+                    ApproverId = approverId,
+                    date = DateTime.Now
                 }
             );
         }

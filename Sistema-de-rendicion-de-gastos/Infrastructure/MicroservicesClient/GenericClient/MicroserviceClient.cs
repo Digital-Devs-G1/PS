@@ -23,7 +23,7 @@ namespace Infrastructure.MicroservicesClient.GenericClient
             {
                 try
                 {
-                    client.DefaultRequestHeaders.Add("Authorization", token.ToString());
+                    //client.DefaultRequestHeaders.Add("Authorization", token.ToString());
                     return await HttpMethod(client, url);
                 }
                 catch (Exception ex)

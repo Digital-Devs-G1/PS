@@ -17,7 +17,7 @@ namespace Application.DTO.Response.Response.EntityProxy
         }
 
         public int FieldTemplateId { get { return _fieldTemplate.DepartmentTemplateId; } set { _fieldTemplate.DepartmentTemplateId = value; } }
-        public string FieldNameId { get { return _fieldTemplate.Name; } set { _fieldTemplate.Name = value; } }
+        public string Name { get { return _fieldTemplate.Name; } set { _fieldTemplate.Name = value; } }
         public int DataTypeId { get { return _fieldTemplate.DataTypeId; } set { _fieldTemplate.DataTypeId = value; } }
     }
 }

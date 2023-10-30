@@ -24,7 +24,6 @@ namespace Infrastructure.Persistence.Inserts
             builder.HasData(
                 new VariableField()
                 {
-                    OrdinalNumberId = ++ordinalNumber,
                     ReportId = reportId,
                     Name = "Proveedor",
                     Value = "Constructura X SRL",
@@ -32,7 +31,6 @@ namespace Infrastructure.Persistence.Inserts
                 },
                 new VariableField()
                 {
-                    OrdinalNumberId = ++ordinalNumber,
                     ReportId = reportId,
                     Name = "Tel. Proveedor",
                     Value = "42561873",
@@ -46,11 +44,9 @@ namespace Infrastructure.Persistence.Inserts
             int reportId
             )
         {
-            var ordinalNumber = 0;
             builder.HasData(
                 new VariableField()
                 {
-                    OrdinalNumberId = ++ordinalNumber,
                     ReportId = reportId,
                     Name = "Ancho [mm]",
                     Value = "270",
@@ -58,7 +54,6 @@ namespace Infrastructure.Persistence.Inserts
                 },
                 new VariableField()
                 {
-                    OrdinalNumberId = ++ordinalNumber,
                     ReportId = reportId,
                     Name = "Alto [mm]",
                     Value = "180",
@@ -66,7 +61,6 @@ namespace Infrastructure.Persistence.Inserts
                 },
                 new VariableField()
                 {
-                    OrdinalNumberId = ++ordinalNumber,
                     ReportId = reportId,
                     Name = "Peso [kg]",
                     Value = "58.8",

@@ -13,7 +13,8 @@ namespace Presentation.Handlers
             var statusCode = HttpStatusCode.InternalServerError;
             List<string> message = new List<string>();
 
-            if(context.Exception is InvalidFormatIdException)
+            if(context.Exception is InvalidFormatIdException ||
+               context.Exception is BadRequestException ) 
             {
                 statusCode = HttpStatusCode.BadRequest;
                 message.Add(context.Exception.Message);
