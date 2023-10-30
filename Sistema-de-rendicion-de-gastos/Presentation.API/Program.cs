@@ -81,10 +81,10 @@ namespace Presentation.API
             builder.Services.AddSingleton<ReportsDbContext>();
 
             //repositories
+            builder.Services.AddSingleton(typeof(IGenericCommand<>), typeof(GenericCommand<>));
+            builder.Services.AddSingleton(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
             builder.Services.AddSingleton<IDepartmentTemplateQuery, DepartmentTemplateQuery>();
             builder.Services.AddSingleton<IFieldTemplateQuery, FieldTemplateQuery>();
-            builder.Services.AddTransient(typeof(IGenericCommand<>), typeof(GenericCommand<>));
-            builder.Services.AddTransient(typeof(IGenericRepositoryQuerys<>), typeof(GenericRepositoryQuerys<>));
             builder.Services.AddSingleton<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddSingleton<IVariableFieldCommand, VariableFieldCommand>();
             builder.Services.AddTransient<IReportTrackingQuery, ReportTrackingQuery>();
