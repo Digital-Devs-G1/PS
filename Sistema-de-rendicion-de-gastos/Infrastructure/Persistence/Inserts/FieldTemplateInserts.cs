@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using static Infrastructure.Persistence.Inserts.DataTypeEnum;
+using static Application.Enums.DataTypeEnum;
 
 namespace Infrastructure.Persistence.Inserts
 {
@@ -89,19 +89,20 @@ namespace Infrastructure.Persistence.Inserts
 
         private void AddTemplate(
             EntityTypeBuilder<FieldTemplate> builder,
-            IList<Field> fieldsValues
-            )
+            IList<Field> fieldsValues)
         {
+            int i = 0;
             List<FieldTemplate> templateFields = new List<FieldTemplate>();
             foreach (var field in fieldsValues)
                 templateFields.Add(new FieldTemplate()
                 {
-                    FieldTemplateId = _autoincrement++,
+                    FieldTemplateId = _autoincrement,
                     FieldNameId = field.Name,
                     DataTypeId = field.TypeId,
                     Enabled = true,
                 }
                 );
+            _autoincrement++;
             builder.HasData(templateFields);
         }
     }

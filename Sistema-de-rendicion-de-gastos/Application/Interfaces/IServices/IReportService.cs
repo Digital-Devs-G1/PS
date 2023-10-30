@@ -1,15 +1,20 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response;
 using Application.DTO.Response.ReportOperationNS;
+using Application.DTO.Response.Response.EntityProxy;
 
 namespace Application.Interfaces.IServices
 {
     public interface IReportService
     {
-        Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId);
+        public Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId);
 
-        Task<ReportStatusResponse> GetReportStatusById(int reportId);
+        public Task<ReportStatusResponse> GetReportStatusById(int reportId);
 
-        Task AddReport(ReportRequest request);
+        public Task AddReport(ReportRequest request, List<string> fields);
+
+        public Task<IList<ReportResponse>> GetPendingApprovals(int approverId);
+
+        public Task<bool> ExistReportById(int reportId);
     }
 }

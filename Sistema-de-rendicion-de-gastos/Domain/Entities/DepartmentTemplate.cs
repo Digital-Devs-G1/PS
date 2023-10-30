@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class DepartmentTemplate
+    public class DepartmentTemplate : BaseEntity
     {
         // PK
         public int DepartmentTemplateId { get; set; }

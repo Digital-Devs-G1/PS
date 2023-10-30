@@ -1,29 +1,37 @@
 ﻿using Application.DTO.Request;
 using Application.Interfaces.IServices;
+using Application.Interfaces.IServices.IVariableFields;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Handlers;
+using Swashbuckle.AspNetCore.Annotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
+    [TypeFilter(typeof(ExceptionFilter))]
     public class DepartmentTemplateController : ControllerBase
     {
-        private readonly IDepartmentTemplateServices _services;
+        private readonly Application.Interfaces.IServices.IDepartmentTemplateServices _services;
         private readonly IMapper _mapper;
 
-        public DepartmentTemplateController(IDepartmentTemplateServices services, IMapper mapper)
+        public DepartmentTemplateController(Application.Interfaces.IServices.IDepartmentTemplateServices services, IMapper mapper)
         {
             _services = services;
             _mapper = mapper;
         }
 
-        [HttpGet("GetTemplatesByDepartamentId/{deptoId}")]
-        public async Task<IActionResult> GetTemplatesByDepartamentId (int deptoId)
+        [HttpGet]
+        [Route("v1/Departament/{id}/templates")]
+
+
+        public async Task<IActionResult> GetTemplatesByDepartamentId ([FromRoute(Name = "id")][Required] int departmentId)
         {
-            var templatesDepto = await _services.GetTemplatesByDeptoId(deptoId);
-            return this.Ok(templatesDepto);
+            var templatesDepto = await _services.GetTemplatesByDeptoId(departmentId);
+            return this.Ok(templatesDepto); 
         }
 
         [HttpPost]

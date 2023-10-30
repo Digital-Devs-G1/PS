@@ -1,0 +1,23 @@
+
+Report
+------
+
+Los nombres se parecen demasiado, la 's' esta en medio:
+	GetReportStatusById
+	GetReportsStatusById
+
+Si no hay registro para ese empleado (cuando se busco en el where) se 
+podria dar un feedback de eso.
+
+El error que dice "No se han realizado operaciones sobre este reporte"
+podria decir "Error de inconsistencia de datos: no se encontro ninguna
+operacion de Creacion para el reporte {id}". Esto es porque no queda
+claro el problema real, al usuario no de deberia llegar esta info pero
+si deberia estar en un log.
+
+
+Notas
+-----
+
+Un repository por service. Usar otros service como inyeccion para supli
+otros repos.

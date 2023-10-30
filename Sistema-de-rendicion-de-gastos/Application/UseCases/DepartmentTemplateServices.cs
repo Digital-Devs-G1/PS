@@ -1,5 +1,7 @@
 ﻿using Application.DTO.Response;
+using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IRepositories;
+using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices;
 using Domain.Entities;
 
@@ -7,11 +9,11 @@ namespace Application.UseCases
 {
     public class DepartmentTemplateServices : IDepartmentTemplateServices
     {
-        public readonly IDepartamentTemplateQuery _query;
+        public readonly IDepartmentTemplateQuery _query;
         public readonly IDepartamentTemplateCommand _command;
         private readonly IFieldTemplateServices _fieldTemplateService;
 
-        public DepartmentTemplateServices(IDepartamentTemplateQuery query, IDepartamentTemplateCommand command, IFieldTemplateServices fieldTemplateService)
+        public DepartmentTemplateServices(IDepartmentTemplateQuery query, IDepartamentTemplateCommand command, IFieldTemplateServices fieldTemplateService)
         {
             _query = query;
             _command = command;

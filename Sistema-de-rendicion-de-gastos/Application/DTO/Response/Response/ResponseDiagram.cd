@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Application.Dto.Response.AddResponse&lt;EntityResponse&gt;">
+    <Position X="2.5" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\Response\AddResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application.Dto.Response.Refused&lt;T&gt;">
+    <Position X="6.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dto\Response\Refused.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application.Dto.Response.ErrorInfo">
+    <Position X="9" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Dto\Response\ErrorInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

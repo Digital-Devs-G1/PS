@@ -1,11 +1,11 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Infrastructure.Persistence.Inserts.DataTypeEnum;
+using static Application.Enums.DataTypeEnum;
 
 namespace Infrastructure.Persistence.Inserts
 {
-    public class DataTypeInserts : IEntityTypeConfiguration<DataType>
+    /*public class DataTypeInserts : IEntityTypeConfiguration<DataType>
     {
         public void Configure(EntityTypeBuilder<DataType> builder)
         {
@@ -37,5 +37,5 @@ namespace Infrastructure.Persistence.Inserts
                 }
             );
         }
-    }
+    }*/
 }

@@ -14,9 +14,7 @@ namespace Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<FieldTemplate> builder)
         {
             builder.HasKey(ft => new {ft.FieldTemplateId, ft.FieldNameId});
-            builder.HasOne(fieldTemplate => fieldTemplate.DataTypeNav)
-                   .WithMany()
-                   .HasForeignKey(fieldTemplate => fieldTemplate.DataTypeId);
+            builder.Property(ft => ft.DataTypeId);
             builder.Property(ft => ft.FieldNameId).HasMaxLength(20);
         }
     }

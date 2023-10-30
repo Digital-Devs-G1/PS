@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Infrastructure.Persistence.Inserts.DataTypeEnum;
+using static Application.Enums.DataTypeEnum;
 
 namespace Infrastructure.Persistence.Inserts
 {
@@ -9,54 +9,66 @@ namespace Infrastructure.Persistence.Inserts
     {
         public void Configure(EntityTypeBuilder<VariableField> builder)
         {
-            ConstructionMaterialReport(builder, 1);
-            CarpentryMaterialReport(builder);
-            ConstructionMaterialReport(builder, 2);
+            var reportId = 0;
+            ConstructionMaterialReport(builder, ++reportId);
+            CarpentryMaterialReport(builder, ++reportId);
+            ConstructionMaterialReport(builder, ++reportId);
         }
 
         public void ConstructionMaterialReport(
             EntityTypeBuilder<VariableField> builder,
-            int reportId)
+            int reportId
+            )
         {
+            var ordinalNumber = 0;
             builder.HasData(
                 new VariableField()
                 {
+                    OrdinalNumberId = ++ordinalNumber,
                     ReportId = reportId,
-                    NameId = "Proveedor",
+                    Name = "Proveedor",
                     Value = "Constructura X SRL",
                     DataTypeId = (int) Str
                 },
                 new VariableField()
                 {
+                    OrdinalNumberId = ++ordinalNumber,
                     ReportId = reportId,
-                    NameId = "Tel. Proveedor",
+                    Name = "Tel. Proveedor",
                     Value = "42561873",
                     DataTypeId = (int)Int
                 }
             );
         }
 
-        public void CarpentryMaterialReport(EntityTypeBuilder<VariableField> builder)
+        public void CarpentryMaterialReport(
+            EntityTypeBuilder<VariableField> builder,
+            int reportId
+            )
         {
+            var ordinalNumber = 0;
             builder.HasData(
                 new VariableField()
                 {
-                    ReportId = 2,
-                    NameId = "Ancho [mm]",
+                    OrdinalNumberId = ++ordinalNumber,
+                    ReportId = reportId,
+                    Name = "Ancho [mm]",
                     Value = "270",
                     DataTypeId = (int)Int
                 },
                 new VariableField()
                 {
-                    ReportId = 2,
-                    NameId = "Alto [mm]",
+                    OrdinalNumberId = ++ordinalNumber,
+                    ReportId = reportId,
+                    Name = "Alto [mm]",
                     Value = "180",
                     DataTypeId = (int)Int
                 },
                 new VariableField()
                 {
-                    ReportId = 2,
-                    NameId = "Peso [kg]",
+                    OrdinalNumberId = ++ordinalNumber,
+                    ReportId = reportId,
+                    Name = "Peso [kg]",
                     Value = "58.8",
                     DataTypeId = (int)Dec
                 }

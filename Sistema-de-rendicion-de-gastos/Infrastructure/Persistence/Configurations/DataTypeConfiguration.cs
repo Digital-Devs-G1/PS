@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class DataTypeConfiguration : IEntityTypeConfiguration<DataType>
+    /*public class DataTypeConfiguration : IEntityTypeConfiguration<DataType>
     {
         public void Configure(EntityTypeBuilder<DataType> table)
         {
@@ -13,5 +13,5 @@ namespace Infrastructure.Persistence.Configurations
             table.Property(x => x.Name)
                 .HasMaxLength(10);
         }
-    }
+    }*/
 }

@@ -7,5 +7,7 @@ namespace Application.Interfaces.IRepositories
         Task AddRange(List<FieldTemplate> fields);
 
         Task Update(FieldTemplate command);
+
+        Task DeleteRange(FieldTemplate entity);
     }
 }

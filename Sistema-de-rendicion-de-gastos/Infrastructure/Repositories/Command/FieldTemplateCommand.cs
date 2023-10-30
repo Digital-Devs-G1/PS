@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.IRepositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Command
 {
@@ -36,6 +37,13 @@ namespace Infrastructure.Repositories.Command
 
             _dbContext.FieldTemplates.Update(command);
 
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteRange(FieldTemplate entity)
+        {
+            List<FieldTemplate> fields = await _dbContext.FieldTemplates.Where(f => f.FieldTemplateId == entity.FieldTemplateId).ToListAsync();
+            _dbContext.FieldTemplates.RemoveRange(fields);
             await _dbContext.SaveChangesAsync();
         }
     }

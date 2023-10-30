@@ -1,16 +1,22 @@
-﻿using Application.DTO.Response.ReportOperationNS;
-using Application.Interfaces.IRepositories;
+﻿using Application.Dto.Response.StatusResponseNS;
+using Application.DTO.Response.ReportOperationNS;
+using Application.Interfaces.IRepositories.IQuery;
 using Domain.Entities;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories.Command;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Query
 {
-    public class ReportTrackingQuery : GenericRepositoryCommand<ReportTracking>, IReportTrackingQuery
+    public class ReportTrackingQuery : GenericCommand<ReportTracking>, IReportTrackingQuery
     {
         private ReportsDbContext _dbContext;
 
-        public ReportTrackingQuery(ReportsDbContext dbContext) : base(dbContext)
+        public ReportTrackingQuery(
+            ReportsDbContext dbContext
+            //IRepositoryResponseFactory responseFactory
+            ) 
+            : base(dbContext/*, responseFactory*/)
         {
             _dbContext = dbContext;
         }
@@ -26,8 +32,8 @@ namespace Infrastructure.Repositories.Query
         public async Task<ReportTracking> GetLastTrackingByReportIdAsync(int reportId)
         {
             var trackings = await _dbContext.Set<ReportTracking>()
-                .Where(e => e.ReportId == reportId)
-                .ToListAsync();
+                                            .Where(e => e.ReportId == reportId)
+                                            .ToListAsync();
             return trackings.OrderByDescending(e => e.TrackingDate).FirstOrDefault();
         }
 
@@ -47,7 +53,7 @@ namespace Infrastructure.Repositories.Query
                 .Where(reportTracking => reportTracking.EmployeeId == employeeId)
                 .Select(rt => new ReportInteraction
                 {
-                    ReportId = rt.ReportId,
+                    ReportId = (int)rt.ReportId,
                     TrackingDate = rt.TrackingDate,
                     ReportOperationName = rt.ReportOperationNav.ReportOperationName
                 })
@@ -72,11 +78,10 @@ namespace Infrastructure.Repositories.Query
                 .GroupBy(tracking => tracking.ReportId)
                 .Select(group => new ReportOperationHistory()
                 {
-                    ReportId = group.Key,
+                    ReportId = (int)group.Key,
                     Operations = group.Select(tracking => new ReportOperationHistoryItem
                     {
                         TrackingDate = tracking.TrackingDate,
-                        EmployeeId = tracking.EmployeeId,
                         ReportOperationName = tracking.ReportOperationNav.ReportOperationName
                     }).ToList()
                 })

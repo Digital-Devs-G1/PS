@@ -475,3 +475,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/Sistema-de-rendicion-de-gastos/Infrastructure/Repositories/Query/ReportTrackingQuery.cs
+/Sistema-de-rendicion-de-gastos/Infrastructure/Persistence/ReportsDbContext.cs
+/Sistema-de-rendicion-de-gastos/Domain/Entities/ReportTracking.cs
+/Sistema-de-rendicion-de-gastos/Domain/Entities/DataType.cs

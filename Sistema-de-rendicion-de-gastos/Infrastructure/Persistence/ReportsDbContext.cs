@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence
     public class ReportsDbContext : DbContext
     {
         public DbSet<VariableField> VariableFields { get; set; }
-        public DbSet<DataType> DataType { get; set; }
+        //public DbSet<DataType> DataType { get; set; }
         public DbSet<ReportOperation> ReportOperations { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<ReportTracking> ReportTrackings { get; set; }
@@ -27,11 +27,11 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new ReportConfiguration());
             modelBuilder.ApplyConfiguration(new ReportTrackingConfiguration());
             modelBuilder.ApplyConfiguration(new VariableFieldConfiguration());
-            modelBuilder.ApplyConfiguration(new DataTypeConfiguration());
+            //modelBuilder.ApplyConfiguration(new DataTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FieldTemplateConfiguration());
             modelBuilder.ApplyConfiguration(new DepartmentTemplateConfiguration());
 
-            modelBuilder.ApplyConfiguration(new DataTypeInserts());
+            //modelBuilder.ApplyConfiguration(new DataTypeInserts());
             modelBuilder.ApplyConfiguration(new ReportInserts());
             modelBuilder.ApplyConfiguration(new VariableFieldInserts());
             modelBuilder.ApplyConfiguration(new ReportTrackingInserts());

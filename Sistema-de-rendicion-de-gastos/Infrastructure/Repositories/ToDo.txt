@@ -1,2 +1,0 @@
-﻿En el metodo Delete de IGenericRepositoryCommand se esta validando el Id en capa de Infra, 
-pero el profe dijo q esas validaciones eran en capa de App. Se deja comentado el method para despues

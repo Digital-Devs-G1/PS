@@ -8,7 +8,6 @@
 
         // FK
         public int DataTypeId { get; set; }
-        public DataType? DataTypeNav { get; set; }
 
         // DATA
         public bool Enabled { get; set; }

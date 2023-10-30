@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Response;
+using Application.DTO.Response.Response.EntityProxy;
 using Domain.Entities;
 
 namespace Application.Interfaces.IServices

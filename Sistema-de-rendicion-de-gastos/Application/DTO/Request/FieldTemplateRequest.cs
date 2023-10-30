@@ -1,11 +1,15 @@
-﻿namespace Application.DTO.Request
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.DTO.Request
 {
     public class FieldTemplateRequest
     {
-        public string FieldName { get; set; }
-
-        public int DataType { get; set; }
-
-        public bool Enabled { get; set; }
+        public required int FieldTemplateId { get; set; }
+        public required string FieldNameId { get; set; }
+        public required int DataTypeId { get; set; }
     }
 }
