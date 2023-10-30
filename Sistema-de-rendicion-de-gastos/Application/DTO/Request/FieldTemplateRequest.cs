@@ -8,8 +8,7 @@ namespace Application.DTO.Request
 {
     public class FieldTemplateRequest
     {
-        public required int FieldTemplateId { get; set; }
-        public required string FieldNameId { get; set; }
+        public required string Name { get; set; }
         public required int DataTypeId { get; set; }
     }
 }

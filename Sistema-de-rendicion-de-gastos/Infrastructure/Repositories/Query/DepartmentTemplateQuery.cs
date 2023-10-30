@@ -14,6 +14,11 @@ namespace Infrastructure.Repositories.Query
             _context = context;
         }
 
+        public async Task<DepartmentTemplate> GetById(int id)
+        {
+            return await _context.DepartmentTemplates.Where(x => x.DepartmentTemplateId == id).FirstOrDefaultAsync();
+        }
+
         public async Task<bool> ExistDepartamentId(int id)
         {
             return await _context.DepartmentTemplates.AnyAsync(dt => dt.DepartmentId == id);

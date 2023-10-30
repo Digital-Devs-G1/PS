@@ -9,6 +9,7 @@ namespace Application.Interfaces.IRepositories.IQuery
 {
     public interface IDepartmentTemplateQuery
     {
+        Task<DepartmentTemplate> GetById(int id);
         public Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId);
         public Task<bool> ExistDepartamentId(int id);
     }

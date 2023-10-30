@@ -114,7 +114,8 @@ namespace Presentation.API
             builder.Services.AddTransient<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddTransient<IDepartmentTemplateQuery, DepartmentTemplateQuery>();
             builder.Services.AddTransient<IFieldTemplateQuerys, FieldTemplateQuerys>();
-            builder.Services.AddTransient<IFieldTemplateCommands, FieldTemplateCommands>();
+            builder.Services.AddTransient<IFieldTemplateCommand, FieldTemplateCommand>();
+            builder.Services.AddSingleton<IDepartamentTemplateCommand, DepartmentTemplateCommand>();
             builder.Services.AddTransient<IVariableFieldQuery, VariableFieldQuery>();
             builder.Services.AddTransient<IReportQuery, ReportQuery>();
             builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
@@ -125,8 +126,8 @@ namespace Presentation.API
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services
-            builder.Services.AddSingleton<IDepartmentTemplateServices, DepartmentTemplateServices>();
-            builder.Services.AddSingleton<IFieldTemplateServices, FieldTemplateService>();
+            builder.Services.AddSingleton<IReportTemplateService, DepartmentTemplateService>();
+            builder.Services.AddSingleton<IFieldTemplateService, FieldTemplateService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
@@ -135,8 +136,7 @@ namespace Presentation.API
             builder.Services.AddTransient<IReportService, ReportService>();
             builder.Services.AddTransient<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddTransient<IReportOperationService, ReportOperationService>();
-            builder.Services.AddTransient<IDepartmentTemplateServices, DepartmentTemplateServices>();
-            builder.Services.AddTransient<IFieldTemplateServices, FieldTemplateServices>();
+            builder.Services.AddTransient<IReportTemplateService, DepartmentTemplateService>();
             builder.Services.AddTransient<IVariableFieldServices, VariableFieldServices>();
             builder.Services.AddTransient<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddTransient<IServiceResponseFactory, ServiceResponseFactory>();

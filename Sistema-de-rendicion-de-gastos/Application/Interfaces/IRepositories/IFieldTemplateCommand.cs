@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories
 {
-    public interface IFieldTemplateCommands
+    public interface IFieldTemplateCommand
     {
+        Task AddRange(List<FieldTemplate> fields);
+
         public Task DeleteRange(FieldTemplate entity);
+
+        Task Update(FieldTemplate command);
     }
 }

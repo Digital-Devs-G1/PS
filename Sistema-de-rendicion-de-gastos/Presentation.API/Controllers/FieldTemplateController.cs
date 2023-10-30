@@ -1,5 +1,7 @@
 ﻿using Application.DTO.Request;
 using Application.Interfaces.IServices;
+using AutoMapper;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Handlers;
 
@@ -10,11 +12,15 @@ namespace Presentation.API.Controllers
     [TypeFilter(typeof(ExceptionFilter))]
     public class FieldTemplateController : ControllerBase
     {
-        private readonly IFieldTemplateServices _services;
+        private readonly IFieldTemplateService _services;
+        private readonly IMapper _mapper;
 
-        public FieldTemplateController(IFieldTemplateServices services)
+        public FieldTemplateController(
+            IFieldTemplateService services,
+            IMapper mapper)
         {
             _services = services;
+            _mapper = mapper;
         }
 
         [HttpGet("v1/Templates/{id}")]
@@ -40,8 +46,19 @@ namespace Presentation.API.Controllers
             {
                 return BadRequest("El ID no puede ser 0."); 
             }
-            await _services.CreateFieldTemplate(template);
+
+            //RECUPERAR ID DEL DEPARTAMENTO
+
+            await _services.CreateFieldTemplate(template, 1);
             return new JsonResult(template) { StatusCode = 201 };
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateFieldRequest request)
+        {
+            var field = this._mapper.Map<FieldTemplate>(request);
+            await _services.UpdateField(field);
+            return this.Ok(field);
         }
 
         [HttpDelete("v1/Templates/{id}")]

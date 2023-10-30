@@ -24,7 +24,7 @@ namespace Application.UseCases
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
         private readonly IVariableFieldService variableFieldService;
-        private readonly IFieldTemplateServices fieldTemplateService;
+        private readonly IFieldTemplateService fieldTemplateService;
         private readonly IServiceResponseFactory responseFactory;
 
         public ReportService(
@@ -33,7 +33,7 @@ namespace Application.UseCases
             IReportOperationService reportOperationService,
             IGenericCommand<Report> command,
             IVariableFieldService variableFieldService,
-            IFieldTemplateServices fieldTemplateService,
+            IFieldTemplateService fieldTemplateService,
             IServiceResponseFactory responseFactory,
             IReportQuery reportQuery)
         {
