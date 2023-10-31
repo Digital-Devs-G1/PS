@@ -4,8 +4,8 @@ namespace Application.Interfaces.IRepositories
 {
     public interface IDepartamentTemplateCommand
     {
-        Task Add(DepartmentTemplate template);
+        Task Add(ReportTemplate template);
 
-        Task Update(DepartmentTemplate command);
+        Task Update(ReportTemplate command);
     }
 }

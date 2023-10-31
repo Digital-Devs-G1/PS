@@ -1,15 +1,19 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class DepartmentTemplateConfiguration : IEntityTypeConfiguration<DepartmentTemplate>
+    public class DepartmentTemplateConfiguration : IEntityTypeConfiguration<ReportTemplate>
     {
-        public void Configure(EntityTypeBuilder<DepartmentTemplate> builder)
+        public void Configure(EntityTypeBuilder<ReportTemplate> builder)
         {
-            builder.HasKey(dt => dt.DepartmentTemplateId); 
-            builder.Property(dt => dt.DepartmentTemplateName).HasMaxLength(30);
+            builder.HasKey(dt => dt.ReportTemplateId); 
+            builder.HasMany(dt => dt.ReportTemplateFieldsCol)
+                .WithOne(f=>f.ReportTemplateNav)
+                .HasForeignKey(f => f.ReportTemplateId);
+            builder.Property(dt => dt.ReportTemplateName).HasMaxLength(30);
         }
     }
 }

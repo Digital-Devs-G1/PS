@@ -17,10 +17,10 @@ namespace Infrastructure.Persistence.Inserts
         }
     }
 
-    public class FieldTemplateInserts : IEntityTypeConfiguration<FieldTemplate>
+    public class ReportTemplateFieldInserts : IEntityTypeConfiguration<ReportTemplateField>
     {
         private int _autoincrement = 1;
-        public void Configure(EntityTypeBuilder<FieldTemplate> builder)
+        public void Configure(EntityTypeBuilder<ReportTemplateField> builder)
         {
             DeptoOneTemplates(builder);
             DeptoTwoTemplates(builder);
@@ -28,7 +28,7 @@ namespace Infrastructure.Persistence.Inserts
         }
 
         // Al departamento 3 se le asignaron 2 templates en DeptoTemplateInserts
-        private void DeptoThreeTemplates(EntityTypeBuilder<FieldTemplate> builder)
+        private void DeptoThreeTemplates(EntityTypeBuilder<ReportTemplateField> builder)
         {
             AddTemplate(builder, new List<Field>()
             {
@@ -44,7 +44,7 @@ namespace Infrastructure.Persistence.Inserts
         }
 
         // Al departamento 2 se le asignaron 3 templates en DeptoTemplateInserts
-        private void DeptoOneTemplates(EntityTypeBuilder<FieldTemplate> builder)
+        private void DeptoOneTemplates(EntityTypeBuilder<ReportTemplateField> builder)
         {
             AddTemplate(builder, new List<Field>()
             {
@@ -68,7 +68,7 @@ namespace Infrastructure.Persistence.Inserts
         }
 
         // Al departamento 2 se le asignaron 2 templates en DeptoTemplateInserts
-        private void DeptoTwoTemplates(EntityTypeBuilder<FieldTemplate> builder)
+        private void DeptoTwoTemplates(EntityTypeBuilder<ReportTemplateField> builder)
         {
             AddTemplate(builder, new List<Field>()
             {
@@ -88,15 +88,15 @@ namespace Infrastructure.Persistence.Inserts
         }
 
         private void AddTemplate(
-            EntityTypeBuilder<FieldTemplate> builder,
+            EntityTypeBuilder<ReportTemplateField> builder,
             IList<Field> fieldsValues)
         {
             int i = 0;
-            List<FieldTemplate> templateFields = new List<FieldTemplate>();
+            List<ReportTemplateField> templateFields = new List<ReportTemplateField>();
             foreach (var field in fieldsValues)
-                templateFields.Add(new FieldTemplate()
+                templateFields.Add(new ReportTemplateField()
                 {
-                    DepartmentTemplateId = _autoincrement,
+                    ReportTemplateId = _autoincrement,
                     Name = field.Name,
                     DataTypeId = field.TypeId,
                     Enabled = true,

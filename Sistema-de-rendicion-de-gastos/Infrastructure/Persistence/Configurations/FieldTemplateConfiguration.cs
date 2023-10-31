@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class FieldTemplateConfiguration : IEntityTypeConfiguration<FieldTemplate>
+    public class FieldTemplateConfiguration : IEntityTypeConfiguration<ReportTemplateField>
     {
-        public void Configure(EntityTypeBuilder<FieldTemplate> builder)
+        public void Configure(EntityTypeBuilder<ReportTemplateField> builder)
         {
-            builder.HasKey(ft => new {ft.DepartmentTemplateId, ft.Name});
+            builder.HasKey(ft => new {ft.ReportTemplateId, ft.Name});
             builder.HasOne(fieldTemplate => fieldTemplate.DataTypeNav)
                    .WithMany()
                    .HasForeignKey(fieldTemplate => fieldTemplate.DataTypeId);

@@ -14,17 +14,17 @@ namespace Infrastructure.Repositories.Query
             _context = context;
         }
 
-        public async Task<IList<FieldTemplate>> GetTemplate(int templateId)
+        public async Task<IList<ReportTemplateField>> GetTemplate(int templateId)
         {
             return await _context
-                .Set<FieldTemplate>()
-                .Where(field=> field.DepartmentTemplateId == templateId)
+                .Set<ReportTemplateField>()
+                .Where(field=> field.ReportTemplateId == templateId)
                 .ToListAsync();
         }
 
-        public async Task<IList<FieldTemplate>> GetTemplatesById(int tempId)
+        public async Task<IList<ReportTemplateField>> GetTemplatesById(int tempId)
         {
-            return await _context.FieldTemplates.Where(ft => ft.DepartmentTemplateId == tempId)
+            return await _context.ReportTemplateField.Where(ft => ft.ReportTemplateId == tempId)
                                                 .ToListAsync();
         }
     }

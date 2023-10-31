@@ -2,10 +2,11 @@
 
 namespace Domain.Entities
 {
-    public class FieldTemplate : BaseEntity
+    public class ReportTemplateField : BaseEntity
     {
         // PK
-        public required int DepartmentTemplateId { get; set; }
+        public required int ReportTemplateId { get; set; }
+        public ReportTemplate? ReportTemplateNav { get; set; }
 
         public required string Name { get; set; }
 

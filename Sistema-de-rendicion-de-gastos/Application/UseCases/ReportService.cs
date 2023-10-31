@@ -1,5 +1,4 @@
-﻿using Application.Dto.Response.StatusResponseNS;
-using Application.DTO.Request;
+﻿using Application.DTO.Request;
 using Application.DTO.Response.ReportOperationNS;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Exceptions;
@@ -20,12 +19,12 @@ namespace Application.UseCases
     {
         private readonly IGenericRepositoryQuerys<Report> repository;
         private readonly IGenericCommand<Report> _reportCommand;
+        private readonly IGenericCommand<ReportTracking> _reportTrankingCommand;
         private readonly IReportQuery _reportQuery;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
         private readonly IVariableFieldService variableFieldService;
-        private readonly IFieldTemplateService fieldTemplateService;
-        private readonly IServiceResponseFactory responseFactory;
+        private readonly IReportTemplateFieldService fieldTemplateService;
 
         public ReportService(
             IGenericRepositoryQuerys<Report> repository,
@@ -33,9 +32,9 @@ namespace Application.UseCases
             IReportOperationService reportOperationService,
             IGenericCommand<Report> command,
             IVariableFieldService variableFieldService,
-            IFieldTemplateService fieldTemplateService,
-            IServiceResponseFactory responseFactory,
-            IReportQuery reportQuery)
+            IReportTemplateFieldService fieldTemplateService,
+            IReportQuery reportQuery,
+            IGenericCommand<ReportTracking> reportTrankingCommand)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
@@ -43,8 +42,8 @@ namespace Application.UseCases
             this.variableFieldService = variableFieldService;
             this.fieldTemplateService = fieldTemplateService;
             this.reportOperationService = reportOperationService;
-            this.responseFactory = responseFactory;
             _reportQuery = reportQuery;
+            _reportTrankingCommand = reportTrankingCommand;
         }
 
         public async Task<Report> GetById(int id)
@@ -121,7 +120,7 @@ namespace Application.UseCases
 
         public async Task<int> AddReport(AddReportRequest reportRequest, int employeeId)
         {
-            var templates = await fieldTemplateService.GetTemplatesById(reportRequest.TemplateId);
+            var templates = await fieldTemplateService.GetTemplatesFields(reportRequest.TemplateId);
             StringBuilder errorBuilder = new StringBuilder();
             if (templates.Count != reportRequest.Fields.Count)
                 errorBuilder.Append("La cantidad de campos no coincide con las del template.");
@@ -169,50 +168,18 @@ namespace Application.UseCases
 
             await _reportCommand.Add(report);
 
+            var tracking = new ReportTracking()
+            {
+                ReportId = report.ReportId,
+                ReportOperationId = 1,
+                TrackingDate = DateTime.Now,
+                EmployeeId = employeeId
+            };
+
+            await _reportTrankingCommand.Add(tracking);
+
             // END TRANSACTION
             return report.ReportId;
-        }
-
-        private bool CheckVariableFields(
-            IList<FieldTemplate> template,
-            List<string> fields,
-            ConcurrentBag<StatusResponse> errors
-            )
-        {
-            int errorsCount = errors.Count;
-            for (int i = 0; i < template.Count; i++)
-            {
-                int j = i * 2;
-                var name = template[i].Name;
-                if (name.CompareTo(fields[j]) != 0)
-                    errors.Add(responseFactory.UnexpectedField(name, fields[j]));
-                var type = template[i].DataTypeId;
-                if (!TryCast(type, fields[j + 1]))
-                    errors.Add(responseFactory.UnexpectedDataType(type, fields[j + 1]));
-            }
-            return errorsCount == errors.Count;
-        }
-
-        private IList<VariableField> CreateVariableFields(
-            IList<FieldTemplate> template,
-            List<string> fields,
-            Report report
-            )
-        {
-            var entities = new List<VariableField>();
-            for (int i = 0; i < template.Count; i++)
-            {
-                int j = i * 2 + 1;
-                entities.Add(new VariableField()
-                {
-                   
-                    ReportId = report.ReportId,
-                    Name = template[i].Name,
-                    DataTypeId = template[i].DataTypeId,
-                    Value = fields[j]
-                });
-            }
-            return entities;
         }
 
         public async Task<bool> ExistReportById(int reportId)

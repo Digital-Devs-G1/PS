@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.DTO.Response.ReportNS;
+using Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -20,8 +21,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpGet]
-        [Route("VariableFields/{id}")]
-
+        [Route("v1/Report/{id}/VariableFields")]
         [SwaggerResponse(
             statusCode: 400,
             type: typeof(ErrorResponse),
@@ -32,11 +32,17 @@ namespace Presentation.API.Controllers
             type: typeof(ErrorResponse),
             description: "Not Found")
         ]
-
-        public async Task<IActionResult> GetVariableFieldById ([FromRoute(Name = "id")][Required] int reportId)
+        [SwaggerResponse(
+            statusCode: 200,
+            type: typeof(List<VariableFieldResponse>),
+            description: "Ok")
+        ]
+        public async Task<IActionResult> GetVariableFieldById (
+            [FromRoute(Name = "id")][Required] int reportId
+            )
         {
             var result = await _services.GetVariableFieldResponseByReportId(reportId);
-            return this.Ok(result);
+            return Ok(result);
         }
     }
 }

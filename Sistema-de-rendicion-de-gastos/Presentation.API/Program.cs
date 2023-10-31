@@ -17,7 +17,6 @@ using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Command;
 using Infrastructure.Repositories.Query;
-using Application.Dto.Response.StatusResponseNS;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +26,7 @@ using Infrastructure.MicroservicesClient.GenericClient;
 using Application.Interfaces.IMicroservices.Generic;
 using Application.Interfaces.IMicroservicesClient;
 using Infrastructure.MicroservicesClient;
+using Application.DTO;
 
 namespace Presentation.API
 {
@@ -113,7 +113,7 @@ namespace Presentation.API
             builder.Services.AddSingleton<IVariableFieldCommand, VariableFieldCommand>();
             builder.Services.AddTransient<IReportTrackingQuery, ReportTrackingQuery>();
             builder.Services.AddTransient<IDepartmentTemplateQuery, DepartmentTemplateQuery>();
-            builder.Services.AddTransient<IFieldTemplateQuerys, FieldTemplateQuerys>();
+            builder.Services.AddTransient<IReportTemplateFieldQuerys, ReportTemplateFieldQuerys>();
             builder.Services.AddTransient<IFieldTemplateCommand, FieldTemplateCommand>();
             builder.Services.AddSingleton<IDepartamentTemplateCommand, DepartmentTemplateCommand>();
             builder.Services.AddTransient<IVariableFieldQuery, VariableFieldQuery>();
@@ -126,8 +126,8 @@ namespace Presentation.API
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services
-            builder.Services.AddSingleton<IReportTemplateService, DepartmentTemplateService>();
-            builder.Services.AddSingleton<IFieldTemplateService, FieldTemplateService>();
+            
+            builder.Services.AddSingleton<IReportTemplateFieldService, FieldTemplateService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();
@@ -136,11 +136,12 @@ namespace Presentation.API
             builder.Services.AddTransient<IReportService, ReportService>();
             builder.Services.AddTransient<IReportTrackingService, ReportTrackingService>();
             builder.Services.AddTransient<IReportOperationService, ReportOperationService>();
-            builder.Services.AddTransient<IReportTemplateService, DepartmentTemplateService>();
+            builder.Services.AddTransient<IReportTemplateService, ReportTemplateService>();
+
             builder.Services.AddTransient<IVariableFieldServices, VariableFieldServices>();
             builder.Services.AddTransient<IReportTrackingQuery, ReportTrackingQuery>();
-            builder.Services.AddTransient<IServiceResponseFactory, ServiceResponseFactory>();
             builder.Services.AddTransient<IAddReportTrackingService, AddReportTrackingService>();
+            builder.Services.AddAutoMapper(typeof(MapperProfile));
 
             //validators
             builder.Services.AddScoped<IValidator<VariableFieldResponse>, VariableFieldValidator>();

@@ -9,14 +9,14 @@ namespace Application.DTO.Response.Response.EntityProxy
 {
     public class FieldTemplateResponse
     {
-        private readonly FieldTemplate _fieldTemplate;
+        private readonly ReportTemplateField _fieldTemplate;
 
-        public FieldTemplateResponse(FieldTemplate fieldTemplate)
+        public FieldTemplateResponse(ReportTemplateField fieldTemplate)
         {
             _fieldTemplate = fieldTemplate;
         }
 
-        public int FieldTemplateId { get { return _fieldTemplate.DepartmentTemplateId; } set { _fieldTemplate.DepartmentTemplateId = value; } }
+        public int FieldTemplateId { get { return _fieldTemplate.ReportTemplateId; } set { _fieldTemplate.ReportTemplateId = value; } }
         public string Name { get { return _fieldTemplate.Name; } set { _fieldTemplate.Name = value; } }
         public int DataTypeId { get { return _fieldTemplate.DataTypeId; } set { _fieldTemplate.DataTypeId = value; } }
     }

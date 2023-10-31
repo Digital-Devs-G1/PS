@@ -14,19 +14,19 @@ namespace Infrastructure.Repositories.Query
             _context = context;
         }
 
-        public async Task<DepartmentTemplate> GetById(int id)
+        public async Task<ReportTemplate> GetById(int id)
         {
-            return await _context.DepartmentTemplates.Where(x => x.DepartmentTemplateId == id).FirstOrDefaultAsync();
+            return await _context.ReportTemplate.Where(x => x.ReportTemplateId == id).FirstOrDefaultAsync();
         }
 
         public async Task<bool> ExistDepartamentId(int id)
         {
-            return await _context.DepartmentTemplates.AnyAsync(dt => dt.DepartmentId == id);
+            return await _context.ReportTemplate.AnyAsync(dt => dt.DepartmentId == id);
         }
 
-        public async Task<IList<DepartmentTemplate>> GetTemplatesByDeptoId(int deptoId)
+        public async Task<IList<ReportTemplate>> GetTemplatesByDeptoId(int deptoId)
         {
-            return await _context.DepartmentTemplates.Where(dt => dt.DepartmentId == deptoId)
+            return await _context.ReportTemplate.Where(dt => dt.DepartmentId == deptoId)
                                                      .ToListAsync();
         }
     }

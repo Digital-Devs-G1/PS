@@ -2,6 +2,7 @@
 using Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Presentation.API.Handlers;
 using System.Net;
 
 namespace Presentation.Handlers
@@ -11,27 +12,28 @@ namespace Presentation.Handlers
         public override void OnException(ExceptionContext context)
         {
             var statusCode = HttpStatusCode.InternalServerError;
-            List<string> message = new List<string>();
-
+            string message = "";
             if(context.Exception is InvalidFormatIdException ||
                context.Exception is BadRequestException ) 
             {
                 statusCode = HttpStatusCode.BadRequest;
-                message.Add(context.Exception.Message);
+                message = context.Exception.Message;
             }
             else if (
                 context.Exception is NonExistentReferenceException ||
-                context.Exception is NoFilterMatchesException
+                context.Exception is NoFilterMatchesException ||
+                context.Exception is NotFoundException
                 )
             {
                 statusCode = HttpStatusCode.NotFound;
-                message.Add(context.Exception.Message);
+                message = context.Exception.Message;
             }
             else if (
                 context.Exception is InvalidTokenInformation ||
                 context.Exception is MicroserviceComunicationException ||
                 context.Exception is InvalidMicroserviceResponseFormatException ||
-                context.Exception is MicroserviceErrorResponseException
+                context.Exception is MicroserviceErrorResponseException ||
+                context.Exception is UnprocesableContentException
                 )
             {
                 statusCode = HttpStatusCode.UnprocessableEntity;
@@ -44,20 +46,14 @@ namespace Presentation.Handlers
                  */
             }
             else
-            {
-                statusCode = HttpStatusCode.InternalServerError;
-                message.Add("Ha ocurrido un error interno.");
-            }
+                message = "Ha ocurrido un error interno.";
             
             context.ExceptionHandled = true;
             context.HttpContext.Response.StatusCode = (int)statusCode;
-            context.Result = new JsonResult(
-                new MessageResponse() 
-                { 
-                    Messages = message
-                }
-            );
+            context.Result = new JsonResult(new ErrorResponse() 
+            { 
+                message = message 
+            });
         }
-
     }
 }

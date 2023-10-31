@@ -1,6 +1,7 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IServices;
+using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -14,12 +15,14 @@ namespace Presentation.API.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportService reportService;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public ReportController(IReportService reportService)
+        public ReportController(IReportService reportService, IHttpContextAccessor httpContextAccessor)
         {
             this.reportService = reportService;
+            this.httpContextAccessor = httpContextAccessor;
         }
-        
+
         [HttpGet("ReportStatus/{reportId}")]
         public async Task<IActionResult> GetReportStatus(int reportId)
         {
@@ -61,7 +64,8 @@ namespace Presentation.API.Controllers
             [FromBody] AddReportRequest report
             )
         {
-            int id = await reportService.AddReport(report,1 );
+            var employeeId = new JwtHelper(httpContextAccessor).GetEmployeeId();
+            int id = await reportService.AddReport(report, employeeId);
             return Created("/api/Report/" + id, id);
         }
     }

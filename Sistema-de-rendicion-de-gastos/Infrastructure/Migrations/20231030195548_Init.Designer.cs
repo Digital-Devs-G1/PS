@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20231030035307_Init")]
+    [Migration("20231030195548_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -70,263 +70,6 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.DepartmentTemplate", b =>
-                {
-                    b.Property<int>("DepartmentTemplateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentTemplateId"));
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DepartmentTemplateName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("DepartmentTemplateId");
-
-                    b.ToTable("DepartmentTemplates");
-
-                    b.HasData(
-                        new
-                        {
-                            DepartmentTemplateId = 1,
-                            DepartmentId = 1,
-                            DepartmentTemplateName = "Auto Propio"
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 2,
-                            DepartmentId = 1,
-                            DepartmentTemplateName = "Servicio Viaje"
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 3,
-                            DepartmentId = 1,
-                            DepartmentTemplateName = "Viaticos"
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 4,
-                            DepartmentId = 2,
-                            DepartmentTemplateName = "Gastos varios"
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 5,
-                            DepartmentId = 2,
-                            DepartmentTemplateName = "Materia prima"
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 6,
-                            DepartmentId = 3,
-                            DepartmentTemplateName = "Materiales de Construccion"
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 7,
-                            DepartmentId = 3,
-                            DepartmentTemplateName = "Placas de Carpinteria"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Entities.FieldTemplate", b =>
-                {
-                    b.Property<int>("DepartmentTemplateId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("DataTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("DepartmentTemplateId", "Name");
-
-                    b.HasIndex("DataTypeId");
-
-                    b.ToTable("FieldTemplates");
-
-                    b.HasData(
-                        new
-                        {
-                            DepartmentTemplateId = 1,
-                            Name = "Destino",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 1,
-                            Name = "Km",
-                            DataTypeId = 5,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 1,
-                            Name = "HuboPeajes",
-                            DataTypeId = 4,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 1,
-                            Name = "Monto Peajes",
-                            DataTypeId = 5,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 2,
-                            Name = "Destino",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 2,
-                            Name = "Nombre Servicio",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 2,
-                            Name = "Comprobante",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 3,
-                            Name = "Viatico",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 3,
-                            Name = "Motivo",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 3,
-                            Name = "Comprobante",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 4,
-                            Name = "Proveedor",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 4,
-                            Name = "Contacto",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 4,
-                            Name = "Nombre Material",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 4,
-                            Name = "Peso [Kg]",
-                            DataTypeId = 5,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 4,
-                            Name = "Ancho [mm]",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 4,
-                            Name = "Alto [mm]",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 5,
-                            Name = "Viatico",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 5,
-                            Name = "Motivo",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 5,
-                            Name = "Comprobante",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 6,
-                            Name = "Proveedor",
-                            DataTypeId = 2,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 6,
-                            Name = "Tel. Proveedor",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 7,
-                            Name = "Ancho [mm]",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 7,
-                            Name = "Alto [mm]",
-                            DataTypeId = 1,
-                            Enabled = true
-                        },
-                        new
-                        {
-                            DepartmentTemplateId = 7,
-                            Name = "Peso [Kg]",
-                            DataTypeId = 5,
-                            Enabled = true
-                        });
-                });
-
             modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
                     b.Property<int>("ReportId")
@@ -365,7 +108,7 @@ namespace Infrastructure.Migrations
                             ApproverId = 1,
                             Description = "Bolsa de cemento",
                             EmployeeId = 1,
-                            date = new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9761)
+                            date = new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5306)
                         },
                         new
                         {
@@ -374,7 +117,7 @@ namespace Infrastructure.Migrations
                             ApproverId = 1,
                             Description = "Placa Mdf",
                             EmployeeId = 2,
-                            date = new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9774)
+                            date = new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5321)
                         },
                         new
                         {
@@ -383,7 +126,7 @@ namespace Infrastructure.Migrations
                             ApproverId = 1,
                             Description = "Bola de cal",
                             EmployeeId = 2,
-                            date = new DateTime(2023, 10, 30, 0, 53, 7, 652, DateTimeKind.Local).AddTicks(9775)
+                            date = new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5322)
                         });
                 });
 
@@ -425,6 +168,263 @@ namespace Infrastructure.Migrations
                         {
                             ReportOperationId = 4,
                             ReportOperationName = "Rechazo"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.ReportTemplate", b =>
+                {
+                    b.Property<int?>("ReportTemplateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ReportTemplateId"));
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReportTemplateName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("ReportTemplateId");
+
+                    b.ToTable("ReportTemplate");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportTemplateId = 1,
+                            DepartmentId = 1,
+                            ReportTemplateName = "Auto Propio"
+                        },
+                        new
+                        {
+                            ReportTemplateId = 2,
+                            DepartmentId = 1,
+                            ReportTemplateName = "Servicio Viaje"
+                        },
+                        new
+                        {
+                            ReportTemplateId = 3,
+                            DepartmentId = 1,
+                            ReportTemplateName = "Viaticos"
+                        },
+                        new
+                        {
+                            ReportTemplateId = 4,
+                            DepartmentId = 2,
+                            ReportTemplateName = "Gastos varios"
+                        },
+                        new
+                        {
+                            ReportTemplateId = 5,
+                            DepartmentId = 2,
+                            ReportTemplateName = "Materia prima"
+                        },
+                        new
+                        {
+                            ReportTemplateId = 6,
+                            DepartmentId = 3,
+                            ReportTemplateName = "Materiales de Construccion"
+                        },
+                        new
+                        {
+                            ReportTemplateId = 7,
+                            DepartmentId = 3,
+                            ReportTemplateName = "Placas de Carpinteria"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.ReportTemplateField", b =>
+                {
+                    b.Property<int>("ReportTemplateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("DataTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ReportTemplateId", "Name");
+
+                    b.HasIndex("DataTypeId");
+
+                    b.ToTable("ReportTemplateField");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportTemplateId = 1,
+                            Name = "Destino",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 1,
+                            Name = "Km",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 1,
+                            Name = "HuboPeajes",
+                            DataTypeId = 4,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 1,
+                            Name = "Monto Peajes",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 2,
+                            Name = "Destino",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 2,
+                            Name = "Nombre Servicio",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 2,
+                            Name = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 3,
+                            Name = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 3,
+                            Name = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 3,
+                            Name = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 4,
+                            Name = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 4,
+                            Name = "Contacto",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 4,
+                            Name = "Nombre Material",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 4,
+                            Name = "Peso [Kg]",
+                            DataTypeId = 5,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 4,
+                            Name = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 4,
+                            Name = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 5,
+                            Name = "Viatico",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 5,
+                            Name = "Motivo",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 5,
+                            Name = "Comprobante",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 6,
+                            Name = "Proveedor",
+                            DataTypeId = 2,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 6,
+                            Name = "Tel. Proveedor",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 7,
+                            Name = "Ancho [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 7,
+                            Name = "Alto [mm]",
+                            DataTypeId = 1,
+                            Enabled = true
+                        },
+                        new
+                        {
+                            ReportTemplateId = 7,
+                            Name = "Peso [Kg]",
+                            DataTypeId = 5,
+                            Enabled = true
                         });
                 });
 
@@ -569,7 +569,7 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.FieldTemplate", b =>
+            modelBuilder.Entity("Domain.Entities.ReportTemplateField", b =>
                 {
                     b.HasOne("Domain.Entities.DataType", "DataTypeNav")
                         .WithMany()
@@ -577,7 +577,15 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.ReportTemplate", "ReportTemplateNav")
+                        .WithMany("ReportTemplateFieldsCol")
+                        .HasForeignKey("ReportTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("DataTypeNav");
+
+                    b.Navigation("ReportTemplateNav");
                 });
 
             modelBuilder.Entity("Domain.Entities.ReportTracking", b =>
@@ -619,6 +627,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
                     b.Navigation("VariableFieldCol");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ReportTemplate", b =>
+                {
+                    b.Navigation("ReportTemplateFieldsCol");
                 });
 #pragma warning restore 612, 618
         }

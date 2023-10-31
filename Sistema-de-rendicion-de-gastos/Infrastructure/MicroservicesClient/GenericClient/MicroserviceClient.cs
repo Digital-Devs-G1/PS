@@ -6,6 +6,7 @@ namespace Infrastructure.MicroservicesClient.GenericClient
     public abstract class MicroserviceClient
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        protected string _token { get; set; }
 
         public MicroserviceClient(IHttpContextAccessor httpContextAccessor)
         {
@@ -15,15 +16,12 @@ namespace Infrastructure.MicroservicesClient.GenericClient
         protected async Task<HttpResponseMessage> SendRequest(string url)
         {
             var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-            /*string employee = new JwtHelper().GetClaimValue(token, TypeClaims.Id);
-            string rol = new JwtHelper().GetClaimValue(token, TypeClaims.Rol);
-            string email = new JwtHelper().GetClaimValue(token, TypeClaims.Email);*/
-
+            
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    //client.DefaultRequestHeaders.Add("Authorization", token.ToString());
+                    client.DefaultRequestHeaders.Add("Authorization", token.ToString());
                     return await HttpMethod(client, url);
                 }
                 catch (Exception ex)

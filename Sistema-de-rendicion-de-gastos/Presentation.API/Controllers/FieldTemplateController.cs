@@ -1,8 +1,12 @@
 ﻿using Application.DTO.Request;
+using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IServices;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.API.Handlers;
 using Presentation.Handlers;
 
 namespace Presentation.API.Controllers
@@ -12,33 +16,29 @@ namespace Presentation.API.Controllers
     [TypeFilter(typeof(ExceptionFilter))]
     public class FieldTemplateController : ControllerBase
     {
-        private readonly IFieldTemplateService _services;
-        private readonly IMapper _mapper;
+        private readonly IReportTemplateFieldService _service;
 
         public FieldTemplateController(
-            IFieldTemplateService services,
-            IMapper mapper)
+            IReportTemplateFieldService services)
         {
-            _services = services;
-            _mapper = mapper;
+            _service = services;
         }
 
-        [HttpGet("v1/Templates/{id}")]
-        public async Task<IActionResult> GetTemplateById(uint id)
+        [HttpGet("v1/ReportTemplate/{id}/ReportTemplateFields")]
+        [ProducesResponseType(typeof(UnauthorizedHttpResult), 401)]
+        [ProducesResponseType(typeof(IList<FieldTemplateResponse>), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
+        [ProducesResponseType(typeof(ErrorResponse), 404)]
+        [ProducesResponseType(typeof(ErrorResponse), 422)]
+        [Authorize]
+        public async Task<IActionResult> GetReportTemplateFields(
+            [FromRoute(Name ="id")] uint reportTemplateId)
         {
-            if (id < 1) 
-            {
-                return BadRequest("El ID no puede ser 0.");  
-            }
-            var templates = await _services.GetTemplatesById((int)id);
-
-            if (templates.Count() == 0)
-            {
-                return NotFound("No existe templates para ese Departamento."); 
-            }
-            return this.Ok(templates);
+            var fields = await _service.GetTemplatesFields((int)reportTemplateId);
+            return Ok(fields);
         }
 
+        /*
         [HttpPost("v1/Template")]
         public async Task<IActionResult> CreateTemplate(FieldTemplateRequest template)
         {
@@ -55,10 +55,9 @@ namespace Presentation.API.Controllers
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateFieldRequest request)
-        {
-            var field = this._mapper.Map<FieldTemplate>(request);
-            await _services.UpdateField(field);
-            return this.Ok(field);
+        {   
+            var fieldResponse = await _services.UpdateField(request);
+            return this.Ok(fieldResponse);
         }
 
         [HttpDelete("v1/Templates/{id}")]
@@ -71,7 +70,8 @@ namespace Presentation.API.Controllers
             await _services.DeleteFieldTemplatesById((int)id);
             return this.Ok();
         }   
-        [HttpDelete("v1/Template/{id}/{name}")]
+        
+        [HttpDelete("v1/ReportTemplateField/{id}/{name}")]
         public async Task<IActionResult> DeleteTemplete(uint id, string name)
         {
             if (id<1 & string.IsNullOrEmpty(name))
@@ -80,6 +80,6 @@ namespace Presentation.API.Controllers
             }
             await _services.DeleteTemplateById(name, (int)id);
             return this.Ok();
-        }
+        }*/
     }
 }

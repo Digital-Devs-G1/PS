@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Inserts
 {
-    public class DepartmentTemplateInserts : IEntityTypeConfiguration<DepartmentTemplate>
+    public class ReportTemplateInserts : IEntityTypeConfiguration<ReportTemplate>
     {
         private int _autoincrement = 1;
 
-        public void Configure(EntityTypeBuilder<DepartmentTemplate> builder)
+        public void Configure(EntityTypeBuilder<ReportTemplate> builder)
         {
             string[] names = { "Auto Propio", "Servicio Viaje", "Viaticos" };
             Insert(builder, names, departmentId: 1);
@@ -21,7 +21,7 @@ namespace Infrastructure.Persistence.Inserts
         }
 
         private void Insert(
-            EntityTypeBuilder<DepartmentTemplate> builder,
+            EntityTypeBuilder<ReportTemplate> builder,
             string[] names,
             int departmentId
             )
@@ -30,11 +30,11 @@ namespace Infrastructure.Persistence.Inserts
                 throw new Exception("El id debe ser mayor a 0");
 
             foreach (var name in names)
-                builder.HasData(new DepartmentTemplate()
+                builder.HasData(new ReportTemplate()
                 {
-                    DepartmentTemplateId = _autoincrement++,
+                    ReportTemplateId = _autoincrement++,
                     DepartmentId = departmentId,
-                    DepartmentTemplateName = name
+                    ReportTemplateName = name
                 });
         }
     }

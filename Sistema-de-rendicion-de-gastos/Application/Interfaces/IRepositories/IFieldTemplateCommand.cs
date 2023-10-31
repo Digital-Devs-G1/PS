@@ -9,10 +9,10 @@ namespace Application.Interfaces.IRepositories
 {
     public interface IFieldTemplateCommand
     {
-        Task AddRange(List<FieldTemplate> fields);
+        Task AddRange(List<ReportTemplateField> fields);
 
-        public Task DeleteRange(FieldTemplate entity);
+        public Task DeleteRange(ReportTemplateField entity);
 
-        Task Update(FieldTemplate command);
+        Task Update(ReportTemplateField command);
     }
 }

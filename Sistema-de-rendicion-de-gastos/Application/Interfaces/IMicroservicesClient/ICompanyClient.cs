@@ -8,6 +8,6 @@ namespace Application.Interfaces.IMicroservicesClient
 {
     public interface ICompanyClient
     {
-        public Task<int> GetDepartmentId(int employeeId);    
+        public Task<int> GetDepartmentId();    
     }
 }

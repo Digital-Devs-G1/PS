@@ -1,14 +1,15 @@
-﻿using Application.DTO.Response.Response.EntityProxy;
+﻿using Application.DTO.Request;
+using Application.DTO.Response.Response.EntityProxy;
 using Domain.Entities;
 
 namespace Application.Interfaces.IServices.IVariableFields
 {
     public interface IReportTemplateService
     {
-        public Task<IList<DepartmentTemplateResponse>> GetTemplatesBy(int deptoId);
+        public Task<IList<ReportTemplateResponse>> GetTemplatesBy();
 
-        Task AddTemplate(DepartmentTemplate temp, List<FieldTemplate> fields);
+        Task<ReportTemplateResponse> AddTemplate(ReportTemplateRequest request);
 
-        Task UpdateTemplate(DepartmentTemplate temp);
+        Task<ReportTemplateResponse> UpdateTemplate(UpdateReportTemplateRequest temp, int reportId);
     }
 }

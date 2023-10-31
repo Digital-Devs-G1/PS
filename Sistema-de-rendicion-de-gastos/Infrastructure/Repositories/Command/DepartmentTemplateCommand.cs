@@ -13,20 +13,20 @@ namespace Infrastructure.Repositories.Command
             _dbContext = dbContext;
         }
 
-        public async Task Add(DepartmentTemplate command)
+        public async Task Add(ReportTemplate command)
         {
-            if (_dbContext.DepartmentTemplates.Any(u => u.DepartmentTemplateName == command.DepartmentTemplateName))
+            if (_dbContext.ReportTemplate.Any(u => u.ReportTemplateName == command.ReportTemplateName))
             {
                 throw new InvalidOperationException("El nombre del template ya existe.");
             }
 
-            _dbContext.DepartmentTemplates.Add(command);
+            _dbContext.ReportTemplate.Add(command);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(DepartmentTemplate command)
+        public async Task Update(ReportTemplate command)
         {
-            _dbContext.DepartmentTemplates.Update(command);
+            _dbContext.ReportTemplate.Update(command);
 
             await _dbContext.SaveChangesAsync();
         }

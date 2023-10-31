@@ -1,31 +1,47 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response;
 using Application.DTO.Response.Response.EntityProxy;
+using Application.Exceptions;
+using Application.Interfaces.IMicroservicesClient;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
+using AutoMapper;
 using Domain.Entities;
+using System.Text;
 
 namespace Application.UseCases
 {
-    public class FieldTemplateService : IFieldTemplateService
+    public class FieldTemplateService : IReportTemplateFieldService
     {
-        public readonly IFieldTemplateQuerys _query;
-        public readonly IGenericCommand<FieldTemplate> _commandGeneric;
+        public readonly IReportTemplateFieldQuerys _query;
+        public readonly IGenericCommand<ReportTemplateField> _commandGeneric;
         public readonly IFieldTemplateCommand _command;
+        private readonly IMapper _mapper;
+        private readonly ICompanyClient _companyClient;
 
-        public FieldTemplateService(IFieldTemplateQuerys query, IGenericCommand<FieldTemplate> commandGeneric, IFieldTemplateCommand command)
+        public FieldTemplateService(IReportTemplateFieldQuerys query, IGenericCommand<ReportTemplateField> commandGeneric, IFieldTemplateCommand command, IMapper mapper, ICompanyClient companyClient)
         {
             _query = query;
             _command = command;
             _commandGeneric = commandGeneric;
+            _mapper = mapper;
+            _companyClient = companyClient;
         }
-        public async Task<IList<DTO.Response.Response.EntityProxy.FieldTemplateResponse>> GetTemplatesById(int tempId)
+
+        public async Task<IList<FieldTemplateResponse>> GetTemplatesFields(int reportTemplateId)
         {
+            var deptoId = await _companyClient.GetDepartmentId();
+            if (reportTemplateId < 1)
+                throw new BadRequestException("El ID no puede ser 0.");
+            var fields = await _query.GetResportTemplatesFieldsByDepartment(
+                reportTemplateId,
+                deptoId
+            );
+            if (fields.Count() == 0)
+                throw new NotFoundException("No existe templates para ese Departamento.");
             IList<FieldTemplateResponse> list = new List<FieldTemplateResponse>();
-            foreach (FieldTemplate elem in await _query.GetTemplatesById(tempId))
-            {
+            foreach (ReportTemplateField elem in fields)
                 list.Add(new FieldTemplateResponse(elem));
-            }
             return list;
         }
 
@@ -39,26 +55,27 @@ namespace Application.UseCases
         {
             if (await _query.GetTemplate(template.Name, departmentId) != null)
                 throw new Exception(null);
-            await _commandGeneric.Add(new FieldTemplate
+            await _commandGeneric.Add(new ReportTemplateField
             {
-                DepartmentTemplateId = departmentId,
+                ReportTemplateId = departmentId,
                 Name = template.Name,
                 DataTypeId = template.DataTypeId,
                 Enabled = true
             });
         }
 
-        public async Task AddRange(List<FieldTemplate> fields, int deptoTemplateId)
+        public async Task AddRange(List<ReportTemplateField> fields, int deptoTemplateId)
         {
-            foreach (var field in fields) { field.DepartmentTemplateId = deptoTemplateId; }
+            foreach (var field in fields) { field.ReportTemplateId = deptoTemplateId; }
             await _command.AddRange(fields);
         }
 
+        
         public async Task DeleteFieldTemplatesById (int idTemplate)
-        {
-            if ((await _query.GetTemplatesById(idTemplate)).Count() == 0)
+        {/*
+            if ((await _query.GetResportTemplatesFields(idTemplate)).Count() == 0)
                 throw new Exception();
-            await _command.DeleteRange (await _query.GetFirstTemplateById(idTemplate));
+            await _command.DeleteRange (await _query.GetFirstTemplateById(idTemplate));*/
         }
 
         public async Task DeleteTemplateById(string tempName, int idTemplate)
@@ -80,9 +97,12 @@ namespace Application.UseCases
             });
         }*/
 
-        public async Task UpdateField(FieldTemplate updateField)
+        public async Task<FieldTemplateResponse> UpdateField(UpdateFieldRequest request)
         {
-            var field = await _query.GetTemplate(updateField.Name, updateField.DepartmentTemplateId);
+
+            var updateField = this._mapper.Map<ReportTemplateField>(request);
+
+            var field = await _query.GetTemplate(updateField.Name, updateField.ReportTemplateId);
 
             if (field == null)
             {
@@ -93,6 +113,7 @@ namespace Application.UseCases
             field.Enabled = updateField.Enabled;
 
             await _command.Update(field);
+            return _mapper.Map<FieldTemplateResponse>(field);   
         }
     }
 }

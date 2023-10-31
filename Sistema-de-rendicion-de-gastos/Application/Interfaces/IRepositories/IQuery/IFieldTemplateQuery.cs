@@ -10,7 +10,7 @@ namespace Application.Interfaces.IRepositories.IQuery
 {
     public interface IFieldTemplateQuery
     {
-        public Task<IList<FieldTemplate>> GetTemplate(int templateId);
-        public Task<IList<FieldTemplate>> GetTemplatesById(int tempId);
+        public Task<IList<ReportTemplateField>> GetTemplate(int templateId);
+        public Task<IList<ReportTemplateField>> GetTemplatesById(int tempId);
     }
 }
