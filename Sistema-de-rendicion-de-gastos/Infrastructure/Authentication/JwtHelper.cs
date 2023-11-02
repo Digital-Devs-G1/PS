@@ -20,7 +20,7 @@ namespace Infrastructure.Authentication
             var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             string? id = GetClaimValue(token, TypeClaims.Id);
             int employeeId;
-            if (int.TryParse(id, out employeeId))
+            if (!int.TryParse(id, out employeeId))
                 throw new InvalidTokenInformation();
             return employeeId;
         }

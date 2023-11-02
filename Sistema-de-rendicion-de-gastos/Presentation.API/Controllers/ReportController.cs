@@ -11,7 +11,7 @@ namespace Presentation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [TypeFilter(typeof(ExceptionFilter))]
+    //[TypeFilter(typeof(ExceptionFilter))]
     public class ReportController : ControllerBase
     {
         private readonly IReportService reportService;

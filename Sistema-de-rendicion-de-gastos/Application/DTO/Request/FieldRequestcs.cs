@@ -9,7 +9,6 @@ namespace Application.DTO.Request
     public class FieldRequest
     {
         public required string Name { get; set; }
-        public required int DataTypeId { get; set; }
 		public required string Value { get; set; }
 	}
 }

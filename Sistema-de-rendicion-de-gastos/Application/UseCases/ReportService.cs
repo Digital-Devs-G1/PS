@@ -1,6 +1,7 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response.ReportOperationNS;
 using Application.DTO.Response.Response.EntityProxy;
+using Application.Enums;
 using Application.Exceptions;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IRepositories.ICommand;
@@ -11,7 +12,10 @@ using Application.Interfaces.IServices.IVariableFields;
 using Application.UseCases.VariableFieldsService;
 using Domain.Entities;
 using System.Collections.Concurrent;
+using System.Globalization;
 using System.Text;
+using static Application.Enums.DataTypeEnum;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Application.UseCases
 {
@@ -20,6 +24,8 @@ namespace Application.UseCases
         private readonly IGenericRepositoryQuerys<Report> repository;
         private readonly IGenericCommand<Report> _reportCommand;
         private readonly IGenericCommand<ReportTracking> _reportTrankingCommand;
+
+        private readonly IGenericCommand<VariableField> _variableFieldCommand;
         private readonly IReportQuery _reportQuery;
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
@@ -34,7 +40,8 @@ namespace Application.UseCases
             IVariableFieldService variableFieldService,
             IReportTemplateFieldService fieldTemplateService,
             IReportQuery reportQuery,
-            IGenericCommand<ReportTracking> reportTrankingCommand)
+            IGenericCommand<ReportTracking> reportTrankingCommand,
+            IGenericCommand<VariableField> variableFieldCommand)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
@@ -44,6 +51,7 @@ namespace Application.UseCases
             this.reportOperationService = reportOperationService;
             _reportQuery = reportQuery;
             _reportTrankingCommand = reportTrankingCommand;
+            _variableFieldCommand = variableFieldCommand;
         }
 
         public async Task<Report> GetById(int id)
@@ -124,15 +132,51 @@ namespace Application.UseCases
             StringBuilder errorBuilder = new StringBuilder();
             if (templates.Count != reportRequest.Fields.Count)
                 errorBuilder.Append("La cantidad de campos no coincide con las del template.");
+            var fields = new List<VariableField>();
             foreach ( var field in templates)
             {
-                var f = reportRequest.Fields.Where(f => f.Name.Equals(field.Name));
-                if ( f.Count() == 0 )
+                var list = reportRequest.Fields.Where(f => f.Name.Equals(field.Name)).ToList();
+                if (list.Count() == 0 )
                     errorBuilder.Append("No se encuentra el campo " + field.Name);
-                else if(field.DataTypeId != f.ElementAt(0).DataTypeId)
-                    errorBuilder.Append("El tipo de dato del campo " + field.Name + " es incorrecto");
-                else if(f.Count() > 1)
+                else if(list.Count() > 1)
                     errorBuilder.Append("No se permiten nombres de campos repetidos.");
+                var f = list[0];
+                switch (field.DataTypeId)
+                {
+                    case (int)Int:
+                        int i;
+                        if(!int.TryParse(f.Value, out i))
+                            errorBuilder.Append("El campo " + field.Name + " debia ser un entero, pero el tipo de dato recibido no tiene el formato adeacuado.");
+                        break;
+                    case (int)Str:
+                        if(string.IsNullOrEmpty(f.Value))
+                            errorBuilder.Append("El campo " + field.Name + " esta vacio.");
+                        break;
+                    case (int)DataTypeEnum.Date:
+                        DateTime d;
+                        if (DateTime.TryParseExact(f.Value, "yyyy--mm-dd", CultureInfo.CurrentCulture, DateTimeStyles.None, out d))
+                            errorBuilder.Append("El campo " + field.Name + " debia ser un entero, pero el tipo de dato recibido no tiene el formato adeacuado.");
+                        break;
+                    case (int)Bool:
+                        bool b;
+                        if (!bool.TryParse(f.Value, out b))
+                            errorBuilder.Append("El campo " + field.Name + " debia ser un booleano, pero el tipo de dato recibido no tiene el formato adeacuado.");
+                        break;
+                    case (int)Dec:
+                        float floatNum;
+                        if (!float.TryParse(f.Value, out floatNum))
+                            errorBuilder.Append("El campo " + field.Name + " debia ser un float, pero el tipo de dato recibido no tiene el formato adeacuado.");
+                        break;
+                    default:
+                        errorBuilder.Append("No se reconoce el tipo de dato del campo " + field.Name + ".");
+                        break;
+                };
+                fields.Add(new VariableField()
+                {
+                    DataTypeId = field.DataTypeId,
+                    Name = f.Name,
+                    Value = f.Value,
+                });
             }       
             if(reportRequest.Report.Amount <=0 )
                 errorBuilder.Append("El monto es incorrecto");
@@ -144,17 +188,6 @@ namespace Application.UseCases
             // CLIENT COMPANY READ APPROVER
             int approverId = 1;
 
-            var fields = new List<VariableField>();
-            foreach ( var field in reportRequest.Fields)
-            {
-                fields.Add(new VariableField()
-                {
-                    DataTypeId = field.DataTypeId,
-                    Name = field.Name,
-                    Value = field.Value,
-                });
-            }
-
             // BEGIN TRANSATION
             var report = new Report()
             {
@@ -162,11 +195,18 @@ namespace Application.UseCases
                 Description = reportRequest.Report.Description,
                 Amount = reportRequest.Report.Amount,
                 ApproverId = approverId,
-                VariableFieldCol = fields,
-                date = DateTime.Now,
+                date = DateTime.Now
             };
 
             await _reportCommand.Add(report);
+
+            foreach( var field in fields )
+            {
+                field.ReportId = report.ReportId;
+                await _variableFieldCommand.Add(field);
+            }
+            report.VariableFieldCol = fields;
+
 
             var tracking = new ReportTracking()
             {

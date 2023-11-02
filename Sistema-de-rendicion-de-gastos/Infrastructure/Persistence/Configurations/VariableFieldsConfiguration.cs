@@ -12,9 +12,7 @@ namespace Infrastructure.Persistence.Configurations
             table.HasOne(variableField => variableField.ReportNav)
                 .WithMany(r=>r.VariableFieldCol)
                 .HasForeignKey(variableField => variableField.ReportId);
-            table.HasOne(variableField => variableField.DataTypeNav)
-                .WithMany()
-                .HasForeignKey(variableField => variableField.DataTypeId);
+            table.HasOne(variableField => variableField.DataTypeNav);
             table.Property(x => x.Name)
                 .HasMaxLength(20);
             table.Property(x => x.Value)

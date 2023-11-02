@@ -37,6 +37,7 @@ namespace Presentation.Handlers
                 )
             {
                 statusCode = HttpStatusCode.UnprocessableEntity;
+                message = "Inconvenientes en la comunicacion entre microservicios";
                 /*
                  * 
                  * RESOLVER LOGER O CONSOLE

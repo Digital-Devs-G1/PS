@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ReportsDbContext))]
-    [Migration("20231030195548_Init")]
+    [Migration("20231102034728_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -108,7 +108,7 @@ namespace Infrastructure.Migrations
                             ApproverId = 1,
                             Description = "Bolsa de cemento",
                             EmployeeId = 1,
-                            date = new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5306)
+                            date = new DateTime(2023, 11, 2, 0, 47, 28, 145, DateTimeKind.Local).AddTicks(7173)
                         },
                         new
                         {
@@ -117,7 +117,7 @@ namespace Infrastructure.Migrations
                             ApproverId = 1,
                             Description = "Placa Mdf",
                             EmployeeId = 2,
-                            date = new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5321)
+                            date = new DateTime(2023, 11, 2, 0, 47, 28, 145, DateTimeKind.Local).AddTicks(7188)
                         },
                         new
                         {
@@ -126,7 +126,7 @@ namespace Infrastructure.Migrations
                             ApproverId = 1,
                             Description = "Bola de cal",
                             EmployeeId = 2,
-                            date = new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5322)
+                            date = new DateTime(2023, 11, 2, 0, 47, 28, 145, DateTimeKind.Local).AddTicks(7189)
                         });
                 });
 
@@ -608,7 +608,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.VariableField", b =>
                 {
                     b.HasOne("Domain.Entities.DataType", "DataTypeNav")
-                        .WithMany()
+                        .WithMany("VariableFieldCol")
                         .HasForeignKey("DataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -622,6 +622,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("DataTypeNav");
 
                     b.Navigation("ReportNav");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DataType", b =>
+                {
+                    b.Navigation("VariableFieldCol");
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>

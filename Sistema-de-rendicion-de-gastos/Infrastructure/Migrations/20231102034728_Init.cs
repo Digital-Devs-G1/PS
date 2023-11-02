@@ -191,9 +191,9 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ReportId", "Amount", "ApproverId", "Description", "EmployeeId", "date" },
                 values: new object[,]
                 {
-                    { 1, 7500.0, 1, "Bolsa de cemento", 1, new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5306) },
-                    { 2, 15000.0, 1, "Placa Mdf", 2, new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5321) },
-                    { 3, 3500.0, 1, "Bola de cal", 2, new DateTime(2023, 10, 30, 16, 55, 48, 680, DateTimeKind.Local).AddTicks(5322) }
+                    { 1, 7500.0, 1, "Bolsa de cemento", 1, new DateTime(2023, 11, 2, 0, 47, 28, 145, DateTimeKind.Local).AddTicks(7173) },
+                    { 2, 15000.0, 1, "Placa Mdf", 2, new DateTime(2023, 11, 2, 0, 47, 28, 145, DateTimeKind.Local).AddTicks(7188) },
+                    { 3, 3500.0, 1, "Bola de cal", 2, new DateTime(2023, 11, 2, 0, 47, 28, 145, DateTimeKind.Local).AddTicks(7189) }
                 });
 
             migrationBuilder.InsertData(
