@@ -27,6 +27,7 @@ using Application.Interfaces.IMicroservices.Generic;
 using Application.Interfaces.IMicroservicesClient;
 using Infrastructure.MicroservicesClient;
 using Application.DTO;
+using Application.Interfaces;
 
 namespace Presentation.API
 {
@@ -118,15 +119,16 @@ namespace Presentation.API
             builder.Services.AddSingleton<IDepartamentTemplateCommand, DepartmentTemplateCommand>();
             builder.Services.AddTransient<IVariableFieldQuery, VariableFieldQuery>();
             builder.Services.AddTransient<IReportQuery, ReportQuery>();
-            builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddTransient<IJwtHelper, JwtHelper>();
+            builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddTransient<IGetMicroserviceClient, GetMicroserviceClient>();
             builder.Services.AddTransient<IPostMicroserviceClient, PostMicroservicClient>();
             builder.Services.AddTransient<ICompanyClient, CompanyClient>();
+            builder.Services.AddTransient<ICompanyApprover, CompanyApprover>();
             //builder.Services.AddSingleton<IReportTrackingRepository, ReportTrackingRepository>();
 
             //services
-            
+
             builder.Services.AddSingleton<IReportTemplateFieldService, FieldTemplateService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
             builder.Services.AddSingleton<IReportService, ReportService>();

@@ -3,6 +3,7 @@ using Application.DTO.Response.ReportOperationNS;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Enums;
 using Application.Exceptions;
+using Application.Interfaces;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IRepositories.ICommand;
 using Application.Interfaces.IRepositories.IQuery;
@@ -31,6 +32,7 @@ namespace Application.UseCases
         private readonly IReportOperationService reportOperationService;
         private readonly IVariableFieldService variableFieldService;
         private readonly IReportTemplateFieldService fieldTemplateService;
+        private readonly ICompanyApprover _companyApprover;
 
         public ReportService(
             IGenericRepositoryQuerys<Report> repository,
@@ -41,7 +43,8 @@ namespace Application.UseCases
             IReportTemplateFieldService fieldTemplateService,
             IReportQuery reportQuery,
             IGenericCommand<ReportTracking> reportTrankingCommand,
-            IGenericCommand<VariableField> variableFieldCommand)
+            IGenericCommand<VariableField> variableFieldCommand,
+            ICompanyApprover companyApprover)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
@@ -52,6 +55,7 @@ namespace Application.UseCases
             _reportQuery = reportQuery;
             _reportTrankingCommand = reportTrankingCommand;
             _variableFieldCommand = variableFieldCommand;
+            _companyApprover = companyApprover;
         }
 
         public async Task<Report> GetById(int id)
@@ -186,39 +190,29 @@ namespace Application.UseCases
                 throw new BadRequestException(errorBuilder.ToString());
 
             // CLIENT COMPANY READ APPROVER
-            int approverId = 1;
+            int approverId = await _companyApprover.GetApproverId();
 
-            // BEGIN TRANSATION
             var report = new Report()
             {
                 EmployeeId = employeeId,
                 Description = reportRequest.Report.Description,
                 Amount = reportRequest.Report.Amount,
                 ApproverId = approverId,
-                date = DateTime.Now
+                date = DateTime.Now,
+                VariableFieldCol = fields
             };
-
-            await _reportCommand.Add(report);
-
-            foreach( var field in fields )
-            {
-                field.ReportId = report.ReportId;
-                await _variableFieldCommand.Add(field);
-            }
-            report.VariableFieldCol = fields;
-
 
             var tracking = new ReportTracking()
             {
                 ReportId = report.ReportId,
                 ReportOperationId = 1,
                 TrackingDate = DateTime.Now,
-                EmployeeId = employeeId
+                EmployeeId = employeeId,
+                ReportNav = report
             };
 
             await _reportTrankingCommand.Add(tracking);
 
-            // END TRANSACTION
             return report.ReportId;
         }
 
