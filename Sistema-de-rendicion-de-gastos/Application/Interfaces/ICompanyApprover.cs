@@ -9,5 +9,7 @@ namespace Application.Interfaces
     public interface ICompanyApprover
     {
         public Task<int> GetApproverId();
+
+        public Task<int> GetNextApproverId(double amount);
     }
 }

@@ -2,6 +2,7 @@
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IServices;
 using Infrastructure.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -11,7 +12,7 @@ namespace Presentation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[TypeFilter(typeof(ExceptionFilter))]
+    [TypeFilter(typeof(ExceptionFilter))]
     public class ReportController : ControllerBase
     {
         private readonly IReportService reportService;
@@ -53,10 +54,12 @@ namespace Presentation.API.Controllers
             type: typeof(ErrorResponse),
             description: "Not Found")
         ]
+        [Authorize]
         public async Task<IActionResult> GetPendingApprovals()
         {
-            var reportsStatus = await reportService.GetPendingApprovals(1);
-            return this.Ok(reportsStatus);
+            var employeeId = new JwtHelper(httpContextAccessor).GetEmployeeId();
+            var reportsStatus = await reportService.GetPendingApprovals(employeeId);
+            return Ok(reportsStatus);
         }
         
         [HttpPost]

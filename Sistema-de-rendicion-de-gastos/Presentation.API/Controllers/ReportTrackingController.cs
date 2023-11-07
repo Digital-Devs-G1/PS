@@ -2,6 +2,7 @@
 using Application.Interfaces.IServices.IReportTraking;
 using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -17,16 +18,19 @@ namespace Presentation.API.Controllers
     {
         private readonly IReportTrackingService _getService;
         private readonly IAddReportTrackingService _addService;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IJwtHelper jwtHelper;
 
         public ReportTrackingController(
             IReportTrackingService service,
             IAddReportTrackingService addService,
-            IJwtHelper jwtHelper)
+            IJwtHelper jwtHelper,
+            IHttpContextAccessor httpContextAccessor)
         {
             _getService = service;
             _addService = addService;
             this.jwtHelper = jwtHelper;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -56,14 +60,15 @@ namespace Presentation.API.Controllers
             type: typeof(ErrorResponse),
             description: "Bad Request")
         ]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> AcceptReport(
             [FromRoute(Name = "id")][Required] int reportId
             )
         {
+            var employeeId = new JwtHelper(httpContextAccessor).GetEmployeeId();
             await _addService.AddAcceptTracking(
                 reportId, 
-                1//jwtHelper.GetEmployeeId()
+                employeeId
             );
             return NoContent();
         }

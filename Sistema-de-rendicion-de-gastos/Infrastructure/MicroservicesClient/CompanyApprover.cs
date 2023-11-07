@@ -22,6 +22,17 @@ namespace Infrastructure.MicroservicesClient
         public async Task<int> GetApproverId()
         {
             string url = "https://localhost:7296/api/Employee/ObtenerAprobador";
+            return await GetApprover(url);
+        }
+
+        public async Task<int> GetNextApproverId(double amount)
+        {
+            string url = "https://localhost:7296/api/Employee/NextApprover?amount=" + amount.ToString();
+            return await GetApprover(url);
+        }
+
+        private async Task<int> GetApprover(string url)
+        {
             HttpResponseMessage response = await _getClient.Get(url);
             
             if (response.IsSuccessStatusCode)
@@ -41,7 +52,7 @@ namespace Infrastructure.MicroservicesClient
                         "Formato invalido en la respuesta entre microservicios para obtener aprovador."
                     );
                 }
-                if (approverId < 1)
+                if (approverId < 0) /* El cero indica que no necesita aprobacion */
                     throw new UnprocesableContentException("Id de aprovador con formato invalido en respuesta de microservicio");
                 return approverId;
             }

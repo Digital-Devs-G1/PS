@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Response.ReportNS;
 using Application.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.API.Handlers;
 using Presentation.Handlers;
@@ -37,6 +38,7 @@ namespace Presentation.API.Controllers
             type: typeof(List<VariableFieldResponse>),
             description: "Ok")
         ]
+        [Authorize]
         public async Task<IActionResult> GetVariableFieldById (
             [FromRoute(Name = "id")][Required] int reportId
             )

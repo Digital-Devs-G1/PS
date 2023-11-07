@@ -1,4 +1,5 @@
 ﻿using Application.Exceptions;
+using Application.Interfaces;
 using Application.Interfaces.IRepositories;
 using Application.Interfaces.IRepositories.IQuery;
 using Application.Interfaces.IServices;
@@ -17,18 +18,21 @@ namespace Application.UseCases.ReportTrackingService
         private readonly IGenericCommand<Report> _reportCommand;
         private readonly IReportTrackingQuery _reportTrackingQuery;
         private readonly IReportService _repoportService;
+        private readonly ICompanyApprover _companyApprover;
         //private readonly ICompanyClient _companyClient;
 
         public AddReportTrackingService(
             IGenericCommand<ReportTracking> command
 , IReportService repoportService,
 IReportTrackingQuery reportTrackingQuery,
-IGenericCommand<Report> reportCommand)//ICompanyClient companyClient)
+IGenericCommand<Report> reportCommand,
+ICompanyApprover companyApprover)//ICompanyClient companyClient)
         {
             this._reportTrankingCommand = command;
             _repoportService = repoportService;
             this._reportTrackingQuery = reportTrackingQuery;
             _reportCommand = reportCommand;
+            _companyApprover = companyApprover;
             // _companyClient = companyClient;
         }
 
@@ -55,17 +59,19 @@ IGenericCommand<Report> reportCommand)//ICompanyClient companyClient)
 
         }
 
-        private async Task<Report> ValidateTrakingOpperationRequest(int reportId)
+        private async Task<Report> ValidateTrakingOpperationRequest(int reportId, int employeeId)
         {
             if (reportId < 1)
                 throw new BadRequestException("El id de reporte tiene un formato invalido");
-
+            
             StringBuilder errorBuilder = new StringBuilder();
             Report report = await _repoportService.GetById(reportId);
             if (report == null)
                 errorBuilder.Append("El reporte no existe en la base de datos");
             else
             {
+                if(report.ApproverId != employeeId)
+                    errorBuilder.Append("El reporte no tiene asignado como aprobador al empleado que solicita la aprobacion");
                 var tracking = await _reportTrackingQuery.GetLastTrackingByReportIdAsync(reportId);
                 if (tracking.ReportOperationId == (int)Approval)
                     errorBuilder.Append("El reporte ya fue aprovado previamente");
@@ -79,11 +85,11 @@ IGenericCommand<Report> reportCommand)//ICompanyClient companyClient)
 
         public async Task AddAcceptTracking(int reportId, int employeeId)
         {
-            var report = await ValidateTrakingOpperationRequest(reportId);
+            var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
             await AddTracking((int)Approval, employeeId, reportId);
             // recuperar el SIGUIENTE APROBADOR 
-            int approverId = 1;
-            if (approverId == employeeId)
+            int approverId = await _companyApprover.GetNextApproverId(report.Amount);
+            if (approverId == 0)
                 report.ApproverId = null;
             else
                 report.ApproverId = approverId;
@@ -100,7 +106,7 @@ IGenericCommand<Report> reportCommand)//ICompanyClient companyClient)
 
         public async Task AddDismissTracking(int reportId, int employeeId)
         {
-            var report = await ValidateTrakingOpperationRequest(reportId);
+            var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
             await AddTracking((int)Refuse, employeeId, reportId);
             report.ApproverId = null;
             await _reportCommand.Update(report);
@@ -120,8 +126,6 @@ IGenericCommand<Report> reportCommand)//ICompanyClient companyClient)
             int reportId
             )
         {
-            if (reportId < 1)
-                throw new InvalidFormatIdException("Id de reporte incorrecto.");
             var tracking = new ReportTracking
             {
                 ReportId = reportId,
