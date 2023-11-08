@@ -15,8 +15,8 @@ namespace Application.UseCases.ReportTrackingService
     public class AddReportTrackingService : IAddReportTrackingService
     {
         private readonly IGenericCommand<ReportTracking> _reportTrankingCommand;
-        private readonly IGenericCommand<Report> _reportCommand;
         private readonly IReportTrackingQuery _reportTrackingQuery;
+
         private readonly IReportService _repoportService;
         private readonly ICompanyApprover _companyApprover;
         //private readonly ICompanyClient _companyClient;
@@ -25,13 +25,11 @@ namespace Application.UseCases.ReportTrackingService
             IGenericCommand<ReportTracking> command
 , IReportService repoportService,
 IReportTrackingQuery reportTrackingQuery,
-IGenericCommand<Report> reportCommand,
 ICompanyApprover companyApprover)//ICompanyClient companyClient)
         {
             this._reportTrankingCommand = command;
             _repoportService = repoportService;
             this._reportTrackingQuery = reportTrackingQuery;
-            _reportCommand = reportCommand;
             _companyApprover = companyApprover;
             // _companyClient = companyClient;
         }
@@ -86,14 +84,25 @@ ICompanyApprover companyApprover)//ICompanyClient companyClient)
         public async Task AddAcceptTracking(int reportId, int employeeId)
         {
             var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
-            await AddTracking((int)Approval, employeeId, reportId);
-            // recuperar el SIGUIENTE APROBADOR 
+            if (report.ApproverId != employeeId)
+                throw new UnprocesableContentException("El empleado no fue asignado como aprovador para el reporte.");
             int approverId = await _companyApprover.GetNextApproverId(report.Amount);
-            if (approverId == 0)
-                report.ApproverId = null;
-            else
+            if (approverId > 0)
+            {
                 report.ApproverId = approverId;
-            await _reportCommand.Update(report);
+                await AddTracking((int)Review, approverId, report.ReportId);
+            }
+            else
+            {
+                await AddTracking((int)Approval, (int)report.ApproverId, report.ReportId);
+                report.ApproverId = null;
+            }
+
+
+            // HACER NULL EL REPORT.APPROVERID PARA QUE PENDING_APPROVALS NO LOS TRAIGA DE NUEVO
+
+
+
             /* 
              * NOTIFICAR AL APROBADOR
              * 
@@ -106,6 +115,17 @@ ICompanyApprover companyApprover)//ICompanyClient companyClient)
 
         public async Task AddDismissTracking(int reportId, int employeeId)
         {
+            var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
+            if (report.ApproverId != employeeId)
+                throw new UnprocesableContentException("El empleado que intenta desaprobar el reporte no es el que fue asignado como aprovador");
+            await AddTracking((int)Refuse, employeeId, report.ReportId);
+
+
+
+            // HACER NULL EL REPORT.APPROVERID PARA QUE PENDING_APPROVALS NO LOS TRAIGA DE NUEVO
+
+
+            /*
             var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
             await AddTracking((int)Refuse, employeeId, reportId);
             report.ApproverId = null;
@@ -120,9 +140,9 @@ ICompanyApprover companyApprover)//ICompanyClient companyClient)
              */
         }
 
-        private async Task AddTracking(
+        private async Task<ReportTracking> AddTracking(
             int operationId,
-            int employeeId,
+            int approverId,
             int reportId
             )
         {
@@ -131,9 +151,10 @@ ICompanyApprover companyApprover)//ICompanyClient companyClient)
                 ReportId = reportId,
                 ReportOperationId = operationId,
                 TrackingDate = DateTime.Now,
-                EmployeeId = employeeId
+                EmployeeId = approverId
             };
             await _reportTrankingCommand.Add(tracking);
+            return tracking;
         }
 
     }

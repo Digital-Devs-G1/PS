@@ -88,9 +88,9 @@ namespace Presentation.API.Controllers
             [FromRoute(Name = "id")][Required] int reportId
             )
         {
+            var employeeId = new JwtHelper(httpContextAccessor).GetEmployeeId();
             await _addService.AddDismissTracking(
-                reportId,
-                1//jwtHelper.GetEmployeeId()
+                reportId,employeeId
             );
             return NoContent();
         }
