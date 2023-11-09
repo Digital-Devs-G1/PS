@@ -10,5 +10,9 @@ namespace Application.Interfaces.IRepositories.IQuery
         public Task<IList<ReportOperationHistory>> GetReportHistoryByCreator(int employeeId);
         Task<IEnumerable<ReportTracking>> GetByReportId(int reportId);
         Task<ReportTracking> GetLastTrackingByReportIdAsync(int reportId);
+
+        public Task<List<ReportStatusResponse>> GetEmployeeReportsStatus(
+            int employeeId
+        );
     }
 }

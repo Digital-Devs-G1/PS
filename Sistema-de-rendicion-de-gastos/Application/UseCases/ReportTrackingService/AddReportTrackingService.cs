@@ -15,6 +15,7 @@ namespace Application.UseCases.ReportTrackingService
     public class AddReportTrackingService : IAddReportTrackingService
     {
         private readonly IGenericCommand<ReportTracking> _reportTrankingCommand;
+        private readonly IGenericCommand<Report> _reportCommand;
         private readonly IReportTrackingQuery _reportTrackingQuery;
 
         private readonly IReportService _repoportService;
@@ -25,12 +26,14 @@ namespace Application.UseCases.ReportTrackingService
             IGenericCommand<ReportTracking> command
 , IReportService repoportService,
 IReportTrackingQuery reportTrackingQuery,
-ICompanyApprover companyApprover)//ICompanyClient companyClient)
+ICompanyApprover companyApprover,
+IGenericCommand<Report> reportCommand)//ICompanyClient companyClient)
         {
             this._reportTrankingCommand = command;
             _repoportService = repoportService;
             this._reportTrackingQuery = reportTrackingQuery;
             _companyApprover = companyApprover;
+            _reportCommand = reportCommand;
             // _companyClient = companyClient;
         }
 
@@ -61,48 +64,45 @@ ICompanyApprover companyApprover)//ICompanyClient companyClient)
         {
             if (reportId < 1)
                 throw new BadRequestException("El id de reporte tiene un formato invalido");
-            
             StringBuilder errorBuilder = new StringBuilder();
             Report report = await _repoportService.GetById(reportId);
             if (report == null)
-                errorBuilder.Append("El reporte no existe en la base de datos");
-            else
-            {
-                if(report.ApproverId != employeeId)
-                    errorBuilder.Append("El reporte no tiene asignado como aprobador al empleado que solicita la aprobacion");
-                var tracking = await _reportTrackingQuery.GetLastTrackingByReportIdAsync(reportId);
-                if (tracking.ReportOperationId == (int)Approval)
-                    errorBuilder.Append("El reporte ya fue aprovado previamente");
-                else if (tracking.ReportOperationId == (int)Refuse)
-                    errorBuilder.Append("El reporte ya fue rechazado previamente");
-            }
+                throw new NotFoundException("El reporte no existe en la base de datos");
+            if(report.ApproverId != employeeId)
+                errorBuilder.Append("El reporte no tiene asignado como aprobador al empleado que solicita la aprobacion");
+            var tracking = await _reportTrackingQuery.GetLastTrackingByReportIdAsync(reportId);
+            if (tracking.ReportOperationId == (int)Approval)
+                errorBuilder.Append("El reporte ya fue aprovado previamente");
+            else if (tracking.ReportOperationId == (int)Refuse)
+                errorBuilder.Append("El reporte ya fue rechazado previamente");
             if (errorBuilder.Length > 0)
-                throw new BadRequestException(errorBuilder.ToString());
+                throw new ConflictException(errorBuilder.ToString());
             return report;
         }
 
         public async Task AddAcceptTracking(int reportId, int employeeId)
         {
             var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
-            if (report.ApproverId != employeeId)
-                throw new UnprocesableContentException("El empleado no fue asignado como aprovador para el reporte.");
             int approverId = await _companyApprover.GetNextApproverId(report.Amount);
+            int originalApprover;
+            int operation;
             if (approverId > 0)
             {
+                originalApprover = (int)report.ApproverId;
                 report.ApproverId = approverId;
-                await AddTracking((int)Review, approverId, report.ReportId);
+                operation = (int)Review;
             }
             else
             {
-                await AddTracking((int)Approval, (int)report.ApproverId, report.ReportId);
+                originalApprover = (int)report.ApproverId;
                 report.ApproverId = null;
+                operation = (int)Approval;
             }
-
-
-            // HACER NULL EL REPORT.APPROVERID PARA QUE PENDING_APPROVALS NO LOS TRAIGA DE NUEVO
-
-
-
+            await AddTracking(
+                operation,
+                originalApprover,
+                report
+            );
             /* 
              * NOTIFICAR AL APROBADOR
              * 
@@ -116,20 +116,13 @@ ICompanyApprover companyApprover)//ICompanyClient companyClient)
         public async Task AddDismissTracking(int reportId, int employeeId)
         {
             var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
-            if (report.ApproverId != employeeId)
-                throw new UnprocesableContentException("El empleado que intenta desaprobar el reporte no es el que fue asignado como aprovador");
-            await AddTracking((int)Refuse, employeeId, report.ReportId);
-
-
-
-            // HACER NULL EL REPORT.APPROVERID PARA QUE PENDING_APPROVALS NO LOS TRAIGA DE NUEVO
-
-
-            /*
-            var report = await ValidateTrakingOpperationRequest(reportId, employeeId);
-            await AddTracking((int)Refuse, employeeId, reportId);
+            int originalApprover = (int)report.ApproverId;
             report.ApproverId = null;
-            await _reportCommand.Update(report);
+            await AddTracking(
+                (int)Refuse,
+                originalApprover,
+                report
+            );
             /* 
              * NOTIFICAR AL APROBADOR
              * 
@@ -143,12 +136,12 @@ ICompanyApprover companyApprover)//ICompanyClient companyClient)
         private async Task<ReportTracking> AddTracking(
             int operationId,
             int approverId,
-            int reportId
+            Report report
             )
         {
             var tracking = new ReportTracking
             {
-                ReportId = reportId,
+                ReportNav = report,
                 ReportOperationId = operationId,
                 TrackingDate = DateTime.Now,
                 EmployeeId = approverId

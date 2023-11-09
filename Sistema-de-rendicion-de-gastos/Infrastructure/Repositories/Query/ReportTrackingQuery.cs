@@ -5,6 +5,7 @@ using Domain.Entities;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories.Command;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Infrastructure.Repositories.Query
 {
@@ -28,6 +29,70 @@ namespace Infrastructure.Repositories.Query
                 .Where(e => e.ReportId == reportId)
                 .ToListAsync();
         }
+
+        public async Task<List<ReportStatusResponse>> GetEmployeeReportsStatus(int employeeId)
+        {
+            var result = await _dbContext
+                .Set<ReportTracking>()
+                .Where(t => t.ReportNav.EmployeeId == employeeId)
+                .Include(t => t.ReportOperationNav)
+                .Include(t => t.ReportNav)
+                .GroupBy(t => t.ReportId)
+                .Select(group => new
+                {
+                    ReportId = group.Key,
+                    LatestTracking = group.OrderByDescending(t => t.TrackingDate).FirstOrDefault()
+                })
+                .ToListAsync();
+
+            var a = result.Select(data => new ReportStatusResponse()
+            {
+                ReportId = (int)data.ReportId,
+                Description = data.LatestTracking?.ReportNav.Description,
+                Amount = data.LatestTracking.ReportNav.Amount,
+                Status = data.LatestTracking?.ReportOperationNav.ReportOperationName,
+                DateTracking = data.LatestTracking?.TrackingDate
+            }).ToList();
+
+            return a;
+        }
+
+
+
+        public async Task<List<ReportStatusResponse>> GetEmployeeReportsStatus2(
+            int employeeId
+            )
+        {
+            var a = await _dbContext
+                .Set<ReportTracking>()
+                .Include(t => t.ReportOperationNav)
+                .Include(t => t.ReportNav)
+                .Where(t => t.ReportNav.EmployeeId == employeeId)
+                .GroupBy(t => t.ReportId)
+                .Select(group => new ReportStatusResponse()
+                {
+                    ReportId = (int)group.First().ReportId,
+                    Description = group.First().ReportNav.Description,
+                    Amount = group.First().ReportNav.Amount,
+                    Status = group.First().ReportOperationNav.ReportOperationName,
+                    DateTracking = group.Max(t => t.TrackingDate)
+                })
+                .ToListAsync();
+            return a;
+        }
+
+        // filtrar por empleado
+        // join operation name DEL ULTIMO Tracking
+        /*
+         * new ReportStatusResponse
+            {
+                ReportId = report.ReportId,
+                Description = report.Description,
+                Amount = report.Amount,
+                Status = reportOperation.ReportOperationName,
+                DateTracking = lastTracking.TrackingDate,
+            }
+        */
 
         public async Task<ReportTracking> GetLastTrackingByReportIdAsync(int reportId)
         {

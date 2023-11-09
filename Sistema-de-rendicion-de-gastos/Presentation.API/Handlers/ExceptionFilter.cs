@@ -12,12 +12,11 @@ namespace Presentation.Handlers
         public override void OnException(ExceptionContext context)
         {
             var statusCode = HttpStatusCode.InternalServerError;
-            string message = "";
-            if(context.Exception is InvalidFormatIdException ||
+            string message = context.Exception.Message;
+            if (context.Exception is InvalidFormatIdException ||
                context.Exception is BadRequestException ) 
             {
                 statusCode = HttpStatusCode.BadRequest;
-                message = context.Exception.Message;
             }
             else if (
                 context.Exception is NonExistentReferenceException ||
@@ -26,7 +25,10 @@ namespace Presentation.Handlers
                 )
             {
                 statusCode = HttpStatusCode.NotFound;
-                message = context.Exception.Message;
+            }
+            else if(context.Exception is ConflictException)
+            {
+                statusCode = HttpStatusCode.Conflict;
             }
             else if (
                 context.Exception is InvalidTokenInformation ||

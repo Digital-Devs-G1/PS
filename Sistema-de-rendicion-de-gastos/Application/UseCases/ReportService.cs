@@ -25,6 +25,7 @@ namespace Application.UseCases
         private readonly IGenericRepositoryQuerys<Report> repository;
         private readonly IGenericCommand<Report> _reportCommand;
         private readonly IGenericCommand<ReportTracking> _reportTrankingCommand;
+        private readonly IReportTrackingQuery _reportTrackingQuery;
 
         private readonly IGenericCommand<VariableField> _variableFieldCommand;
         private readonly IReportQuery _reportQuery;
@@ -44,7 +45,8 @@ namespace Application.UseCases
             IReportQuery reportQuery,
             IGenericCommand<ReportTracking> reportTrankingCommand,
             IGenericCommand<VariableField> variableFieldCommand,
-            ICompanyApprover companyApprover)
+            ICompanyApprover companyApprover,
+            IReportTrackingQuery reportTrackingQuery)
         {
             this.repository = repository;
             this.reportTrackingService = reportTrackingService;
@@ -56,6 +58,7 @@ namespace Application.UseCases
             _reportTrankingCommand = reportTrankingCommand;
             _variableFieldCommand = variableFieldCommand;
             _companyApprover = companyApprover;
+            _reportTrackingQuery = reportTrackingQuery;
         }
 
         public async Task<Report> GetById(int id)
@@ -63,17 +66,17 @@ namespace Application.UseCases
             return await repository.GetByIdAsync(id);
         }
 
-        public async Task<List<Report>> GetAll()
-        {
-            var reports = await repository.GetAllAsync();
-            return reports.ToList();
-        }
 
         public async Task<List<ReportStatusResponse>> GetReportsStatusById(int employeeId)
         {
-            List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
-            var reports = await repository.GetAllAsync();
-            var filter = reports.Where(opt => opt.EmployeeId == employeeId);
+            //List<ReportStatusResponse> reportStatusResponses = new List<ReportStatusResponse>();
+            
+            if (employeeId < 0) 
+                throw new InvalidTokenInformation();
+
+            return await _reportTrackingQuery.GetEmployeeReportsStatus(employeeId);
+            
+            /*var filter = reports.Where(opt => opt.EmployeeId == employeeId);
 
             foreach (var report in filter)
             {
@@ -96,7 +99,7 @@ namespace Application.UseCases
                 reportStatusResponses.Add(reportStatusResponse);
             }
 
-            return reportStatusResponses;
+            return reportStatusResponses;*/
         }
 
         public async Task<ReportStatusResponse> GetReportStatusById(int reportId)

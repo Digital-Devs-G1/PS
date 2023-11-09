@@ -39,7 +39,7 @@ namespace Infrastructure.MicroservicesClient
                     );
                 }
                 if (department.DepartmentId < 1)
-                    throw new UnprocesableContentException("Id de departament con formato invalido en respuesta de microservicio");
+                    throw new MicroserviceComunicationException("Id de departament con formato invalido en respuesta de microservicio");
                 return department.DepartmentId;
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -57,7 +57,7 @@ namespace Infrastructure.MicroservicesClient
                 );
             } catch (Exception)
             {
-                throw new UnprocesableContentException("Error en el formate de respuesta del microservico con statusCode " + response.StatusCode);
+                throw new MicroserviceComunicationException("Error en el formate de respuesta del microservico con statusCode " + response.StatusCode);
             }
         }
     }

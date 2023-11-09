@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
-    public class ConflictException : Exception
+    public class BadRequestException : Exception
     {
-        public ConflictException(string message) : base(message) { }
+        public BadRequestException(string message) : base(message) { }
     }
 }

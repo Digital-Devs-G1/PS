@@ -16,11 +16,6 @@ namespace Infrastructure.Repositories
             entities = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await entities.ToListAsync();
-        }
-
         public async Task<T> GetByIdAsync(int id)
         {
             return await entities.FindAsync(id);

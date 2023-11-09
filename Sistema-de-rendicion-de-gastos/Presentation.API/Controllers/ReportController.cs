@@ -31,9 +31,11 @@ namespace Presentation.API.Controllers
             return this.Ok(reportStatus);
         }
 
-        [HttpGet("GetEmployeeReportsStatus/{employeeId}")]
-        public async Task<IActionResult> GetEmployeeReportsStatus(int employeeId)
+        [HttpGet("GetEmployeeReportsStatus")]
+        [Authorize]
+        public async Task<IActionResult> GetEmployeeReportsStatus()
         {
+            var employeeId = new JwtHelper(httpContextAccessor).GetEmployeeId();
             var reportsStatus = await reportService.GetReportsStatusById(employeeId);
             return this.Ok(reportsStatus);
         }
