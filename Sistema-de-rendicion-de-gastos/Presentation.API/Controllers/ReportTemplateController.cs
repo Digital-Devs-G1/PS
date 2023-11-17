@@ -3,6 +3,7 @@ using Application.DTO.Request;
 using Application.DTO.Response;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Interfaces.IMicroservicesClient;
+using Application.Interfaces.IServices;
 using Application.Interfaces.IServices.IVariableFields;
 using AutoMapper;
 using Domain.Entities;
@@ -22,18 +23,33 @@ namespace Presentation.API.Controllers
     [TypeFilter(typeof(ExceptionFilter))]
     public class ReportTemplateController : ControllerBase
     {
-        private readonly IReportTemplateService _services;
-        private readonly IHttpContextAccessor _httpContext;
-        private readonly ICompanyClient companyClient;
+        private readonly IReportTemplateService _reportTemplateService;
+        private readonly IReportFieldTemplateService _fieldTemplateService;
 
-        public ReportTemplateController(IReportTemplateService services, IHttpContextAccessor httpContext, ICompanyClient companyClient)
+        public ReportTemplateController(
+            IReportTemplateService services,
+            IReportFieldTemplateService fieldTemplateService
+            )
         {
-            _services = services;
-            _httpContext = httpContext;
-            this.companyClient = companyClient;
+            _reportTemplateService = services;
+            _fieldTemplateService = fieldTemplateService;
         }
 
-        [HttpGet("v1/ReportTemplates")]
+        [HttpGet("v1/ReportTemplate/{id}/ReportTemplateFields")]
+        [ProducesResponseType(typeof(UnauthorizedHttpResult), 401)]
+        [ProducesResponseType(typeof(IList<FieldTemplateResponse>), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
+        [ProducesResponseType(typeof(ErrorResponse), 404)]
+        [ProducesResponseType(typeof(ErrorResponse), 422)]
+        [Authorize]
+        public async Task<IActionResult> GetReportTemplateFields(
+            [FromRoute(Name = "id")] uint reportTemplateId)
+        {
+            var fields = await _fieldTemplateService.GetTemplatesFields((int)reportTemplateId);
+            return Ok(fields);
+        }
+
+        [HttpGet("v1/ReportTemplate")]
         [ProducesResponseType(typeof(UnauthorizedHttpResult), 401)]
         [ProducesResponseType(typeof(ErrorResponse), 404)]
         [ProducesResponseType(typeof(ErrorResponse), 422)]
@@ -41,14 +57,14 @@ namespace Presentation.API.Controllers
         [Authorize]
         public async Task<IActionResult> GetTemplates ()
         {
-            var templatesDepto = await _services.GetTemplatesBy();
+            var templatesDepto = await _reportTemplateService.GetTemplatesBy();
             return this.Ok(templatesDepto); 
         }
 
         [HttpPost("v1/ReportTemplate")]
         public async Task<IActionResult> Post([FromBody] ReportTemplateRequest request)
         {
-            var reportTemplate = await _services.AddTemplate(request);
+            var reportTemplate = await _reportTemplateService.AddTemplate(request);
 
             return this.Created("v1/ReportTemplates", reportTemplate);
         }
@@ -59,7 +75,7 @@ namespace Presentation.API.Controllers
             [FromRoute(Name ="id")] int reportId)
         {
 
-            var reportTemplate = await _services.UpdateTemplate(request, reportId);
+            var reportTemplate = await _reportTemplateService.UpdateTemplate(request, reportId);
 
             return this.Ok(reportTemplate);
         }

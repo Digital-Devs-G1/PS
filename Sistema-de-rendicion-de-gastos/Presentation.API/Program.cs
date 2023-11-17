@@ -129,7 +129,7 @@ namespace Presentation.API
 
             //services
 
-            builder.Services.AddSingleton<IReportTemplateFieldService, FieldTemplateService>();
+            builder.Services.AddSingleton<IReportFieldTemplateService, FieldTemplateService>();
             builder.Services.AddSingleton<IReportOperationService, ReportOperationService>();
             builder.Services.AddSingleton<IReportService, ReportService>();
             builder.Services.AddSingleton<IReportTrackingService, ReportTrackingService>();

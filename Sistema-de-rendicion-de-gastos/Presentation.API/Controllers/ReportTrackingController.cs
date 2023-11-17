@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [TypeFilter(typeof(ExceptionFilter))]
     public class ReportTrackingController : ControllerBase
@@ -32,15 +32,15 @@ namespace Presentation.API.Controllers
             this.jwtHelper = jwtHelper;
             this.httpContextAccessor = httpContextAccessor;
         }
-
+        /*
         [HttpGet]
         [Route("GetEmployeeReportInteractions/{employeeId}")]
         public async Task<IActionResult> GetEmployeeReportInteractions(int employeeId)
         {
             var traking = await _getService.GetEmployeeReportInteractions(employeeId);
             return Ok(traking);
-        }
-        
+        }*/
+        /*
         [HttpGet]
         [Route("GetReportHistoryByCreator/{employeeId}")]
         public async Task<IActionResult> GetReportHistoryByCreator(int employeeId)
@@ -48,9 +48,9 @@ namespace Presentation.API.Controllers
             var traking = await _getService.GetReportHistoryByCreator(employeeId);
             return Ok(traking);
         }
-
+        */
         [HttpPost]
-        [Route("Accept/{id}")]
+        [Route("{id}/Accept")]
         [SwaggerResponse(
             statusCode: 204,
             description: "NoContent")
@@ -74,7 +74,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpPost]
-        [Route("Dismiss/{id}")]
+        [Route("{id}/Dismiss")]
         [SwaggerResponse(
             statusCode: 204,
             description: "NoContent")

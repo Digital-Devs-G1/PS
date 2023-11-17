@@ -5,7 +5,7 @@ using Domain.Entities;
 
 namespace Application.Interfaces.IServices
 {
-    public interface IReportTemplateFieldService
+    public interface IReportFieldTemplateService
     {
         public Task<IList<FieldTemplateResponse>> GetTemplatesFields(int tempId);
         public Task<FieldTemplateResponse> GetFirstTemplateById(int tempId);

@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Application.UseCases
 {
-    public class FieldTemplateService : IReportTemplateFieldService
+    public class FieldTemplateService : IReportFieldTemplateService
     {
         public readonly IReportTemplateFieldQuerys _query;
         public readonly IGenericCommand<ReportTemplateField> _commandGeneric;

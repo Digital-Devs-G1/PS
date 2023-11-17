@@ -32,7 +32,7 @@ namespace Application.UseCases
         private readonly IReportTrackingService reportTrackingService;
         private readonly IReportOperationService reportOperationService;
         private readonly IVariableFieldService variableFieldService;
-        private readonly IReportTemplateFieldService fieldTemplateService;
+        private readonly IReportFieldTemplateService fieldTemplateService;
         private readonly ICompanyApprover _companyApprover;
 
         public ReportService(
@@ -41,7 +41,7 @@ namespace Application.UseCases
             IReportOperationService reportOperationService,
             IGenericCommand<Report> command,
             IVariableFieldService variableFieldService,
-            IReportTemplateFieldService fieldTemplateService,
+            IReportFieldTemplateService fieldTemplateService,
             IReportQuery reportQuery,
             IGenericCommand<ReportTracking> reportTrankingCommand,
             IGenericCommand<VariableField> variableFieldCommand,

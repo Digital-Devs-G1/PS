@@ -22,7 +22,7 @@ namespace Application.UseCases.VariableFieldsService
         private readonly IDepartmentTemplateQuery _reportTemplateQuery;
         private readonly IDepartamentTemplateCommand _command;
         private readonly ICompanyClient _companyClient;
-        private readonly IReportTemplateFieldService _fieldTemplateService;
+        private readonly IReportFieldTemplateService _fieldTemplateService;
         private readonly IMapper _mapper;
         private readonly IGenericRepositoryQuerys<DataType> _getDataType;
 
@@ -30,7 +30,7 @@ namespace Application.UseCases.VariableFieldsService
             IDepartmentTemplateQuery query,
             ICompanyClient companyClient,
             IDepartamentTemplateCommand command,
-            IReportTemplateFieldService fieldTemplateService,
+            IReportFieldTemplateService fieldTemplateService,
             IMapper mapper,
             IGenericRepositoryQuerys<DataType> getDataType)
         {
