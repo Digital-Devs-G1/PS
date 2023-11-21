@@ -51,8 +51,8 @@ namespace Infrastructure.Repositories.Query
                 Description = data.LatestTracking?.ReportNav.Description,
                 Amount = data.LatestTracking.ReportNav.Amount,
                 Status = data.LatestTracking?.ReportOperationNav.ReportOperationName,
-                DateTracking = data.LatestTracking?.TrackingDate
-            }).ToList();
+                DateTracking = data.LatestTracking?.TrackingDate.Value.ToString("dd/MM/yy HH:mm:ss")
+        }).ToList();
 
             return a;
         }
@@ -62,7 +62,7 @@ namespace Infrastructure.Repositories.Query
         public async Task<List<ReportStatusResponse>> GetEmployeeReportsStatus2(
             int employeeId
             )
-        {
+        {/*
             var a = await _dbContext
                 .Set<ReportTracking>()
                 .Include(t => t.ReportOperationNav)
@@ -78,7 +78,8 @@ namespace Infrastructure.Repositories.Query
                     DateTracking = group.Max(t => t.TrackingDate)
                 })
                 .ToListAsync();
-            return a;
+            return a;*/
+            return null;
         }
 
         // filtrar por empleado

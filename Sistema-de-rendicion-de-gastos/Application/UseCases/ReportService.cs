@@ -103,7 +103,7 @@ namespace Application.UseCases
         }
 
         public async Task<ReportStatusResponse> GetReportStatusById(int reportId)
-        {
+        {/*
             var report = await GetById(reportId);
             if (report == null)
             {
@@ -125,7 +125,8 @@ namespace Application.UseCases
                 DateTracking = lastTracking.TrackingDate,
             };
 
-            return reportStatusResponse;
+            return reportStatusResponse;*/
+            return null;
         }
 
         public bool TryCast(int type, string value)
@@ -189,6 +190,16 @@ namespace Application.UseCases
                 errorBuilder.Append("El monto es incorrecto");
             if (reportRequest.Report.Description.Equals(""))
                 errorBuilder.Append("No se especifo descripcion");
+            
+            
+            //
+            // ESTA HARDCODEADO EL LENGTH 
+            //
+            if (reportRequest.Report.Description.Length > 100)
+                errorBuilder.Append("El largo de la description supera los 100 caracteres.");
+
+
+
             if (errorBuilder.Length > 0)
                 throw new BadRequestException(errorBuilder.ToString());
 

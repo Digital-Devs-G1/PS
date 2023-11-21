@@ -10,6 +10,6 @@
 
         public required string Status { get; set; }
 
-        public required DateTime? DateTracking { get; set; }
+        public required string DateTracking { get; set; }
     }
 }
