@@ -42,7 +42,7 @@ namespace Infrastructure.Repositories.Query
                     ReportId = x.ReportId,
                     Description = x.Description,
                     Amount = x.Amount,
-                    DateTracking = x.date
+                    DateTracking = ((DateTime?)x.date).Value.ToString("dd/MM/yy HH:mm:ss")
                 })
                 .ToListAsync();
         }

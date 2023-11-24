@@ -240,8 +240,8 @@ namespace Application.UseCases
             if (approverId < 1)
                 throw new InvalidFormatIdException("Id de aprovador invalido. ");
             var reports = await _reportQuery.GetPendingApprovals(approverId);
-            if (reports == null || reports.Count == 0)
-                throw new NoFilterMatchesException("No hay nada por aprovar. ");
+            /*if (reports == null || reports.Count == 0)
+                throw new NoFilterMatchesException("No hay nada por aprovar. ");*/
             return reports;
         }
 

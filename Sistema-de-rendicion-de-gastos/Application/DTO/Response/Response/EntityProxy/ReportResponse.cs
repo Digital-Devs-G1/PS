@@ -14,6 +14,6 @@ namespace Application.DTO.Response.Response.EntityProxy
 
         public required double Amount { get; set; }
 
-        public required DateTime? DateTracking { get; set; }
+        public required string DateTracking { get; set; }
     }
 }
