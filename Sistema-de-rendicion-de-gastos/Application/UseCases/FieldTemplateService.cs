@@ -1,5 +1,4 @@
 ﻿using Application.DTO.Request;
-using Application.DTO.Response;
 using Application.DTO.Response.Response.EntityProxy;
 using Application.Exceptions;
 using Application.Interfaces.IMicroservicesClient;
@@ -7,7 +6,6 @@ using Application.Interfaces.IRepositories;
 using Application.Interfaces.IServices;
 using AutoMapper;
 using Domain.Entities;
-using System.Text;
 
 namespace Application.UseCases
 {
@@ -31,17 +29,21 @@ namespace Application.UseCases
         public async Task<IList<FieldTemplateResponse>> GetTemplatesFields(int reportTemplateId)
         {
             var deptoId = await _companyClient.GetDepartmentId();
-            if (reportTemplateId < 1)
+            if(reportTemplateId < 1)
                 throw new BadRequestException("El ID no puede ser 0.");
             var fields = await _query.GetResportTemplatesFieldsByDepartment(
                 reportTemplateId,
                 deptoId
             );
-            if (fields.Count() == 0)
-                throw new NotFoundException("No existe templates para ese Departamento.");
+
             IList<FieldTemplateResponse> list = new List<FieldTemplateResponse>();
-            foreach (ReportTemplateField elem in fields)
-                list.Add(new FieldTemplateResponse(elem));
+
+            if(fields.Any())
+            {
+                foreach(ReportTemplateField elem in fields)
+                    list.Add(new FieldTemplateResponse(elem));
+            }
+
             return list;
         }
 
@@ -51,9 +53,9 @@ namespace Application.UseCases
             return new FieldTemplateResponse(fieldTemp);
         }
 
-        public async Task CreateFieldTemplate (FieldTemplateRequest template, int departmentId)
+        public async Task CreateFieldTemplate(FieldTemplateRequest template, int departmentId)
         {
-            if (await _query.GetTemplate(template.Name, departmentId) != null)
+            if(await _query.GetTemplate(template.Name, departmentId) != null)
                 throw new Exception(null);
             await _commandGeneric.Add(new ReportTemplateField
             {
@@ -66,12 +68,12 @@ namespace Application.UseCases
 
         public async Task AddRange(List<ReportTemplateField> fields, int deptoTemplateId)
         {
-            foreach (var field in fields) { field.ReportTemplateId = deptoTemplateId; }
+            foreach(var field in fields) { field.ReportTemplateId = deptoTemplateId; }
             await _command.AddRange(fields);
         }
 
-        
-        public async Task DeleteFieldTemplatesById (int idTemplate)
+
+        public async Task DeleteFieldTemplatesById(int idTemplate)
         {/*
             if ((await _query.GetResportTemplatesFields(idTemplate)).Count() == 0)
                 throw new Exception();
@@ -80,7 +82,7 @@ namespace Application.UseCases
 
         public async Task DeleteTemplateById(string tempName, int idTemplate)
         {
-            if (await _query.GetTemplate(tempName, idTemplate) == null)
+            if(await _query.GetTemplate(tempName, idTemplate) == null)
                 throw new Exception(null);
             await _commandGeneric.Delete(await _query.GetTemplate(tempName, idTemplate));
         }
@@ -104,7 +106,7 @@ namespace Application.UseCases
 
             var field = await _query.GetTemplate(updateField.Name, updateField.ReportTemplateId);
 
-            if (field == null)
+            if(field == null)
             {
                 throw new InvalidOperationException("El nombre del campo variable ya existe.");
             }
@@ -113,7 +115,7 @@ namespace Application.UseCases
             field.Enabled = updateField.Enabled;
 
             await _command.Update(field);
-            return _mapper.Map<FieldTemplateResponse>(field);   
+            return _mapper.Map<FieldTemplateResponse>(field);
         }
     }
 }
